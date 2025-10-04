@@ -1,0 +1,10 @@
+@startuml
+
+component RichClient as "Rich client\n(Swing GUI)"
+
+component WebServer as "Web Server\n(REST & Vaadin)"
+
+RichClient --> WebServer : "Token / Battlemap\nmanagement"
+WebServer --> RichClient : "Tokens"
+
+@enduml

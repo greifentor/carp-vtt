@@ -1,9 +1,0 @@
-@startuml
-
-component RichClient as "Rich client\n(Swing GUI)"
-
-component WebServer as "Web Server"
-
-RichClient --> WebServer : "bla"
-
-@enduml
