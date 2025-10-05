@@ -2,12 +2,11 @@ package de.ollie.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import de.ollie.service.model.BattleMap;
-import de.ollie.service.model.BattleMapId;
-import de.ollie.service.port.persistence.BattleMapPersistencePort;
-import java.util.Optional;
+import de.ollie.vtt.core.service.model.BattleMap;
+import de.ollie.vtt.core.service.port.persistence.BattleMapPersistencePort;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,31 +18,27 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class BattleMapServiceImplTest {
 
 	@Mock
-	private BattleMap battleMap;
-
-	@Mock
-	private BattleMapId battleMapId;
-
-	@Mock
 	private BattleMapPersistencePort battleMapPersistencePort;
 
 	@InjectMocks
 	private BattleMapServiceImpl unitUnderTest;
 
 	@Nested
-	class findById_BattleMapId {
+	class save_BattleMap {
 
 		@Test
-		void throwsAnException_passingANullValue_asBattleMapId() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.findById(null));
+		void throwsAnException_passingANullValue_asBattleMap() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.save(null));
 		}
 
 		@Test
 		void callsThePersistencePortMethodCorrectly() {
 			// Prepare
-			when(battleMapPersistencePort.findById(battleMapId)).thenReturn(Optional.of(battleMap));
+			BattleMap saved = mock(BattleMap.class);
+			BattleMap toSave = mock(BattleMap.class);
+			when(battleMapPersistencePort.update(toSave)).thenReturn(saved);
 			// Run & Check
-			assertSame(battleMap, unitUnderTest.findById(battleMapId).get());
+			assertSame(saved, unitUnderTest.save(toSave));
 		}
 	}
 }

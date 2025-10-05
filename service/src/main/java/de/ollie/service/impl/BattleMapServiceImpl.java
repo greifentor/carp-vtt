@@ -2,12 +2,10 @@ package de.ollie.service.impl;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import de.ollie.service.BattleMapService;
-import de.ollie.service.model.BattleMap;
-import de.ollie.service.model.BattleMapId;
-import de.ollie.service.port.persistence.BattleMapPersistencePort;
+import de.ollie.vtt.core.service.BattleMapService;
+import de.ollie.vtt.core.service.model.BattleMap;
+import de.ollie.vtt.core.service.port.persistence.BattleMapPersistencePort;
 import jakarta.inject.Named;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @Named
@@ -17,8 +15,8 @@ class BattleMapServiceImpl implements BattleMapService {
 	private final BattleMapPersistencePort persistencePort;
 
 	@Override
-	public Optional<BattleMap> findById(BattleMapId id) {
-		ensure(id != null, "id cannot be null!");
-		return persistencePort.findById(id);
+	public BattleMap save(BattleMap toSave) {
+		ensure(toSave != null, "object to save cannot be null!");
+		return persistencePort.update(toSave);
 	}
 }

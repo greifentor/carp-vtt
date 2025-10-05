@@ -1,0 +1,26 @@
+classes:
+  - name: BattleMap
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
+      - name: mapImage
+        type:
+          name: byte[]
