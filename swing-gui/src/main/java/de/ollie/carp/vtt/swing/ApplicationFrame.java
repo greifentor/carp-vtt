@@ -56,12 +56,6 @@ public class ApplicationFrame
 	}
 
 	public void showFrame() {
-		//		try {
-		//			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		//			SwingUtilities.updateComponentTreeUI(this);
-		//		} catch (Exception e) {
-		//			e.printStackTrace();
-		//		}
 		setVisible(true);
 	}
 
