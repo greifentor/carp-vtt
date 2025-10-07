@@ -124,6 +124,20 @@ class SwingComponentFactoryTest {
 	}
 
 	@Nested
+	class createPanel {
+
+		@Test
+		void returnsAnObject() {
+			assertNotNull(unitUnderTest.createPanel());
+		}
+
+		@Test
+		void returnsAnNewObject_onEachCall() {
+			assertNotSame(unitUnderTest.createPanel(), unitUnderTest.createPanel());
+		}
+	}
+
+	@Nested
 	class createTextField {
 
 		@Test

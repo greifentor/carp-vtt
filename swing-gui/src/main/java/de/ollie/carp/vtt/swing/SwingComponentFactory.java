@@ -5,6 +5,7 @@ import static de.ollie.baselib.util.Check.ensure;
 import jakarta.inject.Named;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 @Named
@@ -26,6 +27,10 @@ public class SwingComponentFactory {
 			button.setToolTipText(toolTipText);
 		}
 		return button;
+	}
+
+	public JPanel createPanel() {
+		return new JPanel();
 	}
 
 	public JTextField createTextField() {
