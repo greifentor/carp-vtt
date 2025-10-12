@@ -2,9 +2,11 @@ package de.ollie.carp.vtt.swing;
 
 import static de.ollie.baselib.util.Check.ensure;
 
+import de.ollie.carp.vtt.swing.component.FileNameProvider;
 import jakarta.inject.Named;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,6 +29,14 @@ public class SwingComponentFactory {
 			button.setToolTipText(toolTipText);
 		}
 		return button;
+	}
+
+	public JFileChooser createFileChooser() {
+		return new JFileChooser();
+	}
+
+	public FileNameProvider createFileNameProvider() {
+		return new FileNameProvider(this);
 	}
 
 	public JPanel createPanel() {

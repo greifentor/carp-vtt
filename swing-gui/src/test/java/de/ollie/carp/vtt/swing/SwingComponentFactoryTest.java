@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -26,6 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class SwingComponentFactoryTest {
 
 	private static final Integer COLUMNS = 42;
+	private static final String CURRENT_DIR_ABSOLUTE_PATH = "current-dir-absolute-path";
 	private static final String LABEL = "label";
 	private static final String TEXT = "text";
 	private static final String TOOL_TIP_TEXT = "tool-tip-text";
@@ -120,6 +123,36 @@ class SwingComponentFactoryTest {
 			verify(button, never()).setIcon(any());
 			verify(button, never()).setText(any());
 			verify(button, times(1)).setToolTipText(TOOL_TIP_TEXT);
+		}
+	}
+
+	@Nested
+	class createFileChooser {
+
+		@Test
+		void returnsAnObject() {
+			assertNotNull(unitUnderTest.createFileChooser());
+		}
+
+		@Test
+		void returnsAnNewObject_onEachCall() {
+			assertNotSame(unitUnderTest.createFileChooser(), unitUnderTest.createFileChooser());
+		}
+	}
+
+	@Nested
+	class createFileNameProvider_String_Component {
+
+		@Test
+		void returnsAnObject() {
+			Component parent = mock(Component.class);
+			assertNotNull(unitUnderTest.createFileNameProvider());
+		}
+
+		@Test
+		void returnsAnNewObject_onEachCall() {
+			Component parent = mock(Component.class);
+			assertNotSame(unitUnderTest.createFileNameProvider(), unitUnderTest.createFileNameProvider());
 		}
 	}
 
