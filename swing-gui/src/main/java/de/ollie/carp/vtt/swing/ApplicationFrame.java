@@ -5,7 +5,9 @@ import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener.EventType;
 import de.ollie.carp.vtt.swing.component.SimplifiedWindowListener;
+import de.ollie.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,8 +28,11 @@ public class ApplicationFrame
 
 	private static final Logger LOG = LogManager.getLogger(ApplicationFrame.class);
 
-	private static final int HGAP = 3;
-	private static final int VGAP = 3;
+	@Inject
+	private BinaryFileAccessPort binaryFileAccessPort;
+
+	@Inject
+	private SwingComponentFactory swingComponentFactory;
 
 	private JMenuBar menuBar;
 	private JDesktopPane desktopPane;
@@ -64,7 +69,7 @@ public class ApplicationFrame
 		if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.BATTLE_MAP_OPEN) {
-			System.out.println("Save battle map menu item selected!");
+			new TokenEditJInternalFrame(binaryFileAccessPort, swingComponentFactory, desktopPane).prepare().setVisible(true);
 		}
 	}
 

@@ -51,5 +51,8 @@ public class UploadComponent extends JPanel {
 			.ifPresent(path -> update(binaryFileAccessPort.readFileContent(path), path));
 	}
 
-	void update(byte[] content, String path) {}
+	void update(byte[] content, String path) {
+		uploadContent = content;
+		textFieldFileName.setText(path);
+	}
 }

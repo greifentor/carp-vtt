@@ -1,9 +1,12 @@
 package de.ollie.carp.vtt.swing.component;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.ollie.carp.vtt.swing.SwingComponentFactory;
@@ -19,11 +22,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class UploadComponentTest {
 
 	private static final String LABEL = "label";
+	private static final String PATH = "path";
 
 	@Mock
 	private BinaryFileAccessPort binaryFileAccessPort;
@@ -83,6 +88,22 @@ class UploadComponentTest {
 			InOrder inOrder = inOrder(panel);
 			inOrder.verify(panel).add(buttonUpload, BorderLayout.EAST);
 			inOrder.verify(panel).add(textFieldFileName, BorderLayout.CENTER);
+		}
+	}
+
+	@Nested
+	class update_byteArr_String {
+
+		@Test
+		void happyRun() {
+			// Prepare
+			byte[] content = new byte[] { 1, 2, 3, 4, 5 };
+			ReflectionTestUtils.setField(unitUnderTest, "textFieldFileName", textFieldFileName);
+			// Run
+			unitUnderTest.update(content, PATH);
+			// Check
+			verify(textFieldFileName, times(1)).setText(PATH);
+			assertEquals(content, ReflectionTestUtils.getField(unitUnderTest, "uploadContent"));
 		}
 	}
 }
