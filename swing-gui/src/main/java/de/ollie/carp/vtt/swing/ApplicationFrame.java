@@ -43,6 +43,7 @@ public class ApplicationFrame
 
 	@PostConstruct
 	void postConstruct() {
+		// OLI: NimbusLookAndFeel does not work with background images.
 		addWindowListener(new SimplifiedWindowListener(this));
 		setSize(new Dimension(800, 600));
 		menuBar = new CarpVttMenuBar(this);
