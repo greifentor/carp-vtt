@@ -9,6 +9,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class TokenEditJInternalFrame extends JInternalFrame {
 
@@ -29,6 +30,9 @@ public class TokenEditJInternalFrame extends JInternalFrame {
 
 	TokenEditJInternalFrame prepare() {
 		JPanel panel = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
+		panel.setBorder(
+			new EmptyBorder(SwingConstants.VGAP, SwingConstants.HGAP, SwingConstants.VGAP, SwingConstants.HGAP)
+		);
 		JPanel panelLabels = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		panelLabels.add(new JLabel("Name:"));
 		panelLabels.add(new JLabel("Content:"));
@@ -37,7 +41,9 @@ public class TokenEditJInternalFrame extends JInternalFrame {
 		panelFields.add(new UploadComponent(binaryFileAccessPort, swingComponentFactory).build("DOOF"));
 		panel.add(panelLabels, BorderLayout.WEST);
 		panel.add(panelFields, BorderLayout.CENTER);
-		setContentPane(panel);
+		JPanel mainLayout = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
+		mainLayout.add(panel, BorderLayout.NORTH);
+		setContentPane(mainLayout);
 		try {
 			setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {

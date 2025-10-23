@@ -49,7 +49,7 @@ public class ApplicationFrame
 		menuBar = new CarpVttMenuBar(this);
 		setJMenuBar(menuBar);
 		JLabel labelBackground = new JLabel(
-			new ImageIcon("/home/ollie/Rollenspiel/DungeonsAndDragons/Material/5e/Cover-Art-Starterset-Transparent.png")
+			new ImageIcon("/home/ollie/Rollenspiel/DungeonsAndDragons/Material/5e/Cover-Art-Starterset-Transparent-Large.png")
 		);
 		desktopPane = new JDesktopPane();
 		desktopPane.setOpaque(false);
