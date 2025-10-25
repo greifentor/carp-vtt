@@ -32,6 +32,11 @@
 			<artifactId>carp-vtt-service-interface</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>carp-vtt-jpa-persistence</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -115,8 +120,7 @@
 					<ignoreEditorConfig>true</ignoreEditorConfig>
 					<!-- Use <inputGlobs> to override the default input patterns -->
 					<inputGlobs>
-						<!-- These are the default patterns, you can omit
-						<inputGlobs> entirely 
+						<!-- These are the default patterns, you can omit <inputGlobs> entirely 
 							unless you want to override them -->
 						<inputGlob>src/main/java/**/*.java</inputGlob>
 						<inputGlob>src/test/java/**/*.java</inputGlob>

@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -25,6 +26,9 @@ class FileNameProviderTest {
 
 	private static final String ABSOLUTE_FILE_NAME = "/absolute/file/name";
 	private static final String CURRENT_DIR = "current-dir";
+
+	@TempDir
+	private File tempDir;
 
 	@Mock
 	private Component parent;
@@ -74,9 +78,9 @@ class FileNameProviderTest {
 			when(componentactory.createFileChooser()).thenReturn(fileChooser);
 			when(fileChooser.getSelectedFile()).thenReturn(selectedFile);
 			when(fileChooser.showOpenDialog(parent)).thenReturn(JFileChooser.APPROVE_OPTION);
-			when(selectedFile.getAbsolutePath()).thenReturn(ABSOLUTE_FILE_NAME);
+			when(selectedFile.getAbsolutePath()).thenReturn(tempDir + ABSOLUTE_FILE_NAME);
 			// Run & Check
-			assertEquals(ABSOLUTE_FILE_NAME, unitUnderTest.getFileNameByDialog(CURRENT_DIR, parent).get());
+			assertEquals(tempDir + ABSOLUTE_FILE_NAME, unitUnderTest.getFileNameByDialog(CURRENT_DIR, parent).get());
 		}
 	}
 
@@ -90,7 +94,10 @@ class FileNameProviderTest {
 
 		@Test
 		void returnsAFileWithCorrectName_passingAString_asFileNameAbsolutePath() {
-			assertEquals(ABSOLUTE_FILE_NAME, unitUnderTest.createFile(ABSOLUTE_FILE_NAME).getAbsolutePath());
+			assertEquals(
+				(tempDir + ABSOLUTE_FILE_NAME).replace("\\", "/"),
+				unitUnderTest.createFile(tempDir + ABSOLUTE_FILE_NAME).getAbsolutePath().replace("\\", "/")
+			);
 		}
 	}
 }
