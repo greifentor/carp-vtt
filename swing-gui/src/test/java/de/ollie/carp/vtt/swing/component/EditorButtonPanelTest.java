@@ -1,5 +1,7 @@
 package de.ollie.carp.vtt.swing.component;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel.Observer;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,8 @@ class EditorButtonPanelTest {
 	class prepare {
 
 		@Test
-		void t() {}
+		void returns_itself() {
+			assertSame(unitUnderTest, unitUnderTest.prepare());
+		}
 	}
 }

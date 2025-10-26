@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.swing.component;
 
+import javax.swing.JButton;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,7 +18,10 @@ public class EditorButtonPanel {
 
 	private final Observer observer;
 
+	private JButton buttonCancel;
+	private JButton buttonOk;
+
 	public EditorButtonPanel prepare() {
-		return null;
+		return this;
 	}
 }
