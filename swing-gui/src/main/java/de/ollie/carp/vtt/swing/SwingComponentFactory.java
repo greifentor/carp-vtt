@@ -4,6 +4,7 @@ import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.swing.component.FileNameProvider;
 import jakarta.inject.Named;
+import java.awt.BorderLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -12,6 +13,10 @@ import javax.swing.JTextField;
 
 @Named
 public class SwingComponentFactory {
+
+	public BorderLayout createBorderLayout() {
+		return new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP);
+	}
 
 	public JButton createButton() {
 		return new JButton();

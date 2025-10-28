@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.swing;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -48,6 +49,30 @@ class SwingComponentFactoryTest {
 	@BeforeEach
 	void beforeEach() {
 		unitUnderTest = spy(unitUnderTest);
+	}
+
+	@Nested
+	class createBorderLayout {
+
+		@Test
+		void returnsANewObject() {
+			assertNotNull(unitUnderTest.createBorderLayout());
+		}
+
+		@Test
+		void returnsANewObject_onEachCall() {
+			assertNotSame(unitUnderTest.createBorderLayout(), unitUnderTest.createBorderLayout());
+		}
+
+		@Test
+		void returnedLayoutManger_hasCorrectHGap() {
+			assertEquals(SwingConstants.HGAP, unitUnderTest.createBorderLayout().getHgap());
+		}
+
+		@Test
+		void returnedLayoutManger_hasCorrectVGap() {
+			assertEquals(SwingConstants.VGAP, unitUnderTest.createBorderLayout().getVgap());
+		}
 	}
 
 	@Nested
