@@ -5,6 +5,7 @@ import static de.ollie.baselib.util.Check.ensure;
 import de.ollie.carp.vtt.swing.component.FileNameProvider;
 import jakarta.inject.Named;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -42,6 +43,10 @@ public class SwingComponentFactory {
 
 	public FileNameProvider createFileNameProvider() {
 		return new FileNameProvider(this);
+	}
+
+	public FlowLayout createFlowLayout(int alignment) {
+		return new FlowLayout(alignment, SwingConstants.HGAP, SwingConstants.VGAP);
 	}
 
 	public JPanel createPanel() {

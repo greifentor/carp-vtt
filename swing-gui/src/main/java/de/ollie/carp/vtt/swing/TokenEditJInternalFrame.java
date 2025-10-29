@@ -1,5 +1,7 @@
 package de.ollie.carp.vtt.swing;
 
+import de.ollie.carp.vtt.swing.component.EditorButtonPanel;
+import de.ollie.carp.vtt.swing.component.EditorButtonPanel.ButtonType;
 import de.ollie.carp.vtt.swing.component.UploadComponent;
 import de.ollie.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import java.awt.BorderLayout;
@@ -11,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class TokenEditJInternalFrame extends JInternalFrame {
+public class TokenEditJInternalFrame extends JInternalFrame implements EditorButtonPanel.Observer {
 
 	private final BinaryFileAccessPort binaryFileAccessPort;
 	private final SwingComponentFactory swingComponentFactory;
@@ -43,6 +45,7 @@ public class TokenEditJInternalFrame extends JInternalFrame {
 		panel.add(panelFields, BorderLayout.CENTER);
 		JPanel mainLayout = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
 		mainLayout.add(panel, BorderLayout.NORTH);
+		mainLayout.add(new EditorButtonPanel(this, swingComponentFactory).prepare(), BorderLayout.SOUTH);
 		setContentPane(mainLayout);
 		try {
 			setSelected(true);
@@ -53,5 +56,10 @@ public class TokenEditJInternalFrame extends JInternalFrame {
 		pack();
 		desktopPane.add(this);
 		return this;
+	}
+
+	@Override
+	public void buttonPressed(ButtonType buttonTyp) {
+		System.out.println(buttonTyp);
 	}
 }

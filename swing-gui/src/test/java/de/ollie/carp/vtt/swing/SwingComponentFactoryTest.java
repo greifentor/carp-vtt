@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.awt.Component;
+import java.awt.FlowLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -178,6 +179,37 @@ class SwingComponentFactoryTest {
 		void returnsAnNewObject_onEachCall() {
 			Component parent = mock(Component.class);
 			assertNotSame(unitUnderTest.createFileNameProvider(), unitUnderTest.createFileNameProvider());
+		}
+	}
+
+	@Nested
+	class createFlowLayout {
+
+		private static final int ALIGNMENT = FlowLayout.LEADING;
+
+		@Test
+		void returnsANewObject() {
+			assertNotNull(unitUnderTest.createFlowLayout(ALIGNMENT));
+		}
+
+		@Test
+		void returnsANewObject_onEachCall() {
+			assertNotSame(unitUnderTest.createFlowLayout(ALIGNMENT), unitUnderTest.createFlowLayout(ALIGNMENT));
+		}
+
+		@Test
+		void returnedLayoutManger_hasCorrectAlignment() {
+			assertEquals(ALIGNMENT, unitUnderTest.createFlowLayout(ALIGNMENT).getAlignment());
+		}
+
+		@Test
+		void returnedLayoutManger_hasCorrectHGap() {
+			assertEquals(SwingConstants.HGAP, unitUnderTest.createFlowLayout(ALIGNMENT).getHgap());
+		}
+
+		@Test
+		void returnedLayoutManger_hasCorrectVGap() {
+			assertEquals(SwingConstants.VGAP, unitUnderTest.createFlowLayout(ALIGNMENT).getVgap());
 		}
 	}
 
