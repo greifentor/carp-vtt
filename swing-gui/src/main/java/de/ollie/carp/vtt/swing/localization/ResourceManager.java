@@ -1,5 +1,7 @@
 package de.ollie.carp.vtt.swing.localization;
 
 public interface ResourceManager {
-	String getString(String resourceId);
+	String getResource(String resourceId);
+
+	void setResource(String localization, String resourceId, String resource);
 }
