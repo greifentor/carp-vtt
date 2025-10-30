@@ -1,5 +1,6 @@
 package de.ollie.vtt.persistence.jpa.mapper;
 
+import de.ollie.vtt.core.service.model.Token;
 import de.ollie.vtt.persistence.jpa.dbo.TokenDbo;
 import org.mapstruct.Mapper;
 
