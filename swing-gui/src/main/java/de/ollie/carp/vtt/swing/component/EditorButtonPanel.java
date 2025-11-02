@@ -36,7 +36,7 @@ public class EditorButtonPanel extends JPanel {
 
 	JPanel createLeftButtonPanel() {
 		JPanel panel = swingComponentFactory.createPanel();
-		buttonDelete = swingComponentFactory.createButton("Delete", null, null);
+		buttonDelete = swingComponentFactory.createButton("EditorPanel.button.delete.label", null, null);
 		buttonDelete.addActionListener(e -> buttonClicked(ButtonType.DELETE));
 		panel.setLayout(swingComponentFactory.createFlowLayout(FlowLayout.LEFT));
 		panel.add(buttonDelete);
@@ -51,9 +51,9 @@ public class EditorButtonPanel extends JPanel {
 
 	JPanel createRightButtonPanel() {
 		JPanel panel = swingComponentFactory.createPanel();
-		buttonCancel = swingComponentFactory.createButton("Cancel", null, null);
+		buttonCancel = swingComponentFactory.createButton("EditorPanel.button.cancel.label", null, null);
 		buttonCancel.addActionListener(e -> buttonClicked(ButtonType.CANCEL));
-		buttonOk = swingComponentFactory.createButton("Ok", null, null);
+		buttonOk = swingComponentFactory.createButton("EditorPanel.button.ok.label", null, null);
 		buttonOk.addActionListener(e -> buttonClicked(ButtonType.OK));
 		panel.setLayout(swingComponentFactory.createFlowLayout(FlowLayout.RIGHT));
 		panel.add(buttonOk);

@@ -3,6 +3,9 @@ package de.ollie.carp.vtt.swing;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.swing.component.FileNameProvider;
+import de.ollie.carp.vtt.swing.localization.ResourceLoader;
+import de.ollie.carp.vtt.swing.localization.ResourceManager;
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Named;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -11,9 +14,22 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Named
+@RequiredArgsConstructor
 public class SwingComponentFactory {
+
+	@Getter
+	private final ResourceManager resourceManager;
+
+	private final ResourceLoader resourceLoader;
+
+	@PostConstruct
+	void postConstruct() {
+		resourceLoader.loadResources(resourceManager);
+	}
 
 	public BorderLayout createBorderLayout() {
 		return new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP);
@@ -23,13 +39,13 @@ public class SwingComponentFactory {
 		return new JButton();
 	}
 
-	public JButton createButton(String label, Icon icon, String toolTipText) {
+	public JButton createButton(String resourceId, Icon icon, String toolTipText) {
 		JButton button = createButton();
 		if (icon != null) {
 			button.setIcon(icon);
 		}
-		if (label != null) {
-			button.setText(label);
+		if (resourceId != null) {
+			button.setText(resourceManager.getResource(resourceId));
 		}
 		if (toolTipText != null) {
 			button.setToolTipText(toolTipText);

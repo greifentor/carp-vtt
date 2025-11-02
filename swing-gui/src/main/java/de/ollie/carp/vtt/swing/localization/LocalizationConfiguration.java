@@ -12,8 +12,9 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 class LocalizationConfiguration {
 
-	static final String ALTERNATIVE_LANGUAGE_DEFAULT = "EN";
-	static final String CURRENT_LANGUAGE_DEFAULT = "DE";
+	// Code by ISO639-3
+	static final String ALTERNATIVE_LANGUAGE_DEFAULT = "eng";
+	static final String CURRENT_LANGUAGE_DEFAULT = "deu";
 
 	@Value("${carp-vtt.localization.languages:" + CURRENT_LANGUAGE_DEFAULT + "," + ALTERNATIVE_LANGUAGE_DEFAULT + "}")
 	private List<String> languages;

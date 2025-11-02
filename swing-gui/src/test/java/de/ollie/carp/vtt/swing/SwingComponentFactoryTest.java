@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -13,7 +12,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.awt.Component;
+import de.ollie.carp.vtt.swing.localization.ResourceLoader;
+import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import java.awt.FlowLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -30,7 +30,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class SwingComponentFactoryTest {
 
 	private static final Integer COLUMNS = 42;
-	private static final String CURRENT_DIR_ABSOLUTE_PATH = "current-dir-absolute-path";
 	private static final String LABEL = "label";
 	private static final String TEXT = "text";
 	private static final String TOOL_TIP_TEXT = "tool-tip-text";
@@ -43,6 +42,12 @@ class SwingComponentFactoryTest {
 
 	@Mock
 	private Icon icon;
+
+	@Mock
+	private ResourceLoader resourceLoader;
+
+	@Mock
+	private ResourceManager resourceManager;
 
 	@InjectMocks
 	private SwingComponentFactory unitUnderTest;
@@ -93,6 +98,8 @@ class SwingComponentFactoryTest {
 	@Nested
 	class createButton_String_Icon_String {
 
+		private static final String RESOURCE_ID = "resource-id";
+
 		@Test
 		void returnsAnObject() {
 			assertNotNull(unitUnderTest.createButton(null, null, null));
@@ -131,8 +138,9 @@ class SwingComponentFactoryTest {
 		void setsLabel_whenPassed() {
 			// Prepare
 			when(unitUnderTest.createButton()).thenReturn(button);
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
 			// Run
-			unitUnderTest.createButton(LABEL, null, null);
+			unitUnderTest.createButton(RESOURCE_ID, null, null);
 			// Check
 			verify(button, never()).setIcon(any());
 			verify(button, times(1)).setText(LABEL);
@@ -171,13 +179,11 @@ class SwingComponentFactoryTest {
 
 		@Test
 		void returnsAnObject() {
-			Component parent = mock(Component.class);
 			assertNotNull(unitUnderTest.createFileNameProvider());
 		}
 
 		@Test
 		void returnsAnNewObject_onEachCall() {
-			Component parent = mock(Component.class);
 			assertNotSame(unitUnderTest.createFileNameProvider(), unitUnderTest.createFileNameProvider());
 		}
 	}
@@ -290,6 +296,18 @@ class SwingComponentFactoryTest {
 			// Check
 			verify(textField, times(1)).setText(TEXT);
 			verifyNoMoreInteractions(textField);
+		}
+	}
+
+	@Nested
+	class postConstruct {
+
+		@Test
+		void constructsTheResourceManager() {
+			// Run
+			unitUnderTest.postConstruct();
+			// Check
+			verify(resourceLoader, times(1)).loadResources(resourceManager);
 		}
 	}
 }
