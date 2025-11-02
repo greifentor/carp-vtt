@@ -73,7 +73,7 @@ class EditorButtonPanelTest {
 		}
 
 		private void trainMocks() {
-			when(swingComponentFactory.createButton("EditorPanel.button.delete.label", null, null)).thenReturn(button);
+			when(swingComponentFactory.createButton(EditorButtonPanel.RES_ID_BUTTON_DELETE, null, null)).thenReturn(button);
 			when(swingComponentFactory.createFlowLayout(FlowLayout.LEFT)).thenReturn(layout);
 			when(swingComponentFactory.createPanel()).thenReturn(panel);
 		}
@@ -159,8 +159,9 @@ class EditorButtonPanelTest {
 		}
 
 		private void trainMocks() {
-			when(swingComponentFactory.createButton("EditorPanel.button.cancel.label", null, null)).thenReturn(buttonCancel);
-			when(swingComponentFactory.createButton("EditorPanel.button.ok.label", null, null)).thenReturn(buttonOk);
+			when(swingComponentFactory.createButton(EditorButtonPanel.RES_ID_BUTTON_CANCEL, null, null))
+				.thenReturn(buttonCancel);
+			when(swingComponentFactory.createButton(EditorButtonPanel.RES_ID_BUTTON_OK, null, null)).thenReturn(buttonOk);
 			when(swingComponentFactory.createFlowLayout(FlowLayout.RIGHT)).thenReturn(layout);
 			when(swingComponentFactory.createPanel()).thenReturn(panel);
 		}

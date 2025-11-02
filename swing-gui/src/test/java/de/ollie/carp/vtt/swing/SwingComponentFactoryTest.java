@@ -249,6 +249,62 @@ class SwingComponentFactoryTest {
 	}
 
 	@Nested
+	class createMenu_String {
+
+		@Test
+		void returnsANewObject() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertNotNull(unitUnderTest.createMenu(RESOURCE_ID));
+		}
+
+		@Test
+		void returnsANewObject_onEachCall() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertNotSame(unitUnderTest.createMenu(RESOURCE_ID), unitUnderTest.createMenu(RESOURCE_ID));
+		}
+
+		@Test
+		void setsLabelCorrectly() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertEquals(LABEL, unitUnderTest.createMenu(RESOURCE_ID).getText());
+		}
+	}
+
+	@Nested
+	class createMenuItem_String {
+
+		@Test
+		void returnsANewObject() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertNotNull(unitUnderTest.createMenuItem(RESOURCE_ID));
+		}
+
+		@Test
+		void returnsANewObject_onEachCall() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertNotSame(unitUnderTest.createMenuItem(RESOURCE_ID), unitUnderTest.createMenuItem(RESOURCE_ID));
+		}
+
+		@Test
+		void setsLabelCorrectly() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertEquals(LABEL, unitUnderTest.createMenuItem(RESOURCE_ID).getText());
+		}
+	}
+
+	@Nested
 	class createPanel {
 
 		@Test

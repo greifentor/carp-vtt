@@ -44,7 +44,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 		panelLabels.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.content.label"));
 		JPanel panelFields = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		panelFields.add(new JTextField(40));
-		panelFields.add(new UploadComponent(binaryFileAccessPort, swingComponentFactory).build("DOOF"));
+		panelFields.add(new UploadComponent(binaryFileAccessPort, swingComponentFactory).build());
 		panel.add(panelLabels, BorderLayout.WEST);
 		panel.add(panelFields, BorderLayout.CENTER);
 		JPanel mainLayout = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));

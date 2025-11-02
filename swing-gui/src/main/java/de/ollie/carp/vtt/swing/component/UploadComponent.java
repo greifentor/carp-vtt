@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 public class UploadComponent extends JPanel {
 
+	static final String RES_ID_BROWSE_BUTTON = "UploadComponent.button.browse.label";
 	static final int TEXT_FIELD_FILE_NAME_LENGTH = 40;
 
 	private final BinaryFileAccessPort binaryFileAccessPort;
@@ -31,9 +32,8 @@ public class UploadComponent extends JPanel {
 		setLayout(new BorderLayout(HGAP, VGAP));
 	}
 
-	public UploadComponent build(String buttonLabel) {
-		ensure(buttonLabel != null, "button label cannot be null!");
-		buttonUpload = componentFactory.createButton(buttonLabel, null, null);
+	public UploadComponent build() {
+		buttonUpload = componentFactory.createButton(RES_ID_BROWSE_BUTTON, null, null);
 		buttonUpload.addActionListener(e -> upload());
 		textFieldFileName = componentFactory.createTextField("???", TEXT_FIELD_FILE_NAME_LENGTH);
 		JPanel p = componentFactory.createPanel();

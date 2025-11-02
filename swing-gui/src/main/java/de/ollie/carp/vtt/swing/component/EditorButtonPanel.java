@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EditorButtonPanel extends JPanel {
 
+	static final String RES_ID_BUTTON_CANCEL = "EditorPanel.button.cancel.label";
+	static final String RES_ID_BUTTON_DELETE = "EditorPanel.button.delete.label";
+	static final String RES_ID_BUTTON_OK = "EditorPanel.button.ok.label";
+
 	public enum ButtonType {
 		CANCEL,
 		DELETE,
@@ -36,7 +40,7 @@ public class EditorButtonPanel extends JPanel {
 
 	JPanel createLeftButtonPanel() {
 		JPanel panel = swingComponentFactory.createPanel();
-		buttonDelete = swingComponentFactory.createButton("EditorPanel.button.delete.label", null, null);
+		buttonDelete = swingComponentFactory.createButton(RES_ID_BUTTON_DELETE, null, null);
 		buttonDelete.addActionListener(e -> buttonClicked(ButtonType.DELETE));
 		panel.setLayout(swingComponentFactory.createFlowLayout(FlowLayout.LEFT));
 		panel.add(buttonDelete);
@@ -51,9 +55,9 @@ public class EditorButtonPanel extends JPanel {
 
 	JPanel createRightButtonPanel() {
 		JPanel panel = swingComponentFactory.createPanel();
-		buttonCancel = swingComponentFactory.createButton("EditorPanel.button.cancel.label", null, null);
+		buttonCancel = swingComponentFactory.createButton(RES_ID_BUTTON_CANCEL, null, null);
 		buttonCancel.addActionListener(e -> buttonClicked(ButtonType.CANCEL));
-		buttonOk = swingComponentFactory.createButton("EditorPanel.button.ok.label", null, null);
+		buttonOk = swingComponentFactory.createButton(RES_ID_BUTTON_OK, null, null);
 		buttonOk.addActionListener(e -> buttonClicked(ButtonType.OK));
 		panel.setLayout(swingComponentFactory.createFlowLayout(FlowLayout.RIGHT));
 		panel.add(buttonOk);

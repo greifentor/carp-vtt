@@ -70,20 +70,15 @@ class UploadComponentTest {
 	class build_String {
 
 		@Test
-		void throwsAnException_passingANullValue_asButtonLabel() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.build(null));
-		}
-
-		@Test
 		void addsComponentsCorrectly() {
 			// Prepare
 			doNothing().when(unitUnderTest).add(panel, BorderLayout.NORTH);
-			when(componentFactory.createButton(LABEL, null, null)).thenReturn(buttonUpload);
+			when(componentFactory.createButton(UploadComponent.RES_ID_BROWSE_BUTTON, null, null)).thenReturn(buttonUpload);
 			when(componentFactory.createPanel()).thenReturn(panel);
 			when(componentFactory.createTextField("???", UploadComponent.TEXT_FIELD_FILE_NAME_LENGTH))
 				.thenReturn(textFieldFileName);
 			// Run
-			unitUnderTest.build(LABEL);
+			unitUnderTest.build();
 			// Check
 			InOrder inOrder = inOrder(panel);
 			inOrder.verify(panel).add(buttonUpload, BorderLayout.EAST);

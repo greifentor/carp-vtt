@@ -13,6 +13,8 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.Getter;
@@ -68,6 +70,14 @@ public class SwingComponentFactory {
 
 	public JLabel createLabel(String resourceId) {
 		return new JLabel(resourceManager.getResource(resourceId));
+	}
+
+	public JMenu createMenu(String resourceId) {
+		return new JMenu(resourceManager.getResource(resourceId));
+	}
+
+	public JMenuItem createMenuItem(String resourceId) {
+		return new JMenuItem(resourceManager.getResource(resourceId));
 	}
 
 	public JPanel createPanel() {

@@ -51,7 +51,7 @@ public class ApplicationFrame
 		// OLI: NimbusLookAndFeel does not work with background images.
 		addWindowListener(new SimplifiedWindowListener(this));
 		setSize(new Dimension(800, 600));
-		menuBar = new CarpVttMenuBar(this);
+		menuBar = new CarpVttMenuBar(this, swingComponentFactory);
 		setJMenuBar(menuBar);
 		JLabel labelBackground = new JLabel(
 			new ImageIcon("/home/ollie/Rollenspiel/DungeonsAndDragons/Material/5e/Cover-Art-Starterset-Transparent-Large.png")
@@ -74,7 +74,7 @@ public class ApplicationFrame
 	public void menuItemSelected(MenuItemIdentifier selectedMenuItem) {
 		if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
-		} else if (selectedMenuItem == MenuItemIdentifier.BATTLE_MAP_OPEN) {
+		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
 			new TokenEditJInternalFrame(binaryFileAccessPort, swingComponentFactory, desktopPane).prepare().setVisible(true);
 		}
 	}
