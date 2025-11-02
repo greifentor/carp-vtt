@@ -31,6 +31,7 @@ class SwingComponentFactoryTest {
 
 	private static final Integer COLUMNS = 42;
 	private static final String LABEL = "label";
+	private static final String RESOURCE_ID = "resource-id";
 	private static final String TEXT = "text";
 	private static final String TOOL_TIP_TEXT = "tool-tip-text";
 
@@ -216,6 +217,34 @@ class SwingComponentFactoryTest {
 		@Test
 		void returnedLayoutManger_hasCorrectVGap() {
 			assertEquals(SwingConstants.VGAP, unitUnderTest.createFlowLayout(ALIGNMENT).getVgap());
+		}
+	}
+
+	@Nested
+	class createLabel_String {
+
+		@Test
+		void returnsANewObject() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertNotNull(unitUnderTest.createLabel(RESOURCE_ID));
+		}
+
+		@Test
+		void returnsANewObject_onEachCall() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertNotSame(unitUnderTest.createLabel(RESOURCE_ID), unitUnderTest.createLabel(RESOURCE_ID));
+		}
+
+		@Test
+		void setsLabelCorrectly() {
+			// Prepare
+			when(resourceManager.getResource(RESOURCE_ID)).thenReturn(LABEL);
+			// Run & Check
+			assertEquals(LABEL, unitUnderTest.createLabel(RESOURCE_ID).getText());
 		}
 	}
 

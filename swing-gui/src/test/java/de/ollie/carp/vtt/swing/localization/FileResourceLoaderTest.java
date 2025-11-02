@@ -53,7 +53,7 @@ class FileResourceLoaderTest {
 			// Run
 			unitUnderTest.loadResources(resourceManager);
 			// Check
-			verify(resourceManager, times(1)).setResource("qya", "a.resource.identifier", "the qya resource");
+			verify(resourceManager, times(1)).setResource("qya", "a.resource.identifier", "the ö qya resource");
 			verify(resourceManager, times(1)).setResource("qya", "another.resource.identifier", "another qya resource");
 		}
 

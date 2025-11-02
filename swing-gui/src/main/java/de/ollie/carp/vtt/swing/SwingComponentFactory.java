@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.Getter;
@@ -63,6 +64,10 @@ public class SwingComponentFactory {
 
 	public FlowLayout createFlowLayout(int alignment) {
 		return new FlowLayout(alignment, SwingConstants.HGAP, SwingConstants.VGAP);
+	}
+
+	public JLabel createLabel(String resourceId) {
+		return new JLabel(resourceManager.getResource(resourceId));
 	}
 
 	public JPanel createPanel() {

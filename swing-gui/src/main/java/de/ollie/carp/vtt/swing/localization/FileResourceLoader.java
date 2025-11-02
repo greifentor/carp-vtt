@@ -3,9 +3,9 @@ package de.ollie.carp.vtt.swing.localization;
 import static de.ollie.baselib.util.Check.ensure;
 
 import jakarta.inject.Named;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Properties;
 import lombok.RequiredArgsConstructor;
 
 @Named
@@ -28,18 +28,10 @@ class FileResourceLoader implements ResourceLoader {
 	}
 
 	private void loadResourcesFromFile(String language, ResourceManager resourceManagerToLoad) {
-		try {
-			Files
-				.readAllLines(Path.of(configuration.getFilePathPattern().replace("%language%", language)))
-				.stream()
-				.filter(line -> !line.isEmpty())
-				.forEach(line ->
-					resourceManagerToLoad.setResource(
-						language,
-						line.substring(0, line.indexOf("=") - 1).trim(),
-						line.substring(line.indexOf("=") + 1).trim()
-					)
-				);
+		try (FileReader fr = new FileReader(configuration.getFilePathPattern().replace("%language%", language))) {
+			Properties p = new Properties();
+			p.load(fr);
+			p.entrySet().forEach(e -> resourceManagerToLoad.setResource(language, "" + e.getKey(), "" + e.getValue()));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}

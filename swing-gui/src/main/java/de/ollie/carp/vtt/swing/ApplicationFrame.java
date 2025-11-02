@@ -5,6 +5,7 @@ import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener.EventType;
 import de.ollie.carp.vtt.swing.component.SimplifiedWindowListener;
+import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import de.ollie.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
@@ -32,17 +33,21 @@ public class ApplicationFrame
 	private BinaryFileAccessPort binaryFileAccessPort;
 
 	@Inject
+	private ResourceManager resourceManager;
+
+	@Inject
 	private SwingComponentFactory swingComponentFactory;
 
 	private JMenuBar menuBar;
 	private JDesktopPane desktopPane;
 
 	public ApplicationFrame() {
-		super("CARP VTT");
+		super();
 	}
 
 	@PostConstruct
 	void postConstruct() {
+		setTitle(resourceManager.getResource("ApplicationFrame.title"));
 		// OLI: NimbusLookAndFeel does not work with background images.
 		addWindowListener(new SimplifiedWindowListener(this));
 		setSize(new Dimension(800, 600));
