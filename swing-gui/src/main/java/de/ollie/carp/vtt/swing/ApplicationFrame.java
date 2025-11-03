@@ -1,18 +1,21 @@
 package de.ollie.carp.vtt.swing;
 
+import de.ollie.carp.vtt.core.service.TokenService;
+import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener.EventType;
 import de.ollie.carp.vtt.swing.component.SimplifiedWindowListener;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
-import de.ollie.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
+import java.util.UUID;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -37,6 +40,9 @@ public class ApplicationFrame
 
 	@Inject
 	private SwingComponentFactory swingComponentFactory;
+
+	@Inject
+	private TokenService tokenService;
 
 	private JMenuBar menuBar;
 	private JDesktopPane desktopPane;
@@ -75,7 +81,25 @@ public class ApplicationFrame
 		if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
-			new TokenEditJInternalFrame(binaryFileAccessPort, swingComponentFactory, desktopPane).prepare().setVisible(true);
+			new TokenEditJInternalFrame(
+				new Token().setId(UUID.randomUUID()),
+				swingComponentFactory,
+				desktopPane,
+				binaryFileAccessPort,
+				new TokenEditJInternalFrame.Observer() {
+					@Override
+					public void deleted() {
+						// NOP
+					}
+
+					@Override
+					public void updated(Token tokenToSave) {
+						tokenService.save(tokenToSave);
+					}
+				}
+			)
+				.prepare()
+				.setVisible(true);
 		}
 	}
 

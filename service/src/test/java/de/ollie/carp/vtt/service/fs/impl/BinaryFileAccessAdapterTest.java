@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import de.ollie.vtt.core.service.port.filesystem.FileReadException;
+import de.ollie.carp.vtt.core.service.port.filesystem.FileReadException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

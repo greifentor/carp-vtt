@@ -2,8 +2,8 @@ package de.ollie.carp.vtt.service.fs.impl;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import de.ollie.vtt.core.service.port.filesystem.BinaryFileAccessPort;
-import de.ollie.vtt.core.service.port.filesystem.FileReadException;
+import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
+import de.ollie.carp.vtt.core.service.port.filesystem.FileReadException;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 

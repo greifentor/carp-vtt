@@ -21,7 +21,7 @@ classes:
             value: false
         type:
           name: String
-      - name: mapImage
+      - name: image
         type:
           name: byte[]
   - name: Token
@@ -46,6 +46,6 @@ classes:
             value: false
         type:
           name: String
-      - name: mapImage
+      - name: image
         type:
           name: byte[]

@@ -1,10 +1,11 @@
 package de.ollie.carp.vtt.swing;
 
+import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel;
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel.ButtonType;
-import de.ollie.carp.vtt.swing.component.UploadComponent;
+import de.ollie.carp.vtt.swing.component.Upload;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
-import de.ollie.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JDesktopPane;
@@ -15,42 +16,40 @@ import javax.swing.border.EmptyBorder;
 
 public class TokenEditJInternalFrame extends JInternalFrame implements EditorButtonPanel.Observer {
 
-	private final BinaryFileAccessPort binaryFileAccessPort;
+	public interface Observer {
+		void deleted();
+		void updated(Token tokenToSave);
+	}
+
+	private final Token objectToEdit;
 	private final SwingComponentFactory swingComponentFactory;
 	private final JDesktopPane desktopPane;
+	private final BinaryFileAccessPort binaryFileAccessPort;
+	private final Observer observer;
 
 	private ResourceManager resourceManager;
+	private JTextField textFieldName;
+	private Upload uploadImage;
 
 	public TokenEditJInternalFrame(
-		BinaryFileAccessPort binaryFileAccessPort,
+		Token objectToEdit,
 		SwingComponentFactory swingComponentFactory,
-		JDesktopPane desktopPane
+		JDesktopPane desktopPane,
+		BinaryFileAccessPort binaryFileAccessPort,
+		Observer observer
 	) {
 		super("", true, true, true, true);
 		this.binaryFileAccessPort = binaryFileAccessPort;
 		this.desktopPane = desktopPane;
+		this.objectToEdit = objectToEdit;
+		this.observer = observer;
 		this.swingComponentFactory = swingComponentFactory;
 		resourceManager = swingComponentFactory.getResourceManager();
 	}
 
 	TokenEditJInternalFrame prepare() {
 		setTitle(resourceManager.getResource("TokenEditJInternalFrame.title"));
-		JPanel panel = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
-		panel.setBorder(
-			new EmptyBorder(SwingConstants.VGAP, SwingConstants.HGAP, SwingConstants.VGAP, SwingConstants.HGAP)
-		);
-		JPanel panelLabels = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
-		panelLabels.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.name.label"));
-		panelLabels.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.content.label"));
-		JPanel panelFields = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
-		panelFields.add(new JTextField(40));
-		panelFields.add(new UploadComponent(binaryFileAccessPort, swingComponentFactory).build());
-		panel.add(panelLabels, BorderLayout.WEST);
-		panel.add(panelFields, BorderLayout.CENTER);
-		JPanel mainLayout = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
-		mainLayout.add(panel, BorderLayout.NORTH);
-		mainLayout.add(new EditorButtonPanel(this, swingComponentFactory).prepare(), BorderLayout.SOUTH);
-		setContentPane(mainLayout);
+		setContentPane(createMainPanel());
 		try {
 			setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {
@@ -62,8 +61,53 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 		return this;
 	}
 
+	JPanel createMainPanel() {
+		JPanel panel = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
+		panel.add(createEditPanel(), BorderLayout.NORTH);
+		panel.add(new EditorButtonPanel(this, swingComponentFactory).prepare(), BorderLayout.SOUTH);
+		return panel;
+	}
+
+	JPanel createEditPanel() {
+		JPanel panel = new JPanel(new BorderLayout(SwingConstants.HGAP, SwingConstants.VGAP));
+		panel.setBorder(
+			new EmptyBorder(SwingConstants.VGAP, SwingConstants.HGAP, SwingConstants.VGAP, SwingConstants.HGAP)
+		);
+		panel.add(createPanelLabels(), BorderLayout.WEST);
+		panel.add(createPanelFields(), BorderLayout.CENTER);
+		return panel;
+	}
+
+	JPanel createPanelLabels() {
+		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
+		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.name.label"));
+		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.content.label"));
+		return panel;
+	}
+
+	JPanel createPanelFields() {
+		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
+		textFieldName = new JTextField(objectToEdit.getName(), 40);
+		uploadImage = new Upload(binaryFileAccessPort, swingComponentFactory, objectToEdit.getImage()).build();
+		panel.add(new JTextField(40));
+		panel.add(uploadImage);
+		return panel;
+	}
+
 	@Override
 	public void buttonPressed(ButtonType buttonTyp) {
-		System.out.println(buttonTyp);
+		if (observer != null) {
+			if (buttonTyp == ButtonType.OK) {
+				observer.updated(copyValueFromField());
+			} else if (buttonTyp == ButtonType.DELETE) {
+				observer.deleted();
+			}
+		}
+	}
+
+	Token copyValueFromField() {
+		objectToEdit.setName(textFieldName.getText());
+		objectToEdit.setImage(uploadImage.getValue());
+		return objectToEdit;
 	}
 }
