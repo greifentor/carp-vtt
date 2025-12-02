@@ -61,6 +61,8 @@
 	<modules>
 		<module>base-lib</module>
 		<module>jpa-persistence</module>
+		<module>legacy-adapter</module>
+		<module>migration</module>
 		<module>service</module>
 		<module>service-interface</module>
 		<module>swing-gui</module>

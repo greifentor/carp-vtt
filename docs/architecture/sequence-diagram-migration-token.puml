@@ -1,0 +1,30 @@
+@startuml
+
+activate Application
+Application -> MigrationJob : migrateTokens()
+activate MigrationJob
+
+MigrationJob -> LegacyTokenService : findAllTokensPaginated()
+activate LegacyTokenService
+LegacyTokenService --> MigrationJob : page
+deactivate LegacyTokenService
+loop while page available
+    loop while token available
+        MigrationJob -> LegacyTokenMapper : map(LegacyToken)
+        activate LegacyTokenMapper
+        LegacyTokenMapper --> MigrationJob : token
+        deactivate Legac    yTokenMapper
+        MigrationJob -> TokenService : save(token)
+        activate TokenService
+        TokenService --> MigrationJob : token
+        deactivate TokenService
+    end
+    MigrationJob -> LegacyTokenService : findAllTokensPaginated()
+    activate LegacyTokenService
+    LegacyTokenService --> MigrationJob : page
+    deactivate LegacyTokenService
+end
+MigrationJob --> Application
+deactivate MigrationJob
+
+@enduml

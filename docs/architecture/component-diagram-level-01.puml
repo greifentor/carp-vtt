@@ -1,0 +1,39 @@
+@startuml
+
+
+actor GAMEMASTER as "User\n(GM)"
+actor PLAYER as "User\n(Player)"
+
+component Desktop {
+
+    component DT as "CARP-VTT\n(Desktop)"
+
+    database DBLC as "Database\n(Local)"
+
+    DT -R-> DBLC : "JDBC\n(r/w)"
+
+}
+
+interface WSREST as "REST"
+
+component Web {
+
+    component WGUI as "CARP-VTT\n(Web-GUI)"
+    component WS as "CARP-VTT\n(Web-Service)"
+
+    database DBWB as "Database\n(Web)"
+
+    WS -D-> DBWB
+    WGUI -U-> DBWB
+
+    WS -U- WSREST
+
+}
+
+GAMEMASTER --> DT : GUI
+PLAYER -L-> WGUI : GUI
+
+DT -D-( WSREST : "HTTP"
+
+
+@enduml
