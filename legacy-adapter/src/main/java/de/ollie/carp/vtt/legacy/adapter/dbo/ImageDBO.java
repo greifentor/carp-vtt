@@ -42,6 +42,10 @@ public class ImageDBO {
 	@Column(name = "IMAGE_FORMAT")
 	private ImageFormatDBO imageFormat;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "IMAGE_TYPE")
+	private ImageTypeDBO imageType;
+
 	@Column(name = "NAME", nullable = false)
 	private String name;
 

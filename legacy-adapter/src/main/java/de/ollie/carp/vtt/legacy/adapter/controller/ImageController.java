@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.legacy.adapter.controller;
 
 import de.ollie.carp.vtt.legacy.adapter.dbo.ImageDBO;
+import de.ollie.carp.vtt.legacy.adapter.dbo.ImageTokenDBO;
 import de.ollie.carp.vtt.legacy.adapter.repository.ImageDBORepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,27 @@ class ImageController {
 	private final ImageDBORepository repository;
 
 	@GetMapping
-	public List<ImageDBO> findAllImages(int pageNumber, int pageSize) {
-		return repository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(Direction.ASC, "id"))).getContent();
+	public List<ImageDTO> findAllImages(int pageNumber, int pageSize) {
+		return repository
+			.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(Direction.ASC, "id")))
+			.getContent()
+			.stream()
+			.map(this::map)
+			.toList();
+	}
+
+	private ImageDTO map(ImageDBO dbo) {
+		ImageDTO dto = new ImageDTO()
+			.setGlobalId(dbo.getGlobalId())
+			.setHeight(dbo.getHeight())
+			.setImage(dbo.getImage())
+			.setImageFormat(dbo.getImageFormat())
+			.setImageType(dbo.getImageType())
+			.setName(dbo.getName())
+			.setWidth(dbo.getWidth());
+		if (dbo instanceof ImageTokenDBO it) {
+			dto.setPlaceMode(it.getPlaceMode()).setTokenTyp(it.getTokenTyp());
+		}
+		return dto;
 	}
 }

@@ -26,7 +26,6 @@
 			<groupId>de.ollie</groupId>
 			<artifactId>carp-vtt-service-interface</artifactId>
 			<version>0.0.1</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.ollie</groupId>
