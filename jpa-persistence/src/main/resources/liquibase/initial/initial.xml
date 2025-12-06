@@ -14,5 +14,19 @@
         </createTable>
         <addPrimaryKey columnNames="ID" tableName="TOKEN"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Added-Table-MAP" runInTransaction="true" runOnChange="true">
+        <createTable tableName="MAP">
+            <column name="IMAGE" type="LONGVARBINARY">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="MAP"/>
+    </changeSet>
 </databaseChangeLog>
 
