@@ -1,6 +1,6 @@
 package de.ollie.carp.vtt.persistence.jpa.repository;
 
-import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.MapDbo;
 import java.util.UUID;
 import lombok.Generated;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +13,4 @@ import org.springframework.stereotype.Repository;
  */
 @Generated
 @Repository
-public interface TokenDboRepository extends JpaRepository<TokenDbo, UUID> {}
+public interface MapDboRepository extends JpaRepository<MapDbo, UUID> {}
