@@ -1,0 +1,72 @@
+package ${PackageName};
+
+import ${Properties.get("core-model-package")}.${ClassName};
+#foreach($Attribute in $Attributes)
+#if (${Attribute.isReference()})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
+#if (${Attribute.isTypeEnum()})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
+#end
+import ${Properties.get("core-port-persistence-package")}.${ClassName}PersistencePort;
+import ${Properties.get("jpa-mapper-package")}.${ClassName}DboMapper;
+import ${Properties.get("jpa-repository-package")}.${ClassName}DboRepository;
+import jakarta.inject.Named;
+import java.util.List;
+import java.util.Optional;
+import lombok.Generated;
+import lombok.RequiredArgsConstructor;
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+@RequiredArgsConstructor
+public class ${ClassName}JpaPersistenceAdapter implements ${ClassName}PersistencePort {
+
+	private final ${ClassName}DboMapper mapper;
+	private final ${ClassName}DboRepository repository;
+
+	@Override
+	public ${ClassName} create(String name, byte[] image) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteById(UUID id) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Optional<${ClassName}> findById(UUID id) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findable")})
+
+	@Override
+	public Optional<${ClassName}> findByIdOr${Attribute.getNameCamelCase()}Particle(String ${Attribute.getName()}) {
+		return Optional.empty();
+	}
+#end
+
+	@Override
+	public List<${ClassName}> list() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ${ClassName} update(${ClassName} toSave) {
+		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
+	}
+}

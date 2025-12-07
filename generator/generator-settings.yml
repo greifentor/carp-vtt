@@ -65,11 +65,11 @@ generators:
     properties:
       - name: target-path
         value: jpa-persistence/src/main/java
-#  - type: CLASS
-#    package: de.ollie.carp.vtt.persistence.jpa
-#    target-file-name: ${UnitName}PersistenceJpaAdapter
-#    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-#    template: templates/persistence/jpa/PersistenceAdapter.vc
-#    properties:
-#      - name: target-path
-#        value: jpa-persistence/src/main/java
+  - type: CLASS
+    package: de.ollie.carp.vtt.persistence.jpa
+    target-file-name: ${UnitName}JpaPersistenceAdapter
+    path: generator
+    template: templates/persistence/jpa/JpaPersistenceAdapter.vc
+    properties:
+      - name: target-path
+        value: jpa-persistence/src/main/java

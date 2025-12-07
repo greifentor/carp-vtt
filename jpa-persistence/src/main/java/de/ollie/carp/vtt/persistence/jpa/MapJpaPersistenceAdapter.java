@@ -8,11 +8,18 @@ import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
 @Named
 @RequiredArgsConstructor
-class MapJpaPersistenceAdapter implements MapPersistencePort {
+public class MapJpaPersistenceAdapter implements MapPersistencePort {
 
 	private final MapDboMapper mapper;
 	private final MapDboRepository repository;
@@ -26,7 +33,6 @@ class MapJpaPersistenceAdapter implements MapPersistencePort {
 	@Override
 	public void deleteById(UUID id) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
