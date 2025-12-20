@@ -13,10 +13,13 @@ public class CarpVttMenuBar extends JMenuBar {
 	static final String RES_ID_MENU_EDIT_ITEM_TOKEN = "MainMenuBar.menu.edit.item.tokens.label";
 	static final String RES_ID_MENU_FILE = "MainMenuBar.menu.file.label";
 	static final String RES_ID_MENU_FILE_ITEM_QUIT = "MainMenuBar.menu.file.item.quit.label";
+	static final String RES_ID_MENU_MAP = "MainMenuBar.menu.map.label";
+	static final String RES_ID_MENU_MAP_OPEN = "MainMenuBar.menu.map.open.label";
 
 	public enum MenuItemIdentifier {
 		EDIT_TOKEN,
 		FILE_QUIT,
+		MAP_OPEN,
 	}
 
 	public interface Observer {
@@ -25,8 +28,10 @@ public class CarpVttMenuBar extends JMenuBar {
 
 	private JMenu menuEdit;
 	private JMenu menuFile;
+	private JMenu menuMap;
 	private JMenuItem menuItemEditTokens;
 	private JMenuItem menuItemFileQuit;
+	private JMenuItem menuItemMapOpen;
 
 	public CarpVttMenuBar(Observer observer, SwingComponentFactory swingComponentFactory) {
 		super();
@@ -42,5 +47,10 @@ public class CarpVttMenuBar extends JMenuBar {
 		menuItemEditTokens.addActionListener(e -> observer.menuItemSelected(MenuItemIdentifier.EDIT_TOKEN));
 		menuEdit.add(menuItemEditTokens);
 		add(menuEdit);
+		menuMap = swingComponentFactory.createMenu(RES_ID_MENU_MAP);
+		menuItemMapOpen = swingComponentFactory.createMenuItem(RES_ID_MENU_MAP_OPEN);
+		menuItemMapOpen.addActionListener(e -> observer.menuItemSelected(MenuItemIdentifier.MAP_OPEN));
+		menuMap.add(menuItemMapOpen);
+		add(menuMap);
 	}
 }

@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.swing;
 
+import de.ollie.carp.vtt.core.service.MapService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
@@ -34,6 +35,9 @@ public class ApplicationFrame
 
 	@Inject
 	private BinaryFileAccessPort binaryFileAccessPort;
+
+	@Inject
+	private MapService mapService;
 
 	@Inject
 	private ResourceManager resourceManager;
@@ -100,6 +104,8 @@ public class ApplicationFrame
 			)
 				.prepare()
 				.setVisible(true);
+		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
+			new MapJInternalFrame(desktopPane, mapService).prepare().setVisible(true);
 		}
 	}
 

@@ -43,8 +43,7 @@ public class MapJpaPersistenceAdapter implements MapPersistencePort {
 
 	@Override
 	public List<Map> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAll().stream().map(mapper::toModel).toList();
 	}
 
 	@Override

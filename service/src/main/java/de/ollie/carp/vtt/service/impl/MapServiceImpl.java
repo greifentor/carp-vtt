@@ -6,6 +6,7 @@ import de.ollie.carp.vtt.core.service.MapService;
 import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.port.persistence.MapPersistencePort;
 import jakarta.inject.Named;
+import java.util.List;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,11 @@ import lombok.RequiredArgsConstructor;
 class MapServiceImpl implements MapService {
 
 	private final MapPersistencePort persistencePort;
+
+	@Override
+	public List<Map> findAll() {
+		return persistencePort.list();
+	}
 
 	@Override
 	public Map save(Map toSave) {
