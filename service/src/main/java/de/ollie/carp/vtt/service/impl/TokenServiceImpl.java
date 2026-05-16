@@ -6,6 +6,7 @@ import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenPersistencePort;
 import jakarta.inject.Named;
+import java.util.List;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,11 @@ import lombok.RequiredArgsConstructor;
 class TokenServiceImpl implements TokenService {
 
 	private final TokenPersistencePort persistencePort;
+
+	@Override
+	public List<Token> findAll() {
+		return persistencePort.list();
+	}
 
 	@Override
 	public Token save(Token toSave) {

@@ -105,7 +105,7 @@ public class ApplicationFrame
 				.prepare()
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
-			new MapJInternalFrame(desktopPane, mapService).prepare().setVisible(true);
+			new MapJInternalFrame(desktopPane, mapService, tokenService).prepare().setVisible(true);
 		}
 	}
 

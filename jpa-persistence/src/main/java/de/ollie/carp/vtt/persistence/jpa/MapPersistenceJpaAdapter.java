@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-public class MapJpaPersistenceAdapter implements MapPersistencePort {
+public class MapPersistenceJpaAdapter implements MapPersistencePort {
 
 	private final MapDboMapper mapper;
 	private final MapDboRepository repository;
@@ -43,7 +43,7 @@ public class MapJpaPersistenceAdapter implements MapPersistencePort {
 
 	@Override
 	public List<Map> list() {
-		return repository.findAll().stream().map(mapper::toModel).toList();
+		return mapper.toModels(repository.findAll());
 	}
 
 	@Override

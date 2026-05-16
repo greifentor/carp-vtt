@@ -21,13 +21,13 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 		void updated(Token tokenToSave);
 	}
 
-	private final Token objectToEdit;
-	private final SwingComponentFactory swingComponentFactory;
+	private final transient Token objectToEdit;
+	private final transient SwingComponentFactory swingComponentFactory;
 	private final JDesktopPane desktopPane;
-	private final BinaryFileAccessPort binaryFileAccessPort;
-	private final Observer observer;
+	private final transient BinaryFileAccessPort binaryFileAccessPort;
+	private final transient Observer observer;
 
-	private ResourceManager resourceManager;
+	private transient ResourceManager resourceManager;
 	private JTextField textFieldName;
 	private Upload uploadImage;
 

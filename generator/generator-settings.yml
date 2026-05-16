@@ -17,8 +17,6 @@ properties:
     value: de.ollie.carp.vtt.persistence.jpa.mapper
   - name: jpa-repository-package
     value: de.ollie.carp.vtt.persistence.jpa.repository
-  - name: shell-mapper-package
-    value: de.ollie.carp.vtt.shell.mapper
   - name: swing-gui-package
     value: de.ollie.carp.vtt.gui.swing
 generators:
@@ -32,6 +30,13 @@ generators:
         value: service-interface/src/main/java
       - name: suppress-project-type-imports
         value: true
+  - type: ENUM
+    package: de.ollie.carp.vtt.core.service.model
+    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+    template: templates/core/Enum.vc
+    properties:
+      - name: target-path
+        value: service-interface/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.core.service.port.persistence
     target-file-name: ${UnitName}PersistencePort
@@ -40,6 +45,22 @@ generators:
     properties:
       - name: target-path
         value: service-interface/src/main/java
+#  - type: CLASS
+#    package: de.ollie.carp.vtt.core.service
+#    target-file-name: ${UnitName}Service
+#    path: generator
+#    template: templates/core/Service.vc
+#    properties:
+#      - name: target-path
+#        value: service-interface/src/main/java
+#  - type: CLASS
+#    package: de.ollie.carp.vtt.core.service.impl
+#    target-file-name: ${UnitName}ServiceImpl
+#    path: generator
+#    template: templates/core/ServiceImpl.vc
+#    properties:
+#      - name: target-path
+#        value: service/src/main/java
 # --- JPA ---
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.dbo
@@ -49,27 +70,72 @@ generators:
     properties:
       - name: target-path
         value: jpa-persistence/src/main/java
+  - type: ENUM
+    package: de.ollie.carp.vtt.persistence.jpa.dbo
+    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+    target-file-name: ${UnitName}Dbo
+    template: templates/persistence/jpa/EnumDbo.vc
+    properties:
+      - name: target-path
+        value: jpa-persistence/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.mapper
-    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+    path: generator
     target-file-name: ${UnitName}DboMapper
-    template: templates/persistence/jpa/DboMapper.vc
+    template: templates/jpa/DboMapper.vc
     properties:
       - name: target-path
         value: jpa-persistence/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.repository
     target-file-name: ${UnitName}DboRepository
-    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-    template: templates/persistence/jpa/DboRepository.vc
+    path: generator
+    template: templates/jpa/DboRepository.vc
     properties:
       - name: target-path
         value: jpa-persistence/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa
-    target-file-name: ${UnitName}JpaPersistenceAdapter
+    target-file-name: ${UnitName}PersistenceJpaAdapter
     path: generator
-    template: templates/persistence/jpa/JpaPersistenceAdapter.vc
+    template: templates/jpa/PersistenceAdapter.vc
     properties:
       - name: target-path
         value: jpa-persistence/src/main/java
+# --- Swing-GUI ---
+#  - type: CLASS
+#    generate-when: classModel Load gui HasProperty
+#    package: de.ollie.carp.vtt.gui.swing.select.${UnitNameLowerCase}
+#    target-file-name: ${UnitName}SelectJInternalFrame
+#    path: generator
+#    template: templates/swing-gui/SelectJInternalFrame.vc
+#    properties:
+#      - name: target-path
+#        value: swing-gui/src/main/java
+#  - type: CLASS
+#    generate-when: classModel Load gui HasProperty
+#    package: de.ollie.carp.vtt.gui.swing.select.${UnitNameLowerCase}
+#    target-file-name: ${UnitName}SelectJPanel
+#    path: generator
+#    template: templates/swing-gui/SelectJPanel.vc
+#    properties:
+#      - name: target-path
+#        value: swing-gui/src/main/java
+#  - type: CLASS
+#    generate-when: classModel Load gui HasProperty
+#    package: de.ollie.carp.vtt.gui.swing.edit.${UnitNameLowerCase}
+#    target-file-name: ${UnitName}EditJInternalFrame
+#    path: generator
+#    template: templates/swing-gui/EditJInternalFrame.vc
+#    properties:
+#      - name: target-path
+#        value: swing-gui/src/main/java
+#  - type: CLASS
+#    generate-when: classModel Load gui HasProperty
+#    package: de.ollie.carp.vtt.gui.swing.edit.${UnitNameLowerCase}
+#    target-file-name: ${UnitName}EditJPanel
+#    path: generator
+#    template: templates/swing-gui/EditJPanel.vc
+#    properties:
+#      - name: target-path
+#        value: swing-gui/src/main/java

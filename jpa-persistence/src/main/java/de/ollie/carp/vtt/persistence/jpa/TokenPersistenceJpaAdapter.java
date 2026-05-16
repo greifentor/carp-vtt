@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-public class TokenJpaPersistenceAdapter implements TokenPersistencePort {
+public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
 
 	private final TokenDboMapper mapper;
 	private final TokenDboRepository repository;
@@ -43,8 +43,7 @@ public class TokenJpaPersistenceAdapter implements TokenPersistencePort {
 
 	@Override
 	public List<Token> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.toModels(repository.findAll());
 	}
 
 	@Override

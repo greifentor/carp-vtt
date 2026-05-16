@@ -30,7 +30,7 @@ import ${Import};
 @Generated
 @Named
 @RequiredArgsConstructor
-public class ${ClassName}JpaPersistenceAdapter implements ${ClassName}PersistencePort {
+public class ${ClassName}PersistenceJpaAdapter implements ${ClassName}PersistencePort {
 
 	private final ${ClassName}DboMapper mapper;
 	private final ${ClassName}DboRepository repository;
@@ -61,8 +61,7 @@ public class ${ClassName}JpaPersistenceAdapter implements ${ClassName}Persistenc
 
 	@Override
 	public List<${ClassName}> list() {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.toModels(repository.findAll());
 	}
 
 	@Override

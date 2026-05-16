@@ -49,3 +49,39 @@ classes:
       - name: image
         type:
           name: byte[]
+  - name: TokenTyp
+    properties:
+      - name: order
+        value: name
+      - name: gui
+        value: true
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+          - name: findable
+            value: true
+          - name: editor-position
+            value: 1
+        type:
+          name: String
+      - name: token
+        properties:
+          - name: nullable
+            value: false
+          - name: editor-position
+            value: 2
+        type:
+          name: byte[]
