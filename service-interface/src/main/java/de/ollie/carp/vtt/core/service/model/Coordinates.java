@@ -1,6 +1,6 @@
 package de.ollie.carp.vtt.core.service.model;
 
-import java.util.UUID;
+import java.math.BigDecimal;
 import lombok.Data;
 import lombok.Generated;
 import lombok.experimental.Accessors;
@@ -13,10 +13,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-public class Token {
+public class Coordinates {
 
-	private UUID id;
-	private String name;
-	private byte[] image;
-	private TokenSize tokenSize;
+	private BigDecimal fieldX;
+	private BigDecimal fieldY;
 }

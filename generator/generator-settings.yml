@@ -32,6 +32,7 @@ generators:
         value: true
   - type: ENUM
     package: de.ollie.carp.vtt.core.service.model
+    suppress-when: classModel Load suppress-service HasProperty
     resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
     template: templates/core/Enum.vc
     properties:
@@ -39,6 +40,7 @@ generators:
         value: service-interface/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.core.service.port.persistence
+    suppress-when: classModel Load suppress-service HasProperty
     target-file-name: ${UnitName}PersistencePort
     path: generator
     template: templates/core/PersistencePort.vc
@@ -64,6 +66,7 @@ generators:
 # --- JPA ---
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.dbo
+    suppress-when: classModel Load suppress-persistence HasProperty
     resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
     target-file-name: ${UnitName}Dbo
     template: templates/persistence/jpa/Dbo.vc
@@ -72,6 +75,7 @@ generators:
         value: jpa-persistence/src/main/java
   - type: ENUM
     package: de.ollie.carp.vtt.persistence.jpa.dbo
+    suppress-when: classModel Load suppress-persistence HasProperty
     resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
     target-file-name: ${UnitName}Dbo
     template: templates/persistence/jpa/EnumDbo.vc
@@ -80,6 +84,7 @@ generators:
         value: jpa-persistence/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.mapper
+    suppress-when: classModel Load suppress-persistence HasProperty
     path: generator
     target-file-name: ${UnitName}DboMapper
     template: templates/jpa/DboMapper.vc
@@ -88,6 +93,7 @@ generators:
         value: jpa-persistence/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.repository
+    suppress-when: classModel Load suppress-persistence HasProperty
     target-file-name: ${UnitName}DboRepository
     path: generator
     template: templates/jpa/DboRepository.vc
@@ -96,6 +102,7 @@ generators:
         value: jpa-persistence/src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa
+    suppress-when: classModel Load suppress-persistence HasProperty
     target-file-name: ${UnitName}PersistenceJpaAdapter
     path: generator
     template: templates/jpa/PersistenceAdapter.vc

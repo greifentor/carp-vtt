@@ -28,5 +28,12 @@
         </createTable>
         <addPrimaryKey columnNames="ID" tableName="MAP"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Added-Field-TOKEN_SIZE-to-Table-TOKEN" runInTransaction="true" runOnChange="true">
+        <addColumn tableName="TOKEN">
+            <column name="TOKEN_SIZE" type="VARCHAR(20)" defaultValue="MEDIUM">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 

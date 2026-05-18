@@ -24,6 +24,33 @@ classes:
       - name: image
         type:
           name: byte[]
+  - name: Coordinates
+    properties:
+      - name: suppress-persistence
+        value: true
+      - name: suppress-service
+        value: true
+    attributes:
+      - name: fieldX
+        properties:
+          - name: id
+            value: true
+          - name: nullable
+            value: false
+        type:
+          name: BigDecimal
+          properties:
+            - name: import
+              value: java.math.BigDecimal
+      - name: fieldY
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: BigDecimal
+          properties:
+            - name: import
+              value: java.math.BigDecimal
   - name: Token
     properties:
       - name: order
@@ -49,6 +76,13 @@ classes:
       - name: image
         type:
           name: byte[]
+      - name: tokenSize
+        enum: true
+        type:
+          name: TokenSize
+          properties:
+            - name: project-type
+              value: true
   - name: TokenTyp
     properties:
       - name: order
@@ -85,3 +119,12 @@ classes:
             value: 2
         type:
           name: byte[]
+enums:
+  - name: TokenSize
+    identifiers:
+      - TINY
+      - SMALL
+      - MEDIUM
+      - LARGE
+      - HUGE
+      - GARGANTUAN

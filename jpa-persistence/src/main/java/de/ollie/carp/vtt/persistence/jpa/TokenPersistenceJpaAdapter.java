@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenPersistencePort;
 import de.ollie.carp.vtt.persistence.jpa.mapper.TokenDboMapper;
 import de.ollie.carp.vtt.persistence.jpa.repository.TokenDboRepository;
@@ -25,7 +26,7 @@ public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
 	private final TokenDboRepository repository;
 
 	@Override
-	public Token create(String name, byte[] image) {
+	public Token create(String name, byte[] image, TokenSize tokenSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}

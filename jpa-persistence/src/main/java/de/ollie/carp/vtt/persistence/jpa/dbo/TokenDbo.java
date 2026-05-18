@@ -2,6 +2,8 @@ package de.ollie.carp.vtt.persistence.jpa.dbo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -30,4 +32,8 @@ public class TokenDbo {
 
 	@Column(name = "IMAGE", nullable = true)
 	private byte[] image;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "TOKEN_SIZE", nullable = true)
+	private TokenSizeDbo tokenSize;
 }

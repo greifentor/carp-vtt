@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.core.service.port.persistence;
 
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import lombok.Generated;
 @Generated
 @Named
 public interface TokenPersistencePort {
-	Token create(String name, byte[] image);
+	Token create(String name, byte[] image, TokenSize tokenSize);
 
 	void deleteById(UUID id);
 

@@ -5,6 +5,7 @@ import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
 import de.ollie.carp.vtt.core.service.MapService;
 import de.ollie.carp.vtt.core.service.TokenService;
+import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.swing.component.TokenSelectionDialog;
@@ -12,30 +13,25 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @RequiredArgsConstructor
-public class MapJInternalFrame extends JInternalFrame implements ActionListener, ItemListener, MouseListener {
+public class MapJInternalFrame extends JInternalFrame implements ActionListener, MapPanel.Observer {
 
 	private final JDesktopPane desktopPane;
 	private final transient MapService mapService;
@@ -43,8 +39,10 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 
 	private JButton buttonAddIcon = new JButton("+");
 	private JComboBox<Map> comboBoxMaps;
-	private JLabel labelImage;
 	private JPanel panelImage;
+	private MapPanel mapPanel;
+	private Token selectedToken;
+	private java.util.Map<Token, Coordinates> tokens = new HashMap<>();
 
 	public MapJInternalFrame prepare() {
 		desktopPane.add(this);
@@ -54,7 +52,6 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 		setResizable(true);
 		setBounds(50, 50, 640, 480);
 		setContentPane(createMainPanel());
-		labelImage = new JLabel();
 		pack();
 		return this;
 	}
@@ -64,9 +61,7 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 		comboBoxMaps = createMapsComboBox();
 		comboBoxMaps.setRenderer(new MapListCellRenderer());
 		comboBoxMaps.addActionListener(this);
-		comboBoxMaps.addItemListener(this);
 		panelImage = new JPanel(new BorderLayout(HGAP, VGAP));
-		panelImage.addMouseListener(this);
 		JToolBar toolbar = new JToolBar(JToolBar.VERTICAL);
 		toolbar.setFloatable(false);
 		toolbar.add(buttonAddIcon);
@@ -84,60 +79,31 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonAddIcon) {
-			Token token = new TokenSelectionDialog(null, tokenService.findAll()).getSelectedToken();
-			if (token != null) {
-				System.out.println(token.getName());
-			}
+			selectedToken = new TokenSelectionDialog(null, tokenService.findAll()).getSelectedToken();
 		} else if (e.getSource() == comboBoxMaps) {
 			panelImage.removeAll();
-			labelImage.removeMouseListener(this);
 			try {
 				Image image = ImageIO.read(new ByteArrayInputStream((((Map) comboBoxMaps.getSelectedItem()).getImage())));
 				ImageIcon imageIcon = new ImageIcon(image);
-				labelImage.setIcon(imageIcon);
-				labelImage.addMouseListener(this);
-				panelImage.add(new JScrollPane(labelImage), BorderLayout.CENTER);
+				mapPanel = new MapPanel(imageIcon, tokens, this);
+				mapPanel.addMouseListener(
+					new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							if (selectedToken != null) {
+								tokens.put(selectedToken, getFieldCoordinates(e.getX(), e.getY()));
+								mapPanel.updateTokens(tokens);
+								selectedToken = null;
+							}
+						}
+					}
+				);
+				panelImage.add(new JScrollPane(mapPanel), BorderLayout.CENTER);
 				setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
-				panelImage.revalidate();
-				panelImage.repaint();
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
 		}
-	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		if (e.getSource() == comboBoxMaps) {
-			panelImage.removeAll();
-			labelImage.removeMouseListener(this);
-			try {
-				Image image = ImageIO.read(new ByteArrayInputStream((((Map) comboBoxMaps.getSelectedItem()).getImage())));
-				ImageIcon imageIcon = new ImageIcon(image);
-				labelImage.setIcon(imageIcon);
-				labelImage.addMouseListener(this);
-				panelImage.add(new JScrollPane(labelImage), BorderLayout.CENTER);
-				setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
-				panelImage.revalidate();
-				panelImage.repaint();
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println(getFieldCoordinates(e.getX(), e.getY()));
-	}
-
-	@AllArgsConstructor
-	@Getter
-	@ToString
-	private static class Coordinates {
-
-		private BigDecimal fieldX;
-		private BigDecimal fieldY;
 	}
 
 	private static final int OFFSET_IN_PIXELS = 25;
@@ -146,30 +112,20 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 	public Coordinates getFieldCoordinates(int x, int y) {
 		String fieldX = ((x - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
 		String fieldY = ((y - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		return new Coordinates(new BigDecimal(fieldX), new BigDecimal(fieldY));
+		return new Coordinates().setFieldX(new BigDecimal(fieldX)).setFieldY(new BigDecimal(fieldY));
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+	public void tokenHit(Token token, Coordinates coordinates) {
+		if (token != null) {
+			if (token == mapPanel.getSelectedToken()) {
+				mapPanel.setSelectedToken(null);
+			} else {
+				mapPanel.setSelectedToken(token);
+			}
+		} else if (mapPanel.getSelectedToken() != null) {
+			tokens.put(mapPanel.getSelectedToken(), coordinates);
+			mapPanel.updateTokens(tokens);
+		}
 	}
 }
