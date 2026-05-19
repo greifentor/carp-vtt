@@ -14,11 +14,13 @@ import org.springframework.web.client.RestTemplate;
 public class ImageRestClient {
 
 	private final RestTemplate restTemplate;
+	private final MigratorClientConfiguration configuration;
 
-	private static final String BASE_URL = "http://localhost:8080/api/legacy/images";
+	private static final String BASE_URL = "http://localhost:{port}/api/legacy/images";
 
 	public List<ImageDTO> findAllImages(int pageNumber, int pageSize) {
-		String url = BASE_URL + "?pageNumber={pageNumber}&pageSize={pageSize}";
+		String url =
+			BASE_URL.replace("{port}", "" + configuration.getPort()) + "?pageNumber={pageNumber}&pageSize={pageSize}";
 		ResponseEntity<List<ImageDTO>> response = restTemplate.exchange(
 			url,
 			HttpMethod.GET,

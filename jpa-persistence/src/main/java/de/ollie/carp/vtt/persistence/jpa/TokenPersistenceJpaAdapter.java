@@ -49,6 +49,7 @@ public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
 
 	@Override
 	public Token update(Token toSave) {
+		System.out.println(toSave);
 		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
 	}
 }

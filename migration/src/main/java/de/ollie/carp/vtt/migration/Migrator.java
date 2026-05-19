@@ -4,6 +4,7 @@ import de.ollie.carp.vtt.core.service.MapService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.migration.dto.ImageDTO;
 import de.ollie.carp.vtt.migration.dto.ImageTypeDTO;
 import de.ollie.carp.vtt.migration.dto.TokenTypDTO;
@@ -57,7 +58,11 @@ class Migrator {
 	}
 
 	private Token toToken(ImageDTO image) {
-		return new Token().setId(UUID.fromString(image.getGlobalId())).setImage(image.getImage()).setName(image.getName());
+		return new Token()
+			.setId(UUID.fromString(image.getGlobalId()))
+			.setImage(image.getImage())
+			.setName(image.getName())
+			.setTokenSize(TokenSize.MEDIUM);
 	}
 
 	private Map toMap(ImageDTO image) {
