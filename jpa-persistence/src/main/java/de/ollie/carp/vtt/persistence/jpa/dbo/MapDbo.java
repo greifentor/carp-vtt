@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -29,5 +30,6 @@ public class MapDbo {
 	private String name;
 
 	@Column(name = "IMAGE", nullable = true)
+	@ToString.Exclude
 	private byte[] image;
 }

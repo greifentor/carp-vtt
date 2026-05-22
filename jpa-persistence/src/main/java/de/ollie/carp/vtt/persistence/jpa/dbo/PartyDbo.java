@@ -2,14 +2,11 @@ package de.ollie.carp.vtt.persistence.jpa.dbo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -20,9 +17,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-@Entity(name = "TokenDbo")
-@Table(name = "TOKEN")
-public class TokenDbo {
+@Entity(name = "PartyDbo")
+@Table(name = "PARTY")
+public class PartyDbo {
 
 	@Id
 	@Column(name = "ID", nullable = false)
@@ -30,12 +27,4 @@ public class TokenDbo {
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
-
-	@Column(name = "IMAGE", nullable = true)
-	@ToString.Exclude
-	private byte[] image;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "TOKEN_SIZE", nullable = true)
-	private TokenSizeDbo tokenSize;
 }

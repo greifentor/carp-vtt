@@ -4,10 +4,16 @@ import static de.ollie.carp.vtt.swing.SwingConstants.HGAP;
 import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
 import de.ollie.carp.vtt.core.service.MapService;
+import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Map;
+import de.ollie.carp.vtt.core.service.model.Party;
+import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
+import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
+import de.ollie.carp.vtt.swing.TokenMap.MapToken;
 import de.ollie.carp.vtt.swing.component.TokenSelectionDialog;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -18,7 +24,6 @@ import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,16 +38,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MapJInternalFrame extends JInternalFrame implements ActionListener, MapPanel.Observer {
 
+	private static final Party DUMMY_PARTY = new Party();
+	private static final Scenario DUMMY_SCENARIO = new Scenario();
+
 	private final JDesktopPane desktopPane;
 	private final transient MapService mapService;
+	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
+	private final transient TokenWebPort tokenWebPort;
 
 	private JButton buttonAddIcon = new JButton("+");
 	private JComboBox<Map> comboBoxMaps;
 	private JPanel panelImage;
 	private MapPanel mapPanel;
 	private Token selectedToken;
-	private java.util.Map<Token, Coordinates> tokens = new HashMap<>();
+	private TokenMap tokens = new TokenMap();
 
 	public MapJInternalFrame prepare() {
 		desktopPane.add(this);
@@ -91,8 +101,10 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							if (selectedToken != null) {
-								tokens.put(selectedToken, getFieldCoordinates(e.getX(), e.getY()));
-								mapPanel.updateTokens(tokens);
+								MapToken newMapToken = new MapToken(selectedToken, tokens.getNextCounterFor(selectedToken));
+								System.out.println(newMapToken);
+								mapPanel.setSelectedToken(newMapToken);
+								updatePosition(getFieldCoordinates(e.getX(), e.getY()));
 								selectedToken = null;
 							}
 						}
@@ -106,6 +118,20 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 		}
 	}
 
+	private void updatePosition(Coordinates coordinates) {
+		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
+			mapPanel.getSelectedToken().token(),
+			(Map) comboBoxMaps.getSelectedItem(),
+			coordinates,
+			DUMMY_PARTY,
+			DUMMY_SCENARIO
+		);
+		tokenPositionService.updateTokenPosition(event);
+		tokenWebPort.pushTokenPositionUpdate(event);
+		tokens.put(mapPanel.getSelectedToken(), coordinates);
+		mapPanel.updateTokens(tokens);
+	}
+
 	private static final int OFFSET_IN_PIXELS = 25;
 	private static final int FIELD_SIZE_IN_PIXELS = 50;
 
@@ -116,16 +142,15 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 	}
 
 	@Override
-	public void tokenHit(Token token, Coordinates coordinates) {
-		if (token != null) {
-			if (token == mapPanel.getSelectedToken()) {
+	public void tokenHit(MapToken mapToken, Coordinates coordinates) {
+		if (mapToken != null) {
+			if (mapToken == mapPanel.getSelectedToken()) {
 				mapPanel.setSelectedToken(null);
 			} else {
-				mapPanel.setSelectedToken(token);
+				mapPanel.setSelectedToken(mapToken);
 			}
 		} else if (mapPanel.getSelectedToken() != null) {
-			tokens.put(mapPanel.getSelectedToken(), coordinates);
-			mapPanel.updateTokens(tokens);
+			updatePosition(coordinates);
 		}
 	}
 }

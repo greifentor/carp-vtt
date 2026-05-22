@@ -35,5 +35,27 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="dm-comp" id="Add-Table-PARTY" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <createTable tableName="PARTY">
+            <column name="ID" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="PARTY"/>
+    </changeSet>
+    <changeSet author="dm-comp" id="Add-Table-SCENARIO" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <createTable tableName="SCENARIO">
+            <column name="ID" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="SCENARIO"/>
+    </changeSet>
 </databaseChangeLog>
 

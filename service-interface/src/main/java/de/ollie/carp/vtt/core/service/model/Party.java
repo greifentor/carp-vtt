@@ -3,7 +3,6 @@ package de.ollie.carp.vtt.core.service.model;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,11 +13,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-public class Map {
+public class Party {
 
 	private UUID id;
 	private String name;
-
-	@ToString.Exclude
-	private byte[] image;
 }

@@ -1,10 +1,9 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
-import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.core.service.model.TokenSize;
-import de.ollie.carp.vtt.core.service.port.persistence.TokenPersistencePort;
-import de.ollie.carp.vtt.persistence.jpa.mapper.TokenDboMapper;
-import de.ollie.carp.vtt.persistence.jpa.repository.TokenDboRepository;
+import de.ollie.carp.vtt.core.service.model.Party;
+import de.ollie.carp.vtt.core.service.port.persistence.PartyPersistencePort;
+import de.ollie.carp.vtt.persistence.jpa.mapper.PartyDboMapper;
+import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +19,13 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
+public class PartyPersistenceJpaAdapter implements PartyPersistencePort {
 
-	private final TokenDboMapper mapper;
-	private final TokenDboRepository repository;
+	private final PartyDboMapper mapper;
+	private final PartyDboRepository repository;
 
 	@Override
-	public Token create(String name, byte[] image, TokenSize tokenSize) {
+	public Party create(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -37,18 +36,18 @@ public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
 	}
 
 	@Override
-	public Optional<Token> findById(UUID id) {
+	public Optional<Party> findById(UUID id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
 
 	@Override
-	public List<Token> list() {
+	public List<Party> list() {
 		return mapper.toModels(repository.findAll());
 	}
 
 	@Override
-	public Token update(Token toSave) {
+	public Party update(Party toSave) {
 		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
 	}
 }

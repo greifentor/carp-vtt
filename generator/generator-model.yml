@@ -1,29 +1,4 @@
 classes:
-  - name: Map
-    properties:
-      - name: order
-        value: name
-    attributes:
-      - name: id
-        properties:
-          - name: nullable
-            value: false
-          - name: id
-            value: true
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
-      - name: name
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: String
-      - name: image
-        type:
-          name: byte[]
   - name: Coordinates
     properties:
       - name: suppress-persistence
@@ -51,6 +26,78 @@ classes:
           properties:
             - name: import
               value: java.math.BigDecimal
+  - name: Map
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
+      - name: image
+        properties:
+          - name: suppress-to-string
+            value: true
+        type:
+          name: byte[]
+  - name: Party
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
+  - name: Scenario
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
   - name: Token
     properties:
       - name: order
@@ -74,6 +121,9 @@ classes:
         type:
           name: String
       - name: image
+        properties:
+          - name: suppress-to-string
+            value: true
         type:
           name: byte[]
       - name: tokenSize

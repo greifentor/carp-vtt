@@ -25,7 +25,7 @@ public class TokenTypPersistenceJpaAdapter implements TokenTypPersistencePort {
 	private final TokenTypDboRepository repository;
 
 	@Override
-	public TokenTyp create(String name, byte[] image) {
+	public TokenTyp create(String name, byte[] token) {
 		// TODO Auto-generated method stub
 		return null;
 	}
