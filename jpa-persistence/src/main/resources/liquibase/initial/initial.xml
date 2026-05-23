@@ -57,5 +57,51 @@
         </createTable>
         <addPrimaryKey columnNames="ID" tableName="SCENARIO"/>
     </changeSet>
+    <changeSet id="Add-Table-TOKEN_MAP_PARTY_SCENARIO" author="copilot" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <createTable tableName="TOKEN_MAP_PARTY_SCENARIO">
+            <column name="ID" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="MAP_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOKEN_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PARTY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCENARIO_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="MAP_ID"
+                referencedTableName="MAP"
+                referencedColumnNames="ID"
+                constraintName="FK_TMP_S_MAP"/>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="TOKEN_ID"
+                referencedTableName="TOKEN"
+                referencedColumnNames="ID"
+                constraintName="FK_TMP_S_TOKEN"/>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="PARTY_ID"
+                referencedTableName="PARTY"
+                referencedColumnNames="ID"
+                constraintName="FK_TMP_S_PARTY"/>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="SCENARIO_ID"
+                referencedTableName="SCENARIO"
+                referencedColumnNames="ID"
+                constraintName="FK_TMP_S_SCENARIO"/>
+        <addUniqueConstraint
+                tableName="TOKEN_MAP_PARTY_SCENARIO"
+                columnNames="MAP_ID, TOKEN_ID, PARTY_ID, SCENARIO_ID"
+                constraintName="UC_TOKEN_MAP_PARTY_SCENARIO_ALL"/>
+    </changeSet>
 </databaseChangeLog>
-
