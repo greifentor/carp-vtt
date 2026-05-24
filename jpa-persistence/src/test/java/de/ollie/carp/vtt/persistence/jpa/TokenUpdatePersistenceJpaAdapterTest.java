@@ -1,8 +1,26 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.persistence.jpa.dbo.MapDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.TokenMapPartyScenarioDbo;
+import de.ollie.carp.vtt.persistence.jpa.repository.MapDboRepository;
+import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
+import de.ollie.carp.vtt.persistence.jpa.repository.ScenarioDboRepository;
+import de.ollie.carp.vtt.persistence.jpa.repository.TokenDboRepository;
+import de.ollie.carp.vtt.persistence.jpa.repository.TokenMapPartyScenarioDboRepository;
+import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,6 +32,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TokenUpdatePersistenceJpaAdapterTest {
 
+	private static final BigDecimal FIELD_X = new BigDecimal(1701);
+	private static final BigDecimal FIELD_Y = new BigDecimal(4711);
+	private static final UUID ID = UUID.randomUUID();
 	private static final UUID MAP_ID = UUID.randomUUID();
 	private static final UUID PARTY_ID = UUID.randomUUID();
 	private static final UUID SCENARIO_ID = UUID.randomUUID();
@@ -21,6 +42,24 @@ class TokenUpdatePersistenceJpaAdapterTest {
 
 	@Mock
 	private Coordinates coordinates;
+
+	@Mock
+	private MapDboRepository mapDboRepository;
+
+	@Mock
+	private PartyDboRepository partyDboRepository;
+
+	@Mock
+	private ScenarioDboRepository scenarioDboRepository;
+
+	@Mock
+	private TokenMapPartyScenarioDboRepository tokenMapPartyScenarioDboRepository;
+
+	@Mock
+	private TokenDboRepository tokenDboRepository;
+
+	@Mock
+	private UuidService uuidService;
 
 	@InjectMocks
 	private TokenUpdatePersistenceJpaAdapter unitUnderTest;
@@ -66,6 +105,67 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				IllegalArgumentException.class,
 				() -> unitUnderTest.updateTokenPosition(null, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates)
 			);
+		}
+
+		@Test
+		void callsTheRepositoryMethodCorrectly_forAnUpdate() {
+			// Prepare
+			MapDbo mapDbo = mock(MapDbo.class);
+			PartyDbo partyDbo = mock(PartyDbo.class);
+			ScenarioDbo scenarioDbo = mock(ScenarioDbo.class);
+			TokenDbo tokenDbo = mock(TokenDbo.class);
+			TokenMapPartyScenarioDbo dbo = new TokenMapPartyScenarioDbo()
+				.setFieldX(FIELD_X.add(new BigDecimal(1)))
+				.setFieldY(FIELD_Y.add(new BigDecimal(1)))
+				.setId(ID)
+				.setMap(mapDbo)
+				.setParty(partyDbo)
+				.setScenario(scenarioDbo)
+				.setToken(tokenDbo);
+			when(tokenMapPartyScenarioDboRepository.findByTokenMapPartyScenario(tokenDbo, mapDbo, partyDbo, scenarioDbo))
+				.thenReturn(Optional.of(dbo));
+			when(coordinates.getFieldX()).thenReturn(FIELD_X);
+			when(coordinates.getFieldY()).thenReturn(FIELD_Y);
+			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
+			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
+			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
+			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
+			// Run
+			unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
+			// Check
+			assertEquals(FIELD_X, dbo.getFieldX());
+			assertEquals(FIELD_Y, dbo.getFieldY());
+			verify(tokenMapPartyScenarioDboRepository, times(1)).save(dbo);
+		}
+
+		@Test
+		void callsTheRepositoryMethodCorrectly_forACreate() {
+			// Prepare
+			MapDbo mapDbo = mock(MapDbo.class);
+			PartyDbo partyDbo = mock(PartyDbo.class);
+			ScenarioDbo scenarioDbo = mock(ScenarioDbo.class);
+			TokenDbo tokenDbo = mock(TokenDbo.class);
+			TokenMapPartyScenarioDbo dbo = new TokenMapPartyScenarioDbo()
+				.setFieldX(FIELD_X)
+				.setFieldY(FIELD_Y)
+				.setId(ID)
+				.setMap(mapDbo)
+				.setParty(partyDbo)
+				.setScenario(scenarioDbo)
+				.setToken(tokenDbo);
+			when(tokenMapPartyScenarioDboRepository.findByTokenMapPartyScenario(tokenDbo, mapDbo, partyDbo, scenarioDbo))
+				.thenReturn(Optional.empty());
+			when(coordinates.getFieldX()).thenReturn(FIELD_X);
+			when(coordinates.getFieldY()).thenReturn(FIELD_Y);
+			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
+			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
+			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
+			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
+			when(uuidService.create()).thenReturn(ID);
+			// Run
+			unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
+			// Check
+			verify(tokenMapPartyScenarioDboRepository, times(1)).save(dbo);
 		}
 	}
 }

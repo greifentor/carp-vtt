@@ -7,14 +7,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.math.BigDecimal;
 import java.util.UUID;
+import lombok.Data;
 import lombok.Generated;
+import lombok.experimental.Accessors;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
  *
  * Remove this comment to suspend class from generation process.
  */
+@Accessors(chain = true)
+@Data
 @Entity
 @Generated
 @Table(
@@ -29,22 +34,28 @@ import lombok.Generated;
 public class TokenMapPartyScenarioDbo {
 
 	@Id
-	@Column(name = "id", nullable = false, updatable = false)
+	@Column(name = "ID", nullable = false, updatable = false)
 	private UUID id;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "map_id", nullable = false)
+	@JoinColumn(name = "MAP_ID", nullable = false)
 	private MapDbo map;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "token_id", nullable = false)
+	@JoinColumn(name = "TOKEN_ID", nullable = false)
 	private TokenDbo token;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "party_id", nullable = false)
+	@JoinColumn(name = "PARTY_ID", nullable = false)
 	private PartyDbo party;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "scenario_id", nullable = false)
+	@JoinColumn(name = "SCENARIO_ID", nullable = false)
 	private ScenarioDbo scenario;
+
+	@Column(name = "FIELD_X", nullable = false)
+	private BigDecimal fieldX;
+
+	@Column(name = "FIELD_Y", nullable = false)
+	private BigDecimal fieldY;
 }

@@ -104,4 +104,16 @@
                 columnNames="MAP_ID, TOKEN_ID, PARTY_ID, SCENARIO_ID"
                 constraintName="UC_TOKEN_MAP_PARTY_SCENARIO_ALL"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Added-Fields-FIELD_X-and-FIELD_Y-to-table-TOKEN_MAP_PARTY_SCENARIO" runInTransaction="true" runOnChange="true">
+        <addColumn tableName="TOKEN_MAP_PARTY_SCENARIO">
+            <column name="FIELD_X" type="NUMERIC(6,2)" defaultValue="0.0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="TOKEN_MAP_PARTY_SCENARIO">
+            <column name="FIELD_Y" type="NUMERIC(6,2)" defaultValue="0.0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
