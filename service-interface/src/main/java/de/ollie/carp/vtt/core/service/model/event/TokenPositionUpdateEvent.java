@@ -9,9 +9,17 @@ import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
 import java.util.UUID;
 
-public record TokenPositionUpdateEvent(Token token, Map map, Coordinates coordinates, Party party, Scenario scenario) {
+public record TokenPositionUpdateEvent(
+	UUID id,
+	Token token,
+	Map map,
+	Coordinates coordinates,
+	Party party,
+	Scenario scenario
+) {
 	public TokenPositionUpdateEvent {
 		ensure(coordinates != null, "coordinates cannot be null!");
+		ensure(id != null, "id cannot be null!");
 		ensure(map != null, "map cannot be null!");
 		ensure(party != null, "party cannot be null!");
 		ensure(scenario != null, "scenario cannot be null!");

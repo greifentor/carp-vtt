@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.swing;
 import de.ollie.carp.vtt.core.service.MapService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
+import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
@@ -55,6 +56,9 @@ public class ApplicationFrame
 
 	@Inject
 	private TokenWebPort tokenWebPort;
+
+	@Inject
+	private UuidService uuidService;
 
 	private JMenuBar menuBar;
 	private JDesktopPane desktopPane;
@@ -113,7 +117,7 @@ public class ApplicationFrame
 				.prepare()
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
-			new MapJInternalFrame(desktopPane, mapService, tokenPositionService, tokenService, tokenWebPort)
+			new MapJInternalFrame(desktopPane, mapService, tokenPositionService, tokenService, tokenWebPort, uuidService)
 				.prepare()
 				.setVisible(true);
 		}

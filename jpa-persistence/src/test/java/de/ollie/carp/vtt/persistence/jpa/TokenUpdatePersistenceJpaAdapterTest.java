@@ -9,17 +9,21 @@ import static org.mockito.Mockito.when;
 
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenData;
 import de.ollie.carp.vtt.persistence.jpa.dbo.MapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenMapPartyScenarioDbo;
+import de.ollie.carp.vtt.persistence.jpa.mapper.TokenDboMapper;
 import de.ollie.carp.vtt.persistence.jpa.repository.MapDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.ScenarioDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.TokenDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.TokenMapPartyScenarioDboRepository;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
@@ -44,6 +48,18 @@ class TokenUpdatePersistenceJpaAdapterTest {
 	private Coordinates coordinates;
 
 	@Mock
+	private MapDbo mapDbo;
+
+	@Mock
+	private PartyDbo partyDbo;
+
+	@Mock
+	private ScenarioDbo scenarioDbo;
+
+	@Mock
+	private TokenDbo tokenDbo;
+
+	@Mock
 	private MapDboRepository mapDboRepository;
 
 	@Mock
@@ -56,6 +72,9 @@ class TokenUpdatePersistenceJpaAdapterTest {
 	private TokenMapPartyScenarioDboRepository tokenMapPartyScenarioDboRepository;
 
 	@Mock
+	private TokenDboMapper tokenDboMapper;
+
+	@Mock
 	private TokenDboRepository tokenDboRepository;
 
 	@Mock
@@ -65,21 +84,13 @@ class TokenUpdatePersistenceJpaAdapterTest {
 	private TokenUpdatePersistenceJpaAdapter unitUnderTest;
 
 	@Nested
-	class updateTokenPosition_UUID_UUID_UUID_UUID_Coordinates {
-
-		@Test
-		void throwsAnException_passingANullValueAs_Coordinates() {
-			assertThrows(
-				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, null)
-			);
-		}
+	class findAllBy_UUID_UUID_UUID {
 
 		@Test
 		void throwsAnException_passingANullValueAs_MapId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(TOKEN_ID, null, PARTY_ID, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.findAllByMapPartyScenario(null, PARTY_ID, SCENARIO_ID)
 			);
 		}
 
@@ -87,7 +98,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_PartyId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, null, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.findAllByMapPartyScenario(MAP_ID, null, SCENARIO_ID)
 			);
 		}
 
@@ -95,7 +106,80 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_ScenarioId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, PARTY_ID, null, coordinates)
+				() -> unitUnderTest.findAllByMapPartyScenario(MAP_ID, PARTY_ID, null)
+			);
+		}
+
+		@Test
+		void returnsACorrectListOfModels() {
+			// Prepare
+			Token token = mock(Token.class);
+			TokenMapPartyScenarioDbo dbo = new TokenMapPartyScenarioDbo()
+				.setFieldX(FIELD_X)
+				.setFieldY(FIELD_Y)
+				.setId(ID)
+				.setMap(mapDbo)
+				.setParty(partyDbo)
+				.setScenario(scenarioDbo)
+				.setToken(tokenDbo);
+			TokenData data = new TokenData()
+				.setCoordinates(new Coordinates().setFieldX(FIELD_X).setFieldY(FIELD_Y))
+				.setId(ID)
+				.setToken(token);
+			List<TokenData> expected = List.of(data);
+			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
+			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
+			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
+			when(tokenDboMapper.toModel(tokenDbo)).thenReturn(token);
+			when(tokenMapPartyScenarioDboRepository.findAllByAndMapAndPartyAndScenario(mapDbo, partyDbo, scenarioDbo))
+				.thenReturn(List.of(dbo));
+			// Run
+			List<TokenData> returned = unitUnderTest.findAllByMapPartyScenario(MAP_ID, PARTY_ID, SCENARIO_ID);
+			// Check
+			assertEquals(expected, returned);
+		}
+	}
+
+	@Nested
+	class updateTokenPosition_UUID_UUID_UUID_UUID_Coordinates {
+
+		@Test
+		void throwsAnException_passingANullValueAs_Coordinates() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, null)
+			);
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAs_Id() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.updateTokenPosition(null, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates)
+			);
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAs_MapId() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, null, PARTY_ID, SCENARIO_ID, coordinates)
+			);
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAs_PartyId() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, null, SCENARIO_ID, coordinates)
+			);
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAs_ScenarioId() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, null, coordinates)
 			);
 		}
 
@@ -103,17 +187,13 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_TokenId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(null, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.updateTokenPosition(ID, null, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates)
 			);
 		}
 
 		@Test
 		void callsTheRepositoryMethodCorrectly_forAnUpdate() {
 			// Prepare
-			MapDbo mapDbo = mock(MapDbo.class);
-			PartyDbo partyDbo = mock(PartyDbo.class);
-			ScenarioDbo scenarioDbo = mock(ScenarioDbo.class);
-			TokenDbo tokenDbo = mock(TokenDbo.class);
 			TokenMapPartyScenarioDbo dbo = new TokenMapPartyScenarioDbo()
 				.setFieldX(FIELD_X.add(new BigDecimal(1)))
 				.setFieldY(FIELD_Y.add(new BigDecimal(1)))
@@ -122,8 +202,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
-			when(tokenMapPartyScenarioDboRepository.findByTokenMapPartyScenario(tokenDbo, mapDbo, partyDbo, scenarioDbo))
-				.thenReturn(Optional.of(dbo));
+			when(tokenMapPartyScenarioDboRepository.findById(ID)).thenReturn(Optional.of(dbo));
 			when(coordinates.getFieldX()).thenReturn(FIELD_X);
 			when(coordinates.getFieldY()).thenReturn(FIELD_Y);
 			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
@@ -131,7 +210,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
 			// Run
-			unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
+			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
 			// Check
 			assertEquals(FIELD_X, dbo.getFieldX());
 			assertEquals(FIELD_Y, dbo.getFieldY());
@@ -153,8 +232,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
-			when(tokenMapPartyScenarioDboRepository.findByTokenMapPartyScenario(tokenDbo, mapDbo, partyDbo, scenarioDbo))
-				.thenReturn(Optional.empty());
+			when(tokenMapPartyScenarioDboRepository.findById(ID)).thenReturn(Optional.empty());
 			when(coordinates.getFieldX()).thenReturn(FIELD_X);
 			when(coordinates.getFieldY()).thenReturn(FIELD_Y);
 			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
@@ -163,7 +241,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
 			when(uuidService.create()).thenReturn(ID);
 			// Run
-			unitUnderTest.updateTokenPosition(TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
+			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
 			// Check
 			verify(tokenMapPartyScenarioDboRepository, times(1)).save(dbo);
 		}

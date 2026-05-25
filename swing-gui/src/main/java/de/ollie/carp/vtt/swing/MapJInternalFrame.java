@@ -6,11 +6,13 @@ import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 import de.ollie.carp.vtt.core.service.MapService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
+import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenData;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.swing.TokenMap.MapToken;
@@ -24,6 +26,8 @@ import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,14 +42,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MapJInternalFrame extends JInternalFrame implements ActionListener, MapPanel.Observer {
 
-	private static final Party DUMMY_PARTY = new Party();
-	private static final Scenario DUMMY_SCENARIO = new Scenario();
+	private static final Party DUMMY_PARTY = new Party().setId(UUID.fromString("d95b7312-5669-4ee5-9299-4516034f46d8"));
+	private static final Scenario DUMMY_SCENARIO = new Scenario()
+		.setId(UUID.fromString("60d8b44d-f60f-4b04-b9bb-133b3335db0f"));
 
 	private final JDesktopPane desktopPane;
 	private final transient MapService mapService;
 	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
 	private final transient TokenWebPort tokenWebPort;
+	private final transient UuidService uuidService;
 
 	private JButton buttonAddIcon = new JButton("+");
 	private JComboBox<Map> comboBoxMaps;
@@ -101,7 +107,11 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							if (selectedToken != null) {
-								MapToken newMapToken = new MapToken(selectedToken, tokens.getNextCounterFor(selectedToken));
+								MapToken newMapToken = new MapToken(
+									selectedToken,
+									tokens.getNextCounterFor(selectedToken),
+									uuidService.create()
+								);
 								System.out.println(newMapToken);
 								mapPanel.setSelectedToken(newMapToken);
 								updatePosition(getFieldCoordinates(e.getX(), e.getY()));
@@ -112,14 +122,28 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 				);
 				panelImage.add(new JScrollPane(mapPanel), BorderLayout.CENTER);
 				setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
+				List<TokenData> storedTokens = tokenPositionService.findAllBy(
+					(Map) comboBoxMaps.getSelectedItem(),
+					DUMMY_PARTY,
+					DUMMY_SCENARIO
+				);
+				mapPanel.updateTokens(map(storedTokens));
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
 		}
 	}
 
+	private TokenMap map(List<TokenData> tokenData) {
+		tokenData.forEach(td ->
+			tokens.put(new MapToken(td.getToken(), tokens.getNextCounterFor(td.getToken()), td.getId()), td.getCoordinates())
+		);
+		return tokens;
+	}
+
 	private void updatePosition(Coordinates coordinates) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
+			mapPanel.getSelectedToken().id(),
 			mapPanel.getSelectedToken().token(),
 			(Map) comboBoxMaps.getSelectedItem(),
 			coordinates,

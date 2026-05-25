@@ -6,6 +6,7 @@ import de.ollie.carp.vtt.swing.TokenMap.MapToken;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -93,10 +94,14 @@ public class MapPanel extends JPanel {
 					g.drawArc(x, y, width, height, 0, 360);
 				}
 				if (tokens.hasTokenMoreThanOneTimes(token)) {
+					g.setColor(Color.BLACK);
+					((Graphics2D) g).setStroke(new BasicStroke(1));
+					g.drawRect(x + 3, y + 3, 15, 12);
 					g.setColor(Color.LIGHT_GRAY);
 					g.fillRect(x + 3, y + 3, 15, 12);
 					g.setColor(Color.RED);
-					g.drawString("" + mapToken.counter(), x + 4, y + 8);
+					g.setFont(new Font("Serif", Font.BOLD, 12));
+					g.drawString("" + mapToken.counter(), x + 4, y + 12);
 				}
 			} catch (IOException ioe) {
 				ioe.printStackTrace();

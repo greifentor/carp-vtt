@@ -133,6 +133,42 @@ classes:
           properties:
             - name: project-type
               value: true
+  - name: TokenData
+    properties:
+      - name: suppress-persistence
+        value: true
+      - name: suppress-service
+        value: true
+    attributes:
+      - name: coordinates
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: Coordinates
+          properties:
+            - name: project-type
+              value: true
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: token
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: Token
+          properties:
+            - name: project-type
+              value: true
   - name: TokenTyp
     properties:
       - name: order

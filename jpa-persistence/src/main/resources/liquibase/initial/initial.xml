@@ -116,4 +116,32 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="dm-comp" id="Changed-Datatype-for-ID-Fields-of-Table-PARTY-and-SCENARIO" runInTransaction="true" runOnChange="true">
+        <modifyDataType tableName="PARTY" columnName="ID" newDataType="UUID"/>
+        <modifyDataType tableName="SCENARIO" columnName="ID" newDataType="UUID"/>
+    </changeSet>
+    <changeSet author="dm-comp" id="Added-Dummy-Party" runInTransaction="true" runOnChange="true">
+        <insert tableName="PARTY">
+            <column name="ID" value="d95b7312-5669-4ee5-9299-4516034f46d8"/>
+            <column name="NAME" value="Dummy-Party"/>
+        </insert>
+    </changeSet>
+    <changeSet author="dm-comp" id="Added-Dummy-Scenario" runInTransaction="true" runOnChange="true">
+        <insert tableName="SCENARIO">
+            <column name="ID" value="d95b7312-5669-4ee5-9299-4516034f46d8"/>
+            <column name="NAME" value="Dummy-Scenario"/>
+        </insert>
+    </changeSet>
+    <changeSet author="dm-comp" id="Corrected-Dummy-Scenario" runInTransaction="true" runOnChange="true">
+        <delete tableName="SCENARIO">
+            <where>ID = 'd95b7312-5669-4ee5-9299-4516034f46d8'</where>
+        </delete>
+        <insert tableName="SCENARIO">
+            <column name="ID" value="60d8b44d-f60f-4b04-b9bb-133b3335db0f"/>
+            <column name="NAME" value="Dummy-Scenario"/>
+        </insert>
+    </changeSet>
+    <changeSet author="dm-comp" id="Remove-Unique-Constraint-for-Table-TOKEN_MAP_PARTY_SCENARIO" runInTransaction="true" runOnChange="true">
+        <dropUniqueConstraint tableName="TOKEN_MAP_PARTY_SCENARIO" constraintName="UC_TOKEN_MAP_PARTY_SCENARIO_ALL" uniqueColumns="MAP_ID, TOKEN_ID, PARTY_ID, SCENARIO_ID"/>
+    </changeSet>
 </databaseChangeLog>

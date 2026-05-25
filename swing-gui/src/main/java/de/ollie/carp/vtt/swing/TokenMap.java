@@ -7,11 +7,13 @@ import de.ollie.carp.vtt.core.service.model.Token;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class TokenMap {
 
-	record MapToken(Token token, int counter) {
+	record MapToken(Token token, int counter, UUID id) {
 		public MapToken {
+			ensure(id != null, "id cannot be null!");
 			ensure(token != null, "token cannot be null!");
 			ensure(counter > 0, "counter cannot be lesser than one!");
 		}

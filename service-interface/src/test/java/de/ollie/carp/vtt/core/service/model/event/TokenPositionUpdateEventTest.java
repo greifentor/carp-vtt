@@ -20,6 +20,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TokenPositionUpdateEventTest {
 
+	private static final UUID ID = UUID.randomUUID();
+
 	@Mock
 	private Coordinates coordinates;
 
@@ -39,7 +41,7 @@ class TokenPositionUpdateEventTest {
 
 	@BeforeEach
 	private void beforeEach() {
-		unitUnderTest = new TokenPositionUpdateEvent(token, map, coordinates, party, scenario);
+		unitUnderTest = new TokenPositionUpdateEvent(ID, token, map, coordinates, party, scenario);
 	}
 
 	@Nested
@@ -49,7 +51,15 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Coordinates() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(token, map, null, party, scenario)
+				() -> new TokenPositionUpdateEvent(ID, token, map, null, party, scenario)
+			);
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAs_Id() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> new TokenPositionUpdateEvent(null, token, map, coordinates, party, scenario)
 			);
 		}
 
@@ -57,7 +67,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Map() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(token, null, coordinates, party, scenario)
+				() -> new TokenPositionUpdateEvent(ID, token, null, coordinates, party, scenario)
 			);
 		}
 
@@ -65,7 +75,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Party() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(token, map, coordinates, null, scenario)
+				() -> new TokenPositionUpdateEvent(ID, token, map, coordinates, null, scenario)
 			);
 		}
 
@@ -73,7 +83,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Scenario() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(token, map, coordinates, party, null)
+				() -> new TokenPositionUpdateEvent(ID, token, map, coordinates, party, null)
 			);
 		}
 
@@ -81,7 +91,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Token() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(null, map, coordinates, party, scenario)
+				() -> new TokenPositionUpdateEvent(ID, null, map, coordinates, party, scenario)
 			);
 		}
 	}
@@ -89,7 +99,10 @@ class TokenPositionUpdateEventTest {
 	@Nested
 	class IdGetters {
 
-		private static final UUID ID = UUID.randomUUID();
+		@Test
+		void getId_returnsTheIdOfTheRecord() {
+			assertEquals(ID, unitUnderTest.id());
+		}
 
 		@Test
 		void getMapId_returnsTheIdOfTheMap() {
