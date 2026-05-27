@@ -76,15 +76,6 @@ public class MapPanel extends JPanel {
 			int height = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();
 			int width = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();
 			try {
-				System.out.println(
-					"add " +
-					token.getName() +
-					" (" +
-					mapToken.counter() +
-					")" +
-					" - " +
-					(FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields())
-				);
 				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
 				g.drawImage(tokenImage, x, y, width, height, this);
 				if (selectedToken == mapToken) {

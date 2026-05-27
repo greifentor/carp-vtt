@@ -57,6 +57,14 @@
         </createTable>
         <addPrimaryKey columnNames="ID" tableName="SCENARIO"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Changed-Datatype-for-ID-Fields-of-Table-PARTY-and-SCENARIO" runInTransaction="true" runOnChange="true">
+        <modifyDataType tableName="PARTY" columnName="ID" newDataType="UUID"/>
+        <modifyDataType tableName="SCENARIO" columnName="ID" newDataType="UUID"/>
+    </changeSet>
+    <changeSet author="dm-comp" id="Changed-Datatype-for-ID-Fields-of-Table-MAP-and-TOKEN" runInTransaction="true" runOnChange="true">
+        <modifyDataType tableName="MAP" columnName="ID" newDataType="UUID"/>
+        <modifyDataType tableName="TOKEN" columnName="ID" newDataType="UUID"/>
+    </changeSet>
     <changeSet id="Add-Table-TOKEN_MAP_PARTY_SCENARIO" author="copilot" objectQuotingStrategy="LEGACY" runOnChange="true">
         <createTable tableName="TOKEN_MAP_PARTY_SCENARIO">
             <column name="ID" type="UUID">
@@ -116,10 +124,6 @@
             </column>
         </addColumn>
     </changeSet>
-    <changeSet author="dm-comp" id="Changed-Datatype-for-ID-Fields-of-Table-PARTY-and-SCENARIO" runInTransaction="true" runOnChange="true">
-        <modifyDataType tableName="PARTY" columnName="ID" newDataType="UUID"/>
-        <modifyDataType tableName="SCENARIO" columnName="ID" newDataType="UUID"/>
-    </changeSet>
     <changeSet author="dm-comp" id="Added-Dummy-Party" runInTransaction="true" runOnChange="true">
         <insert tableName="PARTY">
             <column name="ID" value="d95b7312-5669-4ee5-9299-4516034f46d8"/>
@@ -141,7 +145,30 @@
             <column name="NAME" value="Dummy-Scenario"/>
         </insert>
     </changeSet>
-    <changeSet author="dm-comp" id="Remove-Unique-Constraint-for-Table-TOKEN_MAP_PARTY_SCENARIO" runInTransaction="true" runOnChange="true">
-        <dropUniqueConstraint tableName="TOKEN_MAP_PARTY_SCENARIO" constraintName="UC_TOKEN_MAP_PARTY_SCENARIO_ALL" uniqueColumns="MAP_ID, TOKEN_ID, PARTY_ID, SCENARIO_ID"/>
+    <changeSet id="Re-Add-Table-TOKEN_MAP_PARTY_SCENARIO" author="copilot" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="MAP_ID"
+                referencedTableName="MAP"
+                referencedColumnNames="ID"
+                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_MAP"/>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="TOKEN_ID"
+                referencedTableName="TOKEN"
+                referencedColumnNames="ID"
+                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_TOKEN"/>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="PARTY_ID"
+                referencedTableName="PARTY"
+                referencedColumnNames="ID"
+                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_PARTY"/>
+        <addForeignKeyConstraint
+                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseColumnNames="SCENARIO_ID"
+                referencedTableName="SCENARIO"
+                referencedColumnNames="ID"
+                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_SCENARIO"/>
     </changeSet>
 </databaseChangeLog>
