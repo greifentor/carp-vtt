@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Battle Map Service API
+  version: 1.0.0
+
+paths:
+  /api/v1/battle-map:
+    put:
+      tags:
+        - BattleMap
+      summary: Update a battle map
+      operationId: updateBattleMap
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BattleMapDto'
+      responses:
+        '200':
+          description: Battle map updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BattleMapDto'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+
+components:
+  schemas:
+    BattleMapDto:
+      type: object
+      required:
+        - id
+        - name
+        - imageContent
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "orc-ambush-map"
+        imageContent:
+          type: string
+          format: byte
+          description: Base64-encoded image content
+          example: "iVBORw0KGgoAAAANSUhEUgAA..."
+
+    ErrorDto:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "BAD_REQUEST"
+        message:
+          type: string
+          example: "The provided BattleMapDto is invalid."

@@ -62,10 +62,21 @@ class Migrator {
 			.setId(UUID.fromString(image.getGlobalId()))
 			.setImage(image.getImage())
 			.setName(image.getName())
-			.setTokenSize(TokenSize.MEDIUM);
+			.setTokenSize(mapToTokenSize(image.getWidth()));
 	}
 
 	private Map toMap(ImageDTO image) {
 		return new Map().setId(UUID.fromString(image.getGlobalId())).setImage(image.getImage()).setName(image.getName());
+	}
+
+	private TokenSize mapToTokenSize(int width) {
+		if (width == 102) {
+			return TokenSize.LARGE;
+		} else if (width == 152) {
+			return TokenSize.HUGE;
+		} else if (width == 202) {
+			return TokenSize.GARGANTUAN;
+		}
+		return TokenSize.MEDIUM;
 	}
 }
