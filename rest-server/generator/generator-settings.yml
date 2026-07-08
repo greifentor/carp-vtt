@@ -17,6 +17,8 @@ properties:
     value: de.ollie.carp.vtt.restserver.persistence.jpa.mapper
   - name: jpa-repository-package
     value: de.ollie.carp.vtt.restserver.persistence.jpa.repository
+  - name: rest-model-package
+    value: de.ollie.carp.vtt.restserver.rest.model
 generators:
 # --- Service ---
   - type: CLASS
@@ -79,7 +81,7 @@ generators:
     template: templates/persistence/jpa/EnumDbo.vc
     properties:
       - name: target-path
-        value: rest-server/src/main/java
+        value: src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.restserver.persistence.jpa.mapper
     suppress-when: classModel Load suppress-persistence HasProperty
@@ -104,6 +106,16 @@ generators:
     target-file-name: ${UnitName}PersistenceJpaAdapter
     path: ../generator
     template: templates/jpa/PersistenceAdapter.vc
+    properties:
+      - name: target-path
+        value: src/main/java
+# --- Rest ---
+  - type: CLASS
+    package: de.ollie.carp.vtt.restserver.rest.mapper
+    suppress-when: classModel Load suppress-persistence HasProperty
+    path: generator
+    target-file-name: ${UnitName}DtoMapper
+    template: templates/rest/DtoMapper.vc
     properties:
       - name: target-path
         value: src/main/java

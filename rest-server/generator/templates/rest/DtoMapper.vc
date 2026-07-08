@@ -1,0 +1,22 @@
+package ${PackageName};
+
+import ${Properties.get("core-model-package")}.${ClassName};
+import ${Properties.get("rest-model-package")}.${ClassName}Dto;
+import java.util.List;
+import org.mapstruct.Mapper;
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Mapper(componentModel = "spring")
+public interface ${ClassName}DtoMapper {
+	${ClassName} toModel(${ClassName}Dto dto);
+
+	List<${ClassName}> toModels(List<${ClassName}Dto> dto);
+
+	${ClassName}Dto toDto(${ClassName} model);
+
+	List<${ClassName}Dto> toDtos(List<${ClassName}> models);
+}
