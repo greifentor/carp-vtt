@@ -2,9 +2,9 @@ package de.ollie.carp.vtt.service.impl;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import de.ollie.carp.vtt.core.service.MapService;
-import de.ollie.carp.vtt.core.service.model.Map;
-import de.ollie.carp.vtt.core.service.port.persistence.MapPersistencePort;
+import de.ollie.carp.vtt.core.service.BattleMapService;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.port.persistence.BattleMapPersistencePort;
 import jakarta.inject.Named;
 import java.util.List;
 import lombok.Generated;
@@ -18,17 +18,17 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-class MapServiceImpl implements MapService {
+class BattleMapServiceImpl implements BattleMapService {
 
-	private final MapPersistencePort persistencePort;
+	private final BattleMapPersistencePort persistencePort;
 
 	@Override
-	public List<Map> findAll() {
+	public List<BattleMap> findAll() {
 		return persistencePort.list();
 	}
 
 	@Override
-	public Map save(Map toSave) {
+	public BattleMap save(BattleMap toSave) {
 		ensure(toSave != null, "map cannot be null!");
 		return persistencePort.update(toSave);
 	}

@@ -3,7 +3,7 @@ package de.ollie.carp.vtt.service.impl;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.core.service.TokenPositionService;
-import de.ollie.carp.vtt.core.service.model.Map;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.TokenData;
@@ -20,11 +20,11 @@ class TokenPositionServiceImpl implements TokenPositionService {
 	private final TokenUpdatePersistencePort tokenUpdatePort;
 
 	@Override
-	public List<TokenData> findAllBy(Map map, Party party, Scenario scenario) {
-		ensure(map != null, "map cannot be null!");
+	public List<TokenData> findAllBy(BattleMap battleMap, Party party, Scenario scenario) {
+		ensure(battleMap != null, "battle map cannot be null!");
 		ensure(party != null, "party cannot be null!");
 		ensure(scenario != null, "scenario cannot be null!");
-		return tokenUpdatePort.findAllByMapPartyScenario(map.getId(), party.getId(), scenario.getId());
+		return tokenUpdatePort.findAllByMapPartyScenario(battleMap.getId(), party.getId(), scenario.getId());
 	}
 
 	@Override

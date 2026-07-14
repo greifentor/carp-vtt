@@ -1,17 +1,17 @@
 package de.ollie.carp.vtt.swing;
 
-import de.ollie.carp.vtt.core.service.model.Map;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-public class MapListCellRenderer implements ListCellRenderer<Map> {
+public class BattleMapListCellRenderer implements ListCellRenderer<BattleMap> {
 
 	@Override
 	public Component getListCellRendererComponent(
-		JList<? extends Map> list,
-		Map value,
+		JList<? extends BattleMap> list,
+		BattleMap value,
 		int index,
 		boolean isSelected,
 		boolean cellHasFocus

@@ -3,12 +3,12 @@ package de.ollie.carp.vtt.swing;
 import static de.ollie.carp.vtt.swing.SwingConstants.HGAP;
 import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
-import de.ollie.carp.vtt.core.service.MapService;
+import de.ollie.carp.vtt.core.service.BattleMapService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
@@ -40,27 +40,27 @@ import javax.swing.JToolBar;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MapJInternalFrame extends JInternalFrame implements ActionListener, MapPanel.Observer {
+public class BattleMapJInternalFrame extends JInternalFrame implements ActionListener, MapPanel.Observer {
 
 	private static final Party DUMMY_PARTY = new Party().setId(UUID.fromString("d95b7312-5669-4ee5-9299-4516034f46d8"));
 	private static final Scenario DUMMY_SCENARIO = new Scenario()
 		.setId(UUID.fromString("60d8b44d-f60f-4b04-b9bb-133b3335db0f"));
 
 	private final JDesktopPane desktopPane;
-	private final transient MapService mapService;
+	private final transient BattleMapService mapService;
 	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
 	private final transient TokenWebPort tokenWebPort;
 	private final transient UuidService uuidService;
 
 	private JButton buttonAddIcon = new JButton("+");
-	private JComboBox<Map> comboBoxMaps;
+	private JComboBox<BattleMap> comboBoxBattleMaps;
 	private JPanel panelImage;
-	private MapPanel mapPanel;
+	private MapPanel battleMapPanel;
 	private Token selectedToken;
 	private TokenMap tokens = new TokenMap();
 
-	public MapJInternalFrame prepare() {
+	public BattleMapJInternalFrame prepare() {
 		desktopPane.add(this);
 		setClosable(true);
 		setIconifiable(true);
@@ -74,35 +74,37 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 
 	private JPanel createMainPanel() {
 		JPanel p = new JPanel(new BorderLayout(HGAP, VGAP));
-		comboBoxMaps = createMapsComboBox();
-		comboBoxMaps.setRenderer(new MapListCellRenderer());
-		comboBoxMaps.addActionListener(this);
+		comboBoxBattleMaps = createMapsComboBox();
+		comboBoxBattleMaps.setRenderer(new BattleMapListCellRenderer());
+		comboBoxBattleMaps.addActionListener(this);
 		panelImage = new JPanel(new BorderLayout(HGAP, VGAP));
 		JToolBar toolbar = new JToolBar(JToolBar.VERTICAL);
 		toolbar.setFloatable(false);
 		toolbar.add(buttonAddIcon);
 		buttonAddIcon.addActionListener(this);
 		p.add(toolbar, BorderLayout.WEST);
-		p.add(comboBoxMaps, BorderLayout.NORTH);
+		p.add(comboBoxBattleMaps, BorderLayout.NORTH);
 		p.add(panelImage, BorderLayout.CENTER);
 		return p;
 	}
 
-	private JComboBox<Map> createMapsComboBox() {
-		return new JComboBox<>(mapService.findAll().toArray(new Map[0]));
+	private JComboBox<BattleMap> createMapsComboBox() {
+		return new JComboBox<>(mapService.findAll().toArray(new BattleMap[0]));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonAddIcon) {
 			selectedToken = new TokenSelectionDialog(null, tokenService.findAll()).getSelectedToken();
-		} else if (e.getSource() == comboBoxMaps) {
+		} else if (e.getSource() == comboBoxBattleMaps) {
 			panelImage.removeAll();
 			try {
-				Image image = ImageIO.read(new ByteArrayInputStream((((Map) comboBoxMaps.getSelectedItem()).getImage())));
+				Image image = ImageIO.read(
+					new ByteArrayInputStream((((BattleMap) comboBoxBattleMaps.getSelectedItem()).getImageContent()))
+				);
 				ImageIcon imageIcon = new ImageIcon(image);
-				mapPanel = new MapPanel(imageIcon, tokens, this);
-				mapPanel.addMouseListener(
+				battleMapPanel = new MapPanel(imageIcon, tokens, this);
+				battleMapPanel.addMouseListener(
 					new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
@@ -113,21 +115,21 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 									uuidService.create()
 								);
 								System.out.println(newMapToken);
-								mapPanel.setSelectedToken(newMapToken);
+								battleMapPanel.setSelectedToken(newMapToken);
 								updatePosition(getFieldCoordinates(e.getX(), e.getY()));
 								selectedToken = null;
 							}
 						}
 					}
 				);
-				panelImage.add(new JScrollPane(mapPanel), BorderLayout.CENTER);
+				panelImage.add(new JScrollPane(battleMapPanel), BorderLayout.CENTER);
 				setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
 				List<TokenData> storedTokens = tokenPositionService.findAllBy(
-					(Map) comboBoxMaps.getSelectedItem(),
+					(BattleMap) comboBoxBattleMaps.getSelectedItem(),
 					DUMMY_PARTY,
 					DUMMY_SCENARIO
 				);
-				mapPanel.updateTokens(map(storedTokens));
+				battleMapPanel.updateTokens(map(storedTokens));
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
@@ -143,17 +145,17 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 
 	private void updatePosition(Coordinates coordinates) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
-			mapPanel.getSelectedToken().id(),
-			mapPanel.getSelectedToken().token(),
-			(Map) comboBoxMaps.getSelectedItem(),
+			battleMapPanel.getSelectedToken().id(),
+			battleMapPanel.getSelectedToken().token(),
+			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
 			coordinates,
 			DUMMY_PARTY,
 			DUMMY_SCENARIO
 		);
 		tokenPositionService.updateTokenPosition(event);
 		tokenWebPort.pushTokenPositionUpdate(event);
-		tokens.put(mapPanel.getSelectedToken(), coordinates);
-		mapPanel.updateTokens(tokens);
+		tokens.put(battleMapPanel.getSelectedToken(), coordinates);
+		battleMapPanel.updateTokens(tokens);
 	}
 
 	private static final int OFFSET_IN_PIXELS = 25;
@@ -168,12 +170,12 @@ public class MapJInternalFrame extends JInternalFrame implements ActionListener,
 	@Override
 	public void tokenHit(MapToken mapToken, Coordinates coordinates) {
 		if (mapToken != null) {
-			if (mapToken == mapPanel.getSelectedToken()) {
-				mapPanel.setSelectedToken(null);
+			if (mapToken == battleMapPanel.getSelectedToken()) {
+				battleMapPanel.setSelectedToken(null);
 			} else {
-				mapPanel.setSelectedToken(mapToken);
+				battleMapPanel.setSelectedToken(mapToken);
 			}
-		} else if (mapPanel.getSelectedToken() != null) {
+		} else if (battleMapPanel.getSelectedToken() != null) {
 			updatePosition(coordinates);
 		}
 	}
