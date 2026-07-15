@@ -1,8 +1,8 @@
 package de.ollie.carp.vtt.migration;
 
-import de.ollie.carp.vtt.core.service.MapService;
+import de.ollie.carp.vtt.core.service.BattleMapService;
 import de.ollie.carp.vtt.core.service.TokenService;
-import de.ollie.carp.vtt.core.service.model.Map;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.migration.dto.ImageDTO;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 class Migrator {
 
 	private final ImageRestClient imageRestClient;
-	private final MapService mapService;
+	private final BattleMapService mapService;
 	private final TokenService tokenService;
 
 	@PostConstruct
@@ -53,7 +53,7 @@ class Migrator {
 		if (isToken(image)) {
 			tokenService.save(toToken(image));
 		} else if (isMap(image)) {
-			mapService.save(toMap(image));
+			mapService.save(toBattleMap(image));
 		}
 	}
 
@@ -65,8 +65,11 @@ class Migrator {
 			.setTokenSize(mapToTokenSize(image.getWidth()));
 	}
 
-	private Map toMap(ImageDTO image) {
-		return new Map().setId(UUID.fromString(image.getGlobalId())).setImage(image.getImage()).setName(image.getName());
+	private BattleMap toBattleMap(ImageDTO image) {
+		return new BattleMap()
+			.setId(UUID.fromString(image.getGlobalId()))
+			.setImageContent(image.getImage())
+			.setName(image.getName());
 	}
 
 	private TokenSize mapToTokenSize(int width) {

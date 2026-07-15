@@ -6,8 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
@@ -42,7 +42,7 @@ class TokenPositionServiceImplTest {
 	class findAllBy_Map_Party_Scenario {
 
 		@Mock
-		private Map map;
+		private BattleMap battleMap;
 
 		@Mock
 		private Party party;
@@ -57,24 +57,24 @@ class TokenPositionServiceImplTest {
 
 		@Test
 		void throwsAnException_passingANullValueAs_Party() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.findAllBy(map, null, scenario));
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.findAllBy(battleMap, null, scenario));
 		}
 
 		@Test
 		void throwsAnException_passingANullValueAs_Scenario() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.findAllBy(map, party, null));
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.findAllBy(battleMap, party, null));
 		}
 
 		@Test
 		void callsPersistencePortMethodCorrectly() {
 			// Prepare
 			List<TokenData> expected = List.of();
-			when(map.getId()).thenReturn(MAP_ID);
+			when(battleMap.getId()).thenReturn(MAP_ID);
 			when(party.getId()).thenReturn(PARTY_ID);
 			when(scenario.getId()).thenReturn(SCENARIO_ID);
 			when(tokenUpdatePort.findAllByMapPartyScenario(MAP_ID, PARTY_ID, SCENARIO_ID)).thenReturn(expected);
 			// Run
-			List<TokenData> returned = unitUnderTest.findAllBy(map, party, scenario);
+			List<TokenData> returned = unitUnderTest.findAllBy(battleMap, party, scenario);
 			// Check
 			assertSame(expected, returned);
 		}
@@ -87,7 +87,7 @@ class TokenPositionServiceImplTest {
 		private Coordinates coordinates;
 
 		@Mock
-		private Map map;
+		private BattleMap battleMap;
 
 		@Mock
 		private Party party;
@@ -106,12 +106,14 @@ class TokenPositionServiceImplTest {
 		@Test
 		void callsThePersistencePortMethodCorrectly() {
 			// Prepare
-			when(map.getId()).thenReturn(MAP_ID);
+			when(battleMap.getId()).thenReturn(MAP_ID);
 			when(party.getId()).thenReturn(PARTY_ID);
 			when(scenario.getId()).thenReturn(SCENARIO_ID);
 			when(token.getId()).thenReturn(TOKEN_ID);
 			// Run
-			unitUnderTest.updateTokenPosition(new TokenPositionUpdateEvent(ID, token, map, coordinates, party, scenario));
+			unitUnderTest.updateTokenPosition(
+				new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, scenario)
+			);
 			// Check
 			verify(tokenUpdatePort, times(1)).updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
 		}

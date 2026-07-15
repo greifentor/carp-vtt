@@ -1,9 +1,9 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
-import de.ollie.carp.vtt.core.service.model.Map;
-import de.ollie.carp.vtt.core.service.port.persistence.MapPersistencePort;
-import de.ollie.carp.vtt.persistence.jpa.mapper.MapDboMapper;
-import de.ollie.carp.vtt.persistence.jpa.repository.MapDboRepository;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.port.persistence.BattleMapPersistencePort;
+import de.ollie.carp.vtt.persistence.jpa.mapper.BattleMapDboMapper;
+import de.ollie.carp.vtt.persistence.jpa.repository.BattleMapDboRepository;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +19,13 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-public class MapPersistenceJpaAdapter implements MapPersistencePort {
+public class BattleMapPersistenceJpaAdapter implements BattleMapPersistencePort {
 
-	private final MapDboMapper mapper;
-	private final MapDboRepository repository;
+	private final BattleMapDboMapper mapper;
+	private final BattleMapDboRepository repository;
 
 	@Override
-	public Map create(String name, byte[] image) {
+	public BattleMap create(String name, byte[] imageContent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -36,18 +36,18 @@ public class MapPersistenceJpaAdapter implements MapPersistencePort {
 	}
 
 	@Override
-	public Optional<Map> findById(UUID id) {
+	public Optional<BattleMap> findById(UUID id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
 
 	@Override
-	public List<Map> list() {
+	public List<BattleMap> list() {
 		return mapper.toModels(repository.findAll());
 	}
 
 	@Override
-	public Map update(Map toSave) {
+	public BattleMap update(BattleMap toSave) {
 		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
 	}
 }

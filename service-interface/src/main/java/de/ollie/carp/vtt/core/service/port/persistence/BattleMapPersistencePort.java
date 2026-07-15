@@ -1,6 +1,6 @@
 package de.ollie.carp.vtt.core.service.port.persistence;
 
-import de.ollie.carp.vtt.core.service.model.Map;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -14,14 +14,14 @@ import lombok.Generated;
  */
 @Generated
 @Named
-public interface MapPersistencePort {
-	Map create(String name, byte[] image);
+public interface BattleMapPersistencePort {
+	BattleMap create(String name, byte[] imageContent);
 
 	void deleteById(UUID id);
 
-	Optional<Map> findById(UUID id);
+	Optional<BattleMap> findById(UUID id);
 
-	List<Map> list();
+	List<BattleMap> list();
 
-	Map update(Map toSave);
+	BattleMap update(BattleMap toSave);
 }

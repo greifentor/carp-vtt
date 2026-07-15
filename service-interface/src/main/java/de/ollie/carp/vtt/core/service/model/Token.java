@@ -3,7 +3,6 @@ package de.ollie.carp.vtt.core.service.model;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,9 +17,6 @@ public class Token {
 
 	private UUID id;
 	private String name;
-
-	@ToString.Exclude
 	private byte[] image;
-
 	private TokenSize tokenSize;
 }

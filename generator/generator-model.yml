@@ -26,7 +26,7 @@ classes:
           properties:
             - name: import
               value: java.math.BigDecimal
-  - name: Map
+  - name: BattleMap
     properties:
       - name: order
         value: name
@@ -48,7 +48,7 @@ classes:
             value: false
         type:
           name: String
-      - name: image
+      - name: imageContent
         properties:
           - name: suppress-to-string
             value: true

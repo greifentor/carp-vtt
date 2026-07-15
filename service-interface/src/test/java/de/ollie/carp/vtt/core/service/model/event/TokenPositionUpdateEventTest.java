@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.Map;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
@@ -26,7 +26,7 @@ class TokenPositionUpdateEventTest {
 	private Coordinates coordinates;
 
 	@Mock
-	private Map map;
+	private BattleMap battleMap;
 
 	@Mock
 	private Party party;
@@ -41,7 +41,7 @@ class TokenPositionUpdateEventTest {
 
 	@BeforeEach
 	private void beforeEach() {
-		unitUnderTest = new TokenPositionUpdateEvent(ID, token, map, coordinates, party, scenario);
+		unitUnderTest = new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, scenario);
 	}
 
 	@Nested
@@ -51,7 +51,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Coordinates() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, map, null, party, scenario)
+				() -> new TokenPositionUpdateEvent(ID, token, battleMap, null, party, scenario)
 			);
 		}
 
@@ -59,7 +59,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Id() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(null, token, map, coordinates, party, scenario)
+				() -> new TokenPositionUpdateEvent(null, token, battleMap, coordinates, party, scenario)
 			);
 		}
 
@@ -75,7 +75,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Party() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, map, coordinates, null, scenario)
+				() -> new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, null, scenario)
 			);
 		}
 
@@ -83,7 +83,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Scenario() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, map, coordinates, party, null)
+				() -> new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, null)
 			);
 		}
 
@@ -91,7 +91,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Token() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, null, map, coordinates, party, scenario)
+				() -> new TokenPositionUpdateEvent(ID, null, battleMap, coordinates, party, scenario)
 			);
 		}
 	}
@@ -107,7 +107,7 @@ class TokenPositionUpdateEventTest {
 		@Test
 		void getMapId_returnsTheIdOfTheMap() {
 			// Prepare
-			when(map.getId()).thenReturn(ID);
+			when(battleMap.getId()).thenReturn(ID);
 			// Run & Check
 			assertEquals(ID, unitUnderTest.getMapId());
 		}
