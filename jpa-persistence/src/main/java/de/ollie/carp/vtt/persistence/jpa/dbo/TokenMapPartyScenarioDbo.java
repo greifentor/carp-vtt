@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.Data;
@@ -22,15 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @Entity
 @Generated
-@Table(
-	name = "TOKEN_MAP_PARTY_SCENARIO",
-	uniqueConstraints = {
-		@UniqueConstraint(
-			name = "uc_token_map_party_scenario_all",
-			columnNames = { "map_id", "token_id", "party_id", "scenario_id" }
-		),
-	}
-)
+@Table(name = "TOKEN_BATTLE_MAP_PARTY_SCENARIO")
 public class TokenMapPartyScenarioDbo {
 
 	@Id
@@ -38,8 +29,8 @@ public class TokenMapPartyScenarioDbo {
 	private UUID id;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "MAP_ID", nullable = false)
-	private MapDbo map;
+	@JoinColumn(name = "BATTLE_MAP_ID", nullable = false)
+	private BattleMapDbo battleMap;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "TOKEN_ID", nullable = false)

@@ -6,13 +6,13 @@ import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.TokenData;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenUpdatePersistencePort;
-import de.ollie.carp.vtt.persistence.jpa.dbo.MapDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenMapPartyScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.mapper.TokenDboMapper;
-import de.ollie.carp.vtt.persistence.jpa.repository.MapDboRepository;
+import de.ollie.carp.vtt.persistence.jpa.repository.BattleMapDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.ScenarioDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.TokenDboRepository;
@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistencePort {
 
-	private final MapDboRepository mapDboRepository;
+	private final BattleMapDboRepository battleMapDboRepository;
 	private final PartyDboRepository partyDboRepository;
 	private final ScenarioDboRepository scenarioDboRepository;
 	private final TokenDboRepository tokenDboRepository;
@@ -37,20 +37,20 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	private final UuidService uuidService;
 
 	@Override
-	public List<TokenData> findAllByMapPartyScenario(UUID mapId, UUID partyId, UUID scenarioId) {
-		ensure(mapId != null, "map id cannot be null!");
+	public List<TokenData> findAllByMapPartyScenario(UUID battleMapId, UUID partyId, UUID scenarioId) {
+		ensure(battleMapId != null, "battle map id cannot be null!");
 		ensure(partyId != null, "party id cannot be null!");
 		ensure(scenarioId != null, "scenario id cannot be null!");
-		MapDbo mapDbo = mapDboRepository
-			.findById(mapId)
-			.orElseThrow(() -> new NoSuchElementException("Map with id not found: " + mapId));
+		BattleMapDbo mapDbo = battleMapDboRepository
+			.findById(battleMapId)
+			.orElseThrow(() -> new NoSuchElementException("Map with id not found: " + battleMapId));
 		PartyDbo partyDbo = partyDboRepository
 			.findById(partyId)
 			.orElseThrow(() -> new NoSuchElementException("Party with id not found: " + partyId));
 		ScenarioDbo scenarioDbo = scenarioDboRepository
 			.findById(scenarioId)
 			.orElseThrow(() -> new NoSuchElementException("Scenario with id not found: " + scenarioId));
-		List<TokenMapPartyScenarioDbo> dbos = tokenMapPartyScenarioDboRepository.findAllByAndMapAndPartyAndScenario(
+		List<TokenMapPartyScenarioDbo> dbos = tokenMapPartyScenarioDboRepository.findAllByAndBattleMapAndPartyAndScenario(
 			mapDbo,
 			partyDbo,
 			scenarioDbo
@@ -75,20 +75,20 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	public void updateTokenPosition(
 		UUID id,
 		UUID tokenId,
-		UUID mapId,
+		UUID battleMapId,
 		UUID partyId,
 		UUID scenarioId,
 		Coordinates coordinates
 	) {
 		ensure(coordinates != null, "coordinates can not be null!");
 		ensure(id != null, "id can not be null!");
-		ensure(mapId != null, "map id can not be null!");
+		ensure(battleMapId != null, "battle map id can not be null!");
 		ensure(partyId != null, "party id can not be null!");
 		ensure(scenarioId != null, "scenario id can not be null!");
 		ensure(tokenId != null, "token id can not be null!");
-		MapDbo mapDbo = mapDboRepository
-			.findById(mapId)
-			.orElseThrow(() -> new NoSuchElementException("Map with id not found: " + mapId));
+		BattleMapDbo battleMapDbo = battleMapDboRepository
+			.findById(battleMapId)
+			.orElseThrow(() -> new NoSuchElementException("Battle Map with id not found: " + battleMapId));
 		PartyDbo partyDbo = partyDboRepository
 			.findById(partyId)
 			.orElseThrow(() -> new NoSuchElementException("Party with id not found: " + partyId));
@@ -111,7 +111,7 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 						.setFieldX(coordinates.getFieldX())
 						.setFieldY(coordinates.getFieldY())
 						.setId(uuidService.create())
-						.setMap(mapDbo)
+						.setBattleMap(battleMapDbo)
 						.setParty(partyDbo)
 						.setScenario(scenarioDbo)
 						.setToken(tokenDbo);

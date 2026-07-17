@@ -14,9 +14,9 @@
         </createTable>
         <addPrimaryKey columnNames="ID" tableName="TOKEN"/>
     </changeSet>
-    <changeSet author="dm-comp" id="Added-Table-MAP" runInTransaction="true" runOnChange="true">
-        <createTable tableName="MAP">
-            <column name="IMAGE" type="LONGVARBINARY">
+    <changeSet author="dm-comp" id="Added-Table-BATTLE_MAP" runInTransaction="true" runOnChange="true">
+        <createTable tableName="BATTLE_MAP">
+            <column name="IMAGE_CONTENT" type="LONGVARBINARY">
                 <constraints nullable="false"/>
             </column>
             <column name="ID" type="VARCHAR(40)">
@@ -26,7 +26,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addPrimaryKey columnNames="ID" tableName="MAP"/>
+        <addPrimaryKey columnNames="ID" tableName="BATTLE_MAP"/>
     </changeSet>
     <changeSet author="dm-comp" id="Added-Field-TOKEN_SIZE-to-Table-TOKEN" runInTransaction="true" runOnChange="true">
         <addColumn tableName="TOKEN">
@@ -61,16 +61,16 @@
         <modifyDataType tableName="PARTY" columnName="ID" newDataType="UUID"/>
         <modifyDataType tableName="SCENARIO" columnName="ID" newDataType="UUID"/>
     </changeSet>
-    <changeSet author="dm-comp" id="Changed-Datatype-for-ID-Fields-of-Table-MAP-and-TOKEN" runInTransaction="true" runOnChange="true">
-        <modifyDataType tableName="MAP" columnName="ID" newDataType="UUID"/>
+    <changeSet author="dm-comp" id="Changed-Datatype-for-ID-Fields-of-Table-BATTLE_MAP-and-TOKEN" runInTransaction="true" runOnChange="true">
+        <modifyDataType tableName="BATTLE_MAP" columnName="ID" newDataType="UUID"/>
         <modifyDataType tableName="TOKEN" columnName="ID" newDataType="UUID"/>
     </changeSet>
-    <changeSet id="Add-Table-TOKEN_MAP_PARTY_SCENARIO" author="copilot" objectQuotingStrategy="LEGACY" runOnChange="true">
-        <createTable tableName="TOKEN_MAP_PARTY_SCENARIO">
+    <changeSet author="dm-comp" id="Add-Table-TOKEN_BATTLE_MAP_PARTY_SCENARIO" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <createTable tableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO">
             <column name="ID" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="MAP_ID" type="UUID">
+            <column name="BATTLE_MAP_ID" type="UUID">
                 <constraints nullable="false"/>
             </column>
             <column name="TOKEN_ID" type="UUID">
@@ -84,41 +84,37 @@
             </column>
         </createTable>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
-                baseColumnNames="MAP_ID"
-                referencedTableName="MAP"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
+                baseColumnNames="BATTLE_MAP_ID"
+                referencedTableName="BATTLE_MAP"
                 referencedColumnNames="ID"
                 constraintName="FK_TMP_S_MAP"/>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
                 baseColumnNames="TOKEN_ID"
                 referencedTableName="TOKEN"
                 referencedColumnNames="ID"
                 constraintName="FK_TMP_S_TOKEN"/>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
                 baseColumnNames="PARTY_ID"
                 referencedTableName="PARTY"
                 referencedColumnNames="ID"
                 constraintName="FK_TMP_S_PARTY"/>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
                 baseColumnNames="SCENARIO_ID"
                 referencedTableName="SCENARIO"
                 referencedColumnNames="ID"
                 constraintName="FK_TMP_S_SCENARIO"/>
-        <addUniqueConstraint
-                tableName="TOKEN_MAP_PARTY_SCENARIO"
-                columnNames="MAP_ID, TOKEN_ID, PARTY_ID, SCENARIO_ID"
-                constraintName="UC_TOKEN_MAP_PARTY_SCENARIO_ALL"/>
     </changeSet>
     <changeSet author="dm-comp" id="Added-Fields-FIELD_X-and-FIELD_Y-to-table-TOKEN_MAP_PARTY_SCENARIO" runInTransaction="true" runOnChange="true">
-        <addColumn tableName="TOKEN_MAP_PARTY_SCENARIO">
+        <addColumn tableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO">
             <column name="FIELD_X" type="NUMERIC(6,2)" defaultValue="0.0">
                 <constraints nullable="false"/>
             </column>
         </addColumn>
-        <addColumn tableName="TOKEN_MAP_PARTY_SCENARIO">
+        <addColumn tableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO">
             <column name="FIELD_Y" type="NUMERIC(6,2)" defaultValue="0.0">
                 <constraints nullable="false"/>
             </column>
@@ -145,30 +141,30 @@
             <column name="NAME" value="Dummy-Scenario"/>
         </insert>
     </changeSet>
-    <changeSet id="Re-Add-Table-TOKEN_MAP_PARTY_SCENARIO" author="copilot" objectQuotingStrategy="LEGACY" runOnChange="true">
+    <changeSet author="dm-comp" id="Re-Add-Table-TOKEN_BATTLE_MAP_PARTY_SCENARIO" objectQuotingStrategy="LEGACY" runOnChange="true">
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
-                baseColumnNames="MAP_ID"
-                referencedTableName="MAP"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
+                baseColumnNames="BATTLE_MAP_ID"
+                referencedTableName="BATTLE_MAP"
                 referencedColumnNames="ID"
-                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_MAP"/>
+                constraintName="FK_TOKEN_BATTLE_MAP_PARTY_SCENARIO_TO_MAP"/>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
                 baseColumnNames="TOKEN_ID"
                 referencedTableName="TOKEN"
                 referencedColumnNames="ID"
-                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_TOKEN"/>
+                constraintName="FK_TOKEN_BATTLE_MAP_PARTY_SCENARIO_TO_TOKEN"/>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
                 baseColumnNames="PARTY_ID"
                 referencedTableName="PARTY"
                 referencedColumnNames="ID"
-                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_PARTY"/>
+                constraintName="FK_TOKEN_BATTLE_MAP_PARTY_SCENARIO_TO_PARTY"/>
         <addForeignKeyConstraint
-                baseTableName="TOKEN_MAP_PARTY_SCENARIO"
+                baseTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"
                 baseColumnNames="SCENARIO_ID"
                 referencedTableName="SCENARIO"
                 referencedColumnNames="ID"
-                constraintName="FK_TOKEN_MAP_PARTY_SCENARIO_TO_SCENARIO"/>
+                constraintName="FK_TOKEN_BATTLE_MAP_PARTY_SCENARIO_TO_SCENARIO"/>
     </changeSet>
 </databaseChangeLog>

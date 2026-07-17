@@ -1,6 +1,6 @@
 package de.ollie.carp.vtt.persistence.jpa.repository;
 
-import de.ollie.carp.vtt.persistence.jpa.dbo.MapDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
@@ -11,11 +11,15 @@ import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 
 public interface TokenMapPartyScenarioDboRepository extends CrudRepository<TokenMapPartyScenarioDbo, UUID> {
-	List<TokenMapPartyScenarioDbo> findAllByAndMapAndPartyAndScenario(MapDbo map, PartyDbo party, ScenarioDbo scenario);
+	List<TokenMapPartyScenarioDbo> findAllByAndBattleMapAndPartyAndScenario(
+		BattleMapDbo battleMap,
+		PartyDbo party,
+		ScenarioDbo scenario
+	);
 
-	Optional<TokenMapPartyScenarioDbo> findByTokenAndMapAndPartyAndScenario(
+	Optional<TokenMapPartyScenarioDbo> findByTokenAndBattleMapAndPartyAndScenario(
 		TokenDbo token,
-		MapDbo map,
+		BattleMapDbo battleMap,
 		PartyDbo party,
 		ScenarioDbo scenario
 	);

@@ -11,13 +11,13 @@ import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenData;
-import de.ollie.carp.vtt.persistence.jpa.dbo.MapDbo;
+import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenMapPartyScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.mapper.TokenDboMapper;
-import de.ollie.carp.vtt.persistence.jpa.repository.MapDboRepository;
+import de.ollie.carp.vtt.persistence.jpa.repository.BattleMapDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.ScenarioDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.TokenDboRepository;
@@ -48,7 +48,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 	private Coordinates coordinates;
 
 	@Mock
-	private MapDbo mapDbo;
+	private BattleMapDbo battleMapDbo;
 
 	@Mock
 	private PartyDbo partyDbo;
@@ -60,7 +60,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 	private TokenDbo tokenDbo;
 
 	@Mock
-	private MapDboRepository mapDboRepository;
+	private BattleMapDboRepository battleMapDboRepository;
 
 	@Mock
 	private PartyDboRepository partyDboRepository;
@@ -118,7 +118,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setFieldX(FIELD_X)
 				.setFieldY(FIELD_Y)
 				.setId(ID)
-				.setMap(mapDbo)
+				.setBattleMap(battleMapDbo)
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
@@ -127,11 +127,13 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setId(ID)
 				.setToken(token);
 			List<TokenData> expected = List.of(data);
-			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
+			when(battleMapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(battleMapDbo));
 			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboMapper.toModel(tokenDbo)).thenReturn(token);
-			when(tokenMapPartyScenarioDboRepository.findAllByAndMapAndPartyAndScenario(mapDbo, partyDbo, scenarioDbo))
+			when(
+				tokenMapPartyScenarioDboRepository.findAllByAndBattleMapAndPartyAndScenario(battleMapDbo, partyDbo, scenarioDbo)
+			)
 				.thenReturn(List.of(dbo));
 			// Run
 			List<TokenData> returned = unitUnderTest.findAllByMapPartyScenario(MAP_ID, PARTY_ID, SCENARIO_ID);
@@ -198,14 +200,14 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setFieldX(FIELD_X.add(new BigDecimal(1)))
 				.setFieldY(FIELD_Y.add(new BigDecimal(1)))
 				.setId(ID)
-				.setMap(mapDbo)
+				.setBattleMap(battleMapDbo)
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
 			when(tokenMapPartyScenarioDboRepository.findById(ID)).thenReturn(Optional.of(dbo));
 			when(coordinates.getFieldX()).thenReturn(FIELD_X);
 			when(coordinates.getFieldY()).thenReturn(FIELD_Y);
-			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
+			when(battleMapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(battleMapDbo));
 			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
@@ -220,7 +222,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		@Test
 		void callsTheRepositoryMethodCorrectly_forACreate() {
 			// Prepare
-			MapDbo mapDbo = mock(MapDbo.class);
+			BattleMapDbo battleMapDbo = mock(BattleMapDbo.class);
 			PartyDbo partyDbo = mock(PartyDbo.class);
 			ScenarioDbo scenarioDbo = mock(ScenarioDbo.class);
 			TokenDbo tokenDbo = mock(TokenDbo.class);
@@ -228,14 +230,14 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setFieldX(FIELD_X)
 				.setFieldY(FIELD_Y)
 				.setId(ID)
-				.setMap(mapDbo)
+				.setBattleMap(battleMapDbo)
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
 			when(tokenMapPartyScenarioDboRepository.findById(ID)).thenReturn(Optional.empty());
 			when(coordinates.getFieldX()).thenReturn(FIELD_X);
 			when(coordinates.getFieldY()).thenReturn(FIELD_Y);
-			when(mapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(mapDbo));
+			when(battleMapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(battleMapDbo));
 			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
