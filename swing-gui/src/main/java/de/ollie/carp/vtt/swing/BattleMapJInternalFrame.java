@@ -114,7 +114,6 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 									tokens.getNextCounterFor(selectedToken),
 									uuidService.create()
 								);
-								System.out.println(newMapToken);
 								battleMapPanel.setSelectedToken(newMapToken);
 								updatePosition(getFieldCoordinates(e.getX(), e.getY()));
 								selectedToken = null;
@@ -137,6 +136,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	}
 
 	private TokenMap map(List<TokenData> tokenData) {
+		tokens.clear();
 		tokenData.forEach(td ->
 			tokens.put(new MapToken(td.getToken(), tokens.getNextCounterFor(td.getToken()), td.getId()), td.getCoordinates())
 		);

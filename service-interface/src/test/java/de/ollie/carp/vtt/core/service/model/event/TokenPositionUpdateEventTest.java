@@ -101,7 +101,7 @@ class TokenPositionUpdateEventTest {
 
 		@Test
 		void getId_returnsTheIdOfTheRecord() {
-			assertEquals(ID, unitUnderTest.id());
+			assertEquals(ID, unitUnderTest.getId());
 		}
 
 		@Test
@@ -109,7 +109,7 @@ class TokenPositionUpdateEventTest {
 			// Prepare
 			when(battleMap.getId()).thenReturn(ID);
 			// Run & Check
-			assertEquals(ID, unitUnderTest.getMapId());
+			assertEquals(ID, unitUnderTest.getBattleMapId());
 		}
 
 		@Test

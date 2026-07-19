@@ -51,4 +51,8 @@ public class TokenMap {
 	public void put(MapToken key, Coordinates coordinates) {
 		tokens.put(key, coordinates);
 	}
+
+	public void clear() {
+		tokens.clear();
+	}
 }

@@ -30,13 +30,15 @@ class TokenPositionServiceImpl implements TokenPositionService {
 	@Override
 	public void updateTokenPosition(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
 		ensure(tokenPositionUpdateEvent != null, "token position update event cannot be null!");
-		tokenUpdatePort.updateTokenPosition(
-			tokenPositionUpdateEvent.id(),
-			tokenPositionUpdateEvent.getTokenId(),
-			tokenPositionUpdateEvent.getMapId(),
-			tokenPositionUpdateEvent.getPartyId(),
-			tokenPositionUpdateEvent.getScenarioId(),
-			tokenPositionUpdateEvent.coordinates()
+		tokenPositionUpdateEvent.setId(
+			tokenUpdatePort.updateTokenPosition(
+				tokenPositionUpdateEvent.getId(),
+				tokenPositionUpdateEvent.getTokenId(),
+				tokenPositionUpdateEvent.getBattleMapId(),
+				tokenPositionUpdateEvent.getPartyId(),
+				tokenPositionUpdateEvent.getScenarioId(),
+				tokenPositionUpdateEvent.getCoordinates()
+			)
 		);
 	}
 }

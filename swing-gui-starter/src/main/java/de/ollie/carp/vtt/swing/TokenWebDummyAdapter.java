@@ -10,6 +10,6 @@ public class TokenWebDummyAdapter implements TokenWebPort {
 
 	@Override
 	public void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
-		System.out.println("push " + tokenPositionUpdateEvent);
+		System.out.println("push " + tokenPositionUpdateEvent.getId());
 	}
 }

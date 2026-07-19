@@ -55,7 +55,6 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 			partyDbo,
 			scenarioDbo
 		);
-		dbos.forEach(dbo -> System.out.println("--- " + dbo));
 		return map(dbos);
 	}
 
@@ -72,7 +71,7 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	}
 
 	@Override
-	public void updateTokenPosition(
+	public UUID updateTokenPosition(
 		UUID id,
 		UUID tokenId,
 		UUID battleMapId,
@@ -98,25 +97,27 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 		TokenDbo tokenDbo = tokenDboRepository
 			.findById(tokenId)
 			.orElseThrow(() -> new NoSuchElementException("Token with id not found: " + tokenId));
-		tokenMapPartyScenarioDboRepository
+		System.out.println("id -   " + id);
+		return tokenMapPartyScenarioDboRepository
 			.findById(id)
-			.ifPresentOrElse(
-				tmps -> {
-					tmps.setFieldX(coordinates.getFieldX()).setFieldY(coordinates.getFieldY());
-					tokenMapPartyScenarioDboRepository.save(tmps);
-				},
-				() -> {
-					TokenMapPartyScenarioDbo tmps = new TokenMapPartyScenarioDbo()
-						.setId(id)
-						.setFieldX(coordinates.getFieldX())
-						.setFieldY(coordinates.getFieldY())
-						.setId(uuidService.create())
-						.setBattleMap(battleMapDbo)
-						.setParty(partyDbo)
-						.setScenario(scenarioDbo)
-						.setToken(tokenDbo);
-					tokenMapPartyScenarioDboRepository.save(tmps);
-				}
-			);
+			.map(tmps -> {
+				System.out.println("read - " + tmps.getId());
+				tmps.setFieldX(coordinates.getFieldX()).setFieldY(coordinates.getFieldY());
+				tokenMapPartyScenarioDboRepository.save(tmps);
+				return id;
+			})
+			.orElseGet(() -> {
+				TokenMapPartyScenarioDbo tmps = new TokenMapPartyScenarioDbo()
+					.setId(id)
+					.setFieldX(coordinates.getFieldX())
+					.setFieldY(coordinates.getFieldY())
+					.setBattleMap(battleMapDbo)
+					.setParty(partyDbo)
+					.setScenario(scenarioDbo)
+					.setToken(tokenDbo);
+				System.out.println("new -  " + tmps.getId());
+				tokenMapPartyScenarioDboRepository.save(tmps);
+				return id;
+			});
 	}
 }

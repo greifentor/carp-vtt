@@ -241,7 +241,6 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
-			when(uuidService.create()).thenReturn(ID);
 			// Run
 			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
 			// Check

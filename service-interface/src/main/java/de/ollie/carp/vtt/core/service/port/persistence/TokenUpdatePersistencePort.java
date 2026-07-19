@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface TokenUpdatePersistencePort {
 	List<TokenData> findAllByMapPartyScenario(UUID mapId, UUID partyId, UUID scenarioId);
 
-	void updateTokenPosition(UUID id, UUID tokenId, UUID mapId, UUID partyId, UUID scenarioId, Coordinates coordinates);
+	UUID updateTokenPosition(UUID id, UUID tokenId, UUID mapId, UUID partyId, UUID scenarioId, Coordinates coordinates);
 }
