@@ -63,7 +63,6 @@
 		<module>jpa-persistence</module>
 		<module>legacy-adapter</module>
 		<module>migration</module>
-		<module>out-box</module>
 		<module>rest-client</module>
 		<module>rest-server</module>
 		<module>service</module>

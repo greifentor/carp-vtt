@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 paths:
-  /api/v1/battle-map:
+  /api/v1/battle-maps:
     put:
       tags:
         - BattleMap
@@ -23,6 +23,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BattleMapDto'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /api/v1/tokens/positions:
+    put:
+      tags:
+        - Token-Position
+      summary: Update a tokens position
+      operationId: updateTokenPosition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenPositionDto'
+      responses:
+        '200':
+          description: Token Position updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPositionDto'
         '400':
           description: Invalid request
           content:
@@ -57,6 +88,45 @@ components:
           format: byte
           description: Base64-encoded image content
           example: "iVBORw0KGgoAAAANSUhEUgAA..."
+    TokenPositionDto:
+      type: object
+      required:
+        - id
+        - battleMapId
+        - partyId
+        - scenarioId
+        - tokenId
+        - coordinateX
+        - coordinateY
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        battleMapId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        partyId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        scenarioId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        tokenId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        coordinateX:
+          type: integer
+          format: int32
+          example: 4711
+        coordinateY:
+          type: integer
+          format: int32
+          example: 1701
 
     ErrorDto:
       type: object

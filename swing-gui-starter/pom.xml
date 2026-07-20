@@ -33,6 +33,12 @@
 			<version>0.0.1</version>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>carp-vtt-rest-client</artifactId>
+			<version>0.0.1</version>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- java -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

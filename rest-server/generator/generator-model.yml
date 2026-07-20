@@ -27,3 +27,64 @@ classes:
             value: true
         type:
           name: byte[]
+  - name: TokenPosition
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: battleMapId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: coordinatesX
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: coordinatesY
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: partyId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: scenarioId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: tokenId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
