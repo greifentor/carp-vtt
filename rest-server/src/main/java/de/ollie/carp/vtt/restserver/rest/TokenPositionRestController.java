@@ -5,12 +5,12 @@ import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import de.ollie.carp.vtt.restserver.rest.api.TokenPositionApi;
 import de.ollie.carp.vtt.restserver.rest.mapper.TokenPositionDtoMapper;
 import de.ollie.carp.vtt.restserver.rest.model.TokenPositionDto;
-import jakarta.inject.Named;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
-@Named
+@RestController
 @RequiredArgsConstructor
 public class TokenPositionRestController implements TokenPositionApi {
 

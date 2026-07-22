@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class RestClientConfiguration {
 
-	@Value("${rest.client.base.url:http://localhost:8080}")
+	@Value("${rest.client.base.url}")
 	private String baseUrl;
 }

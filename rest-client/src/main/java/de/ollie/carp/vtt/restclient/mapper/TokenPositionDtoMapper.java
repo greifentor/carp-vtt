@@ -9,6 +9,7 @@ public class TokenPositionDtoMapper {
 
 	public TokenPositionDto map(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
 		TokenPositionDto dto = new TokenPositionDto();
+		dto.setId(tokenPositionUpdateEvent.getId());
 		dto.setBattleMapId(tokenPositionUpdateEvent.getBattleMapId());
 		dto.setCoordinateX(tokenPositionUpdateEvent.getCoordinates().getFieldX().intValue());
 		dto.setCoordinateY(tokenPositionUpdateEvent.getCoordinates().getFieldY().intValue());

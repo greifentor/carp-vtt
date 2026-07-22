@@ -5,12 +5,12 @@ import de.ollie.carp.vtt.restserver.core.service.model.BattleMap;
 import de.ollie.carp.vtt.restserver.rest.api.BattleMapApi;
 import de.ollie.carp.vtt.restserver.rest.mapper.BattleMapDtoMapper;
 import de.ollie.carp.vtt.restserver.rest.model.BattleMapDto;
-import jakarta.inject.Named;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
-@Named
+@RestController
 @RequiredArgsConstructor
 public class BattleMapRestController implements BattleMapApi {
 
