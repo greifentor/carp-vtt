@@ -14,4 +14,29 @@
         </createTable>
         <addPrimaryKey columnNames="ID" tableName="BATTLE_MAP"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Add-Table-TOKEN_POSITION" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <createTable tableName="TOKEN_POSITION">
+            <column name="ID" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="BATTLE_MAP_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOKEN_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PARTY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCENARIO_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COORDINATE_X" type="NUMERIC(6,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COORDINATE_Y" type="NUMERIC(6,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

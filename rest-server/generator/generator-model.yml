@@ -49,13 +49,13 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
-      - name: coordinatesX
+      - name: coordinateX
         properties:
           - name: nullable
             value: false
         type:
           name: int
-      - name: coordinatesY
+      - name: coordinateY
         properties:
           - name: nullable
             value: false
