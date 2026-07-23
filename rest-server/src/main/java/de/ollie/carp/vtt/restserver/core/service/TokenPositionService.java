@@ -15,8 +15,8 @@ import lombok.Generated;
 public interface TokenPositionService {
 	TokenPosition createTokenPosition(
 		UUID battleMapId,
-		int coordinatesX,
-		int coordinatesY,
+		int coordinateX,
+		int coordinateY,
 		UUID partyId,
 		UUID scenarioId,
 		UUID tokenId

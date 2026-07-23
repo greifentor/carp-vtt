@@ -27,8 +27,8 @@ public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersiste
 	@Override
 	public TokenPosition create(
 		UUID battleMapId,
-		int coordinatesX,
-		int coordinatesY,
+		int coordinateX,
+		int coordinateY,
 		UUID partyId,
 		UUID scenarioId,
 		UUID tokenId

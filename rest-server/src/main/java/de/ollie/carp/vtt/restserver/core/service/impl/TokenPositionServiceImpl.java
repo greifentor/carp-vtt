@@ -25,13 +25,13 @@ class TokenPositionServiceImpl implements TokenPositionService {
 	@Override
 	public TokenPosition createTokenPosition(
 		UUID battleMapId,
-		int coordinatesX,
-		int coordinatesY,
+		int coordinateX,
+		int coordinateY,
 		UUID partyId,
 		UUID scenarioId,
 		UUID tokenId
 	) {
-		return tokenPositionPersistencePort.create(battleMapId, coordinatesX, coordinatesY, partyId, scenarioId, tokenId);
+		return tokenPositionPersistencePort.create(battleMapId, coordinateX, coordinateY, partyId, scenarioId, tokenId);
 	}
 
 	@Override

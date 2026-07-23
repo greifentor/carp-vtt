@@ -28,11 +28,11 @@ public class TokenPositionDbo {
 	@Column(name = "BATTLE_MAP_ID", nullable = false)
 	private UUID battleMapId;
 
-	@Column(name = "COORDINATES_X", nullable = false)
-	private int coordinatesX;
+	@Column(name = "COORDINATE_X", nullable = false)
+	private int coordinateX;
 
-	@Column(name = "COORDINATES_Y", nullable = false)
-	private int coordinatesY;
+	@Column(name = "COORDINATE_Y", nullable = false)
+	private int coordinateY;
 
 	@Column(name = "PARTY_ID", nullable = false)
 	private UUID partyId;
