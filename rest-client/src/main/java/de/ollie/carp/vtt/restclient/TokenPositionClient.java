@@ -13,12 +13,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenPositionClient {
 
+	private final BearerTokenGenerator bearerTokenGenerator;
 	private final RestClientConfiguration restClientConfiguration;
 	private final TokenPositionDtoMapper tokenPositionDtoMapper;
 
 	public void updateTokenPosition(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
 		ApiClient client = new ApiClient();
 		client.setBasePath(restClientConfiguration.getBaseUrl());
+		client.setBearerToken(bearerTokenGenerator.create());
 		TokenPositionApi api = new TokenPositionApi(client);
 		TokenPositionDto dto = tokenPositionDtoMapper.map(tokenPositionUpdateEvent);
 		try {

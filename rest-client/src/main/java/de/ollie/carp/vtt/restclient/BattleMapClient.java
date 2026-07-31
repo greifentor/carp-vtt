@@ -12,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BattleMapClient {
 
+	private final BearerTokenGenerator bearerTokenGenerator;
 	private final RestClientConfiguration restClientConfiguration;
 
 	public void uploadBattleMap(BattleMap battleMap) {
 		ApiClient client = new ApiClient();
 		client.setBasePath(restClientConfiguration.getBaseUrl());
+		client.setBearerToken(bearerTokenGenerator.create());
 		BattleMapApi api = new BattleMapApi(client);
 		BattleMapDto dto = null;
 		try {

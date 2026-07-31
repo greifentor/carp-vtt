@@ -10,4 +10,13 @@ public class RestClientConfiguration {
 
 	@Value("${rest.client.base.url}")
 	private String baseUrl;
+
+	@Value("${rest.communication.secret}")
+	private String communicationSecret;
+
+	@Value("${rest.client.user.name}")
+	private String userName;
+
+	@Value("${rest.communication.validity.offset:3}")
+	private int communicationValidityOffset;
 }

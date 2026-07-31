@@ -3,6 +3,9 @@ info:
   title: Battle Map Service API
   version: 1.0.0
 
+security:
+  - bearerAuth: []
+
 paths:
   /api/v1/battle-maps:
     put:
@@ -68,6 +71,11 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     BattleMapDto:
       type: object
