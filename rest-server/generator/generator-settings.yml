@@ -75,7 +75,7 @@ generators:
         value: src/main/java
   - type: ENUM
     package: de.ollie.carp.vtt.restserver.persistence.jpa.dbo
-    suppress-when: classModel Load suppress-persistence HasProperty
+    suppress-when: propertyOwner Load suppress-persistence HasProperty
     resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
     target-file-name: ${UnitName}Dbo
     template: templates/persistence/jpa/EnumDbo.vc

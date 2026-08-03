@@ -88,3 +88,18 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
+enums:
+  - name: AccessRight
+    properties:
+      - name: suppress-persistence
+        value: true
+    identifiers:
+    - CREATE_OWN
+    - CREATE_PUBLISHED
+    - DELETE_OWN
+    - DELETE_PUBLISHED
+    - RETRIEVE_OWN
+    - RETRIEVE_PUBLISHED
+    - UPDATE_OWN
+    - UPDATE_POSITION
+    - UPDATE_PUBLISHED
