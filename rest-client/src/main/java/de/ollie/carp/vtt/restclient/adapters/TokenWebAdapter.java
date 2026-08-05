@@ -1,7 +1,9 @@
 package de.ollie.carp.vtt.restclient.adapters;
 
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
+import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
+import de.ollie.carp.vtt.restclient.TokenClient;
 import de.ollie.carp.vtt.restclient.TokenPositionClient;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +12,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenWebAdapter implements TokenWebPort {
 
+	private final TokenClient tokenClient;
 	private final TokenPositionClient tokenPositionClient;
 
 	@Override
 	public void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
 		tokenPositionClient.updateTokenPosition(tokenPositionUpdateEvent);
+	}
+
+	@Override
+	public void pushTokenUpdate(TokenUpdateEvent tokenUpdateEvent) {
+		tokenClient.updateToken(tokenUpdateEvent);
 	}
 }

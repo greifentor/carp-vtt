@@ -27,6 +27,41 @@ classes:
             value: true
         type:
           name: byte[]
+  - name: Token
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
+      - name: image
+        properties:
+          - name: suppress-to-string
+            value: true
+        type:
+          name: byte[]
+      - name: tokenSize
+        enum: true
+        type:
+          name: TokenSize
+          properties:
+            - name: project-type
+              value: true
   - name: TokenPosition
     attributes:
       - name: id
@@ -103,3 +138,11 @@ enums:
     - UPDATE_OWN
     - UPDATE_POSITION
     - UPDATE_PUBLISHED
+  - name: TokenSize
+    identifiers:
+    - TINY
+    - SMALL
+    - MEDIUM
+    - LARGE
+    - HUGE
+    - GARGANTUAN

@@ -38,6 +38,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
+  /api/v1/tokens:
+    put:
+      tags:
+        - Token
+      summary: Update a tokens
+      operationId: updateToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenDto'
+      responses:
+        '200':
+          description: Token updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
   /api/v1/tokens/positions:
     put:
       tags:
@@ -81,7 +112,7 @@ components:
       type: object
       required:
         - id
-        - name
+        - name 
         - imageContent
       properties:
         id:
@@ -96,6 +127,37 @@ components:
           format: byte
           description: Base64-encoded image content
           example: "iVBORw0KGgoAAAANSUhEUgAA..."
+    TokenDto:
+      type: object
+      required:
+        - id
+        - name
+        - imageContent
+        - tokenSize
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "orc-ambush-map"
+        imageContent:
+          type: string
+          format: byte
+          description: Base64-encoded image content
+          example: "iVBORw0KGgoAAAANSUhEUgAA..."
+        tokenSize:
+          $ref: '#/components/schemas/TokenSizeDto'
+    TokenSizeDto:
+      type: string
+      enum:
+        - TINY
+        - SMALL
+        - MEDIUM
+        - LARGE
+        - HUGE
+        - GARGANTUAN
     TokenPositionDto:
       type: object
       required:

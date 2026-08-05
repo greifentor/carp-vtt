@@ -4,7 +4,7 @@ import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel;
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel.ButtonType;
-import de.ollie.carp.vtt.swing.component.Upload;
+import de.ollie.carp.vtt.swing.component.FileUploadField;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -18,6 +18,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 
 	public interface Observer {
 		void deleted();
+
 		void updated(Token tokenToSave);
 	}
 
@@ -29,7 +30,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 
 	private transient ResourceManager resourceManager;
 	private JTextField textFieldName;
-	private Upload uploadImage;
+	private FileUploadField uploadImage;
 
 	public TokenEditJInternalFrame(
 		Token objectToEdit,
@@ -88,7 +89,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 	JPanel createPanelFields() {
 		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		textFieldName = new JTextField(objectToEdit.getName(), 40);
-		uploadImage = new Upload(binaryFileAccessPort, swingComponentFactory, objectToEdit.getImage()).build();
+		uploadImage = new FileUploadField();
 		panel.add(new JTextField(40));
 		panel.add(uploadImage);
 		return panel;
@@ -103,11 +104,16 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 				observer.deleted();
 			}
 		}
+		setVisible(false);
+		dispose();
 	}
 
 	Token copyValueFromField() {
 		objectToEdit.setName(textFieldName.getText());
-		objectToEdit.setImage(uploadImage.getValue());
+		if (uploadImage.hasContent()) {
+			objectToEdit.setTokenSize(uploadImage.getTokenSize());
+			objectToEdit.setImage(uploadImage.getContent());
+		}
 		return objectToEdit;
 	}
 }

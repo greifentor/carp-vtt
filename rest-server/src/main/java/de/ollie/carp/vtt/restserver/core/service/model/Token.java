@@ -1,4 +1,4 @@
-package de.ollie.carp.vtt.core.service.model;
+package de.ollie.carp.vtt.restserver.core.service.model;
 
 import java.util.UUID;
 import lombok.Data;
@@ -17,9 +17,6 @@ public class Token {
 
 	private UUID id;
 	private String name;
-
-	@lombok.ToString.Exclude
 	private byte[] image;
-
 	private TokenSize tokenSize;
 }

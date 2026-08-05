@@ -5,6 +5,7 @@ import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
@@ -110,7 +111,10 @@ public class ApplicationFrame
 
 					@Override
 					public void updated(Token tokenToSave) {
-						tokenService.save(tokenToSave);
+						System.out.println(tokenToSave);
+						tokenToSave = tokenService.save(tokenToSave);
+						System.out.println(tokenToSave);
+						tokenWebPort.pushTokenUpdate(new TokenUpdateEvent(UUID.randomUUID(), tokenToSave));
 					}
 				}
 			)
