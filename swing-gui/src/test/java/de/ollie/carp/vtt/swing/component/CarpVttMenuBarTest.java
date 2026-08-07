@@ -53,12 +53,24 @@ class CarpVttMenuBarTest {
 			when(swingComponentFactory.createMenu(CarpVttMenuBar.RES_ID_MENU_EDIT)).thenReturn(new JMenu(LABEL));
 			when(swingComponentFactory.createMenu(CarpVttMenuBar.RES_ID_MENU_FILE)).thenReturn(new JMenu(LABEL));
 			when(swingComponentFactory.createMenu(CarpVttMenuBar.RES_ID_MENU_MAP)).thenReturn(new JMenu(LABEL));
+			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_EDIT_ITEM_BATTLE_MAP))
+				.thenReturn(new JMenuItem(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_EDIT_ITEM_TOKEN))
 				.thenReturn(new JMenuItem(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_FILE_ITEM_QUIT))
 				.thenReturn(new JMenuItem(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_MAP_OPEN)).thenReturn(new JMenuItem(LABEL));
 			unitUnderTest = new CarpVttMenuBar(observer, swingComponentFactory);
+		}
+
+		@Test
+		void obsererReturnsCorrectIdentifier_whenEditBattleMapsMenuItemClicked() {
+			// Prepare
+			JMenuItem menuItem = (JMenuItem) ReflectionTestUtils.getField(unitUnderTest, "menuItemEditBattleMaps");
+			// Run
+			menuItem.doClick();
+			// Check
+			verify(observer, times(1)).menuItemSelected(MenuItemIdentifier.EDIT_BATTLE_MAP);
 		}
 
 		@Test

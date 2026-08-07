@@ -1,4 +1,4 @@
-package de.ollie.carp.vtt.restclient.adapters;
+package de.ollie.carp.vtt.restclient.adapter;
 
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;

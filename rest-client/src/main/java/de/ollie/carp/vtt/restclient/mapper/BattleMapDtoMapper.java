@@ -1,17 +1,17 @@
 package de.ollie.carp.vtt.restclient.mapper;
 
-import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.model.event.BattleMapUpdateEvent;
 import de.ollie.carp.vtt.restclient.model.BattleMapDto;
-import java.util.List;
-import org.mapstruct.Mapper;
+import jakarta.inject.Named;
 
-@Mapper(componentModel = "spring")
-public interface BattleMapDtoMapper {
-	BattleMap toModel(BattleMapDto dto);
+@Named
+public class BattleMapDtoMapper {
 
-	List<BattleMap> toModels(List<BattleMapDto> dbo);
-
-	BattleMapDto toDto(BattleMap model);
-
-	List<BattleMapDto> toDtos(List<BattleMap> models);
+	public BattleMapDto map(BattleMapUpdateEvent battleMapUpdateEvent) {
+		BattleMapDto dto = new BattleMapDto();
+		dto.setId(battleMapUpdateEvent.getId());
+		dto.setImage(battleMapUpdateEvent.getBattleMap().getImageContent());
+		dto.setName(battleMapUpdateEvent.getBattleMap().getName());
+		return dto;
+	}
 }

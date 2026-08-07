@@ -1,30 +1,27 @@
 package de.ollie.carp.vtt.swing;
 
-import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.core.service.model.TokenSize;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel;
 import de.ollie.carp.vtt.swing.component.EditorButtonPanel.ButtonType;
 import de.ollie.carp.vtt.swing.component.FileUploadField;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class TokenEditJInternalFrame extends JInternalFrame implements EditorButtonPanel.Observer {
+public class BattleMapEditJInternalFrame extends JInternalFrame implements EditorButtonPanel.Observer {
 
 	public interface Observer {
 		void deleted();
 
-		void updated(Token tokenToSave);
+		void updated(BattleMap tokenToSave);
 	}
 
-	private final transient JComboBox<TokenSize> comboBoxTokenSize;
-	private final transient Token objectToEdit;
+	private final transient BattleMap objectToEdit;
 	private final transient SwingComponentFactory swingComponentFactory;
 	private final JDesktopPane desktopPane;
 	private final transient Observer observer;
@@ -33,8 +30,8 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 	private JTextField textFieldName;
 	private FileUploadField uploadFieldImage;
 
-	public TokenEditJInternalFrame(
-		Token objectToEdit,
+	public BattleMapEditJInternalFrame(
+		BattleMap objectToEdit,
 		SwingComponentFactory swingComponentFactory,
 		JDesktopPane desktopPane,
 		Observer observer
@@ -44,12 +41,11 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 		this.objectToEdit = objectToEdit;
 		this.observer = observer;
 		this.swingComponentFactory = swingComponentFactory;
-		comboBoxTokenSize = new JComboBox<>(TokenSize.values());
 		resourceManager = swingComponentFactory.getResourceManager();
 	}
 
-	TokenEditJInternalFrame prepare() {
-		setTitle(resourceManager.getResource("TokenEditJInternalFrame.title"));
+	BattleMapEditJInternalFrame prepare() {
+		setTitle(resourceManager.getResource("BattleMapEditJInternalFrame.title"));
 		setContentPane(createMainPanel());
 		try {
 			setSelected(true);
@@ -81,8 +77,8 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 
 	JPanel createPanelLabels() {
 		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
-		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.name.label"));
-		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.content.label"));
+		panel.add(swingComponentFactory.createLabel("BattleMapEditJInternalFrame.field.name.label"));
+		panel.add(swingComponentFactory.createLabel("BattleMapEditJInternalFrame.field.content.label"));
 		return panel;
 	}
 
@@ -90,7 +86,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		textFieldName = new JTextField(objectToEdit.getName(), 40);
 		uploadFieldImage = new FileUploadField();
-		panel.add(new JTextField(40));
+		panel.add(textFieldName);
 		panel.add(uploadFieldImage);
 		return panel;
 	}
@@ -108,12 +104,12 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 		dispose();
 	}
 
-	Token copyValueFromField() {
+	BattleMap copyValueFromField() {
 		objectToEdit.setName(textFieldName.getText());
 		if (uploadFieldImage.hasContent()) {
-			objectToEdit.setTokenSize((TokenSize) comboBoxTokenSize.getSelectedItem());
-			objectToEdit.setImage(uploadFieldImage.getContent());
+			objectToEdit.setImageContent(uploadFieldImage.getContent());
 		}
+		System.out.println("\n\n" + objectToEdit);
 		return objectToEdit;
 	}
 }

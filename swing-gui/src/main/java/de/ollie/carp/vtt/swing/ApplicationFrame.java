@@ -4,9 +4,12 @@ import de.ollie.carp.vtt.core.service.BattleMapService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.event.BattleMapUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
+import de.ollie.carp.vtt.core.service.port.web.BattleMapWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
@@ -41,7 +44,10 @@ public class ApplicationFrame
 	private BinaryFileAccessPort binaryFileAccessPort;
 
 	@Inject
-	private BattleMapService mapService;
+	private BattleMapService battleMapService;
+
+	@Inject
+	private BattleMapWebPort battleMapWebPort;
 
 	@Inject
 	private ResourceManager resourceManager;
@@ -95,14 +101,31 @@ public class ApplicationFrame
 
 	@Override
 	public void menuItemSelected(MenuItemIdentifier selectedMenuItem) {
-		if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
-			System.exit(0);
+		if (selectedMenuItem == MenuItemIdentifier.EDIT_BATTLE_MAP) {
+			new BattleMapEditJInternalFrame(
+				new BattleMap().setId(UUID.randomUUID()),
+				swingComponentFactory,
+				desktopPane,
+				new BattleMapEditJInternalFrame.Observer() {
+					@Override
+					public void deleted() {
+						// NOP
+					}
+
+					@Override
+					public void updated(BattleMap battleMapToSave) {
+						battleMapToSave = battleMapService.save(battleMapToSave);
+						battleMapWebPort.pushBattleMapUpdate(new BattleMapUpdateEvent(uuidService.create(), battleMapToSave));
+					}
+				}
+			)
+				.prepare()
+				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
 			new TokenEditJInternalFrame(
 				new Token().setId(UUID.randomUUID()),
 				swingComponentFactory,
 				desktopPane,
-				binaryFileAccessPort,
 				new TokenEditJInternalFrame.Observer() {
 					@Override
 					public void deleted() {
@@ -111,19 +134,19 @@ public class ApplicationFrame
 
 					@Override
 					public void updated(Token tokenToSave) {
-						System.out.println(tokenToSave);
 						tokenToSave = tokenService.save(tokenToSave);
-						System.out.println(tokenToSave);
-						tokenWebPort.pushTokenUpdate(new TokenUpdateEvent(UUID.randomUUID(), tokenToSave));
+						tokenWebPort.pushTokenUpdate(new TokenUpdateEvent(uuidService.create(), tokenToSave));
 					}
 				}
 			)
 				.prepare()
 				.setVisible(true);
+		} else if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
+			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
 			new BattleMapJInternalFrame(
 				desktopPane,
-				mapService,
+				battleMapService,
 				tokenPositionService,
 				tokenService,
 				tokenWebPort,

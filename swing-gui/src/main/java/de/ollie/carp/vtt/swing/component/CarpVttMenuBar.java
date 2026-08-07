@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 public class CarpVttMenuBar extends JMenuBar {
 
 	static final String RES_ID_MENU_EDIT = "MainMenuBar.menu.edit.label";
+	static final String RES_ID_MENU_EDIT_ITEM_BATTLE_MAP = "MainMenuBar.menu.edit.item.battleMaps.label";
 	static final String RES_ID_MENU_EDIT_ITEM_TOKEN = "MainMenuBar.menu.edit.item.tokens.label";
 	static final String RES_ID_MENU_FILE = "MainMenuBar.menu.file.label";
 	static final String RES_ID_MENU_FILE_ITEM_QUIT = "MainMenuBar.menu.file.item.quit.label";
@@ -17,6 +18,7 @@ public class CarpVttMenuBar extends JMenuBar {
 	static final String RES_ID_MENU_MAP_OPEN = "MainMenuBar.menu.map.open.label";
 
 	public enum MenuItemIdentifier {
+		EDIT_BATTLE_MAP,
 		EDIT_TOKEN,
 		FILE_QUIT,
 		MAP_OPEN,
@@ -29,6 +31,7 @@ public class CarpVttMenuBar extends JMenuBar {
 	private JMenu menuEdit;
 	private JMenu menuFile;
 	private JMenu menuMap;
+	private JMenuItem menuItemEditBattleMaps;
 	private JMenuItem menuItemEditTokens;
 	private JMenuItem menuItemFileQuit;
 	private JMenuItem menuItemMapOpen;
@@ -43,6 +46,9 @@ public class CarpVttMenuBar extends JMenuBar {
 		menuFile.add(menuItemFileQuit);
 		add(menuFile);
 		menuEdit = swingComponentFactory.createMenu(RES_ID_MENU_EDIT);
+		menuItemEditBattleMaps = swingComponentFactory.createMenuItem(RES_ID_MENU_EDIT_ITEM_BATTLE_MAP);
+		menuItemEditBattleMaps.addActionListener(e -> observer.menuItemSelected(MenuItemIdentifier.EDIT_BATTLE_MAP));
+		menuEdit.add(menuItemEditBattleMaps);
 		menuItemEditTokens = swingComponentFactory.createMenuItem(RES_ID_MENU_EDIT_ITEM_TOKEN);
 		menuItemEditTokens.addActionListener(e -> observer.menuItemSelected(MenuItemIdentifier.EDIT_TOKEN));
 		menuEdit.add(menuItemEditTokens);
