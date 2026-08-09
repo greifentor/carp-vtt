@@ -10,7 +10,7 @@ public class TokenDtoMapper {
 
 	public TokenDto map(TokenUpdateEvent tokenUpdateEvent) {
 		TokenDto dto = new TokenDto();
-		dto.setId(tokenUpdateEvent.getId());
+		dto.setId(tokenUpdateEvent.getToken().getId());
 		dto.setImageContent(tokenUpdateEvent.getToken().getImage());
 		dto.setName(tokenUpdateEvent.getToken().getName());
 		dto.setTokenSize(TokenSizeDto.valueOf(tokenUpdateEvent.getToken().getTokenSize().name()));

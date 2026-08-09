@@ -80,17 +80,19 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 	}
 
 	JPanel createPanelLabels() {
-		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
+		JPanel panel = new JPanel(new GridLayout(3, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.name.label"));
+		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.tokenSize.label"));
 		panel.add(swingComponentFactory.createLabel("TokenEditJInternalFrame.field.content.label"));
 		return panel;
 	}
 
 	JPanel createPanelFields() {
-		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
+		JPanel panel = new JPanel(new GridLayout(3, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		textFieldName = new JTextField(objectToEdit.getName(), 40);
 		uploadFieldImage = new FileUploadField();
-		panel.add(new JTextField(40));
+		panel.add(textFieldName);
+		panel.add(comboBoxTokenSize);
 		panel.add(uploadFieldImage);
 		return panel;
 	}
@@ -110,8 +112,8 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 
 	Token copyValueFromField() {
 		objectToEdit.setName(textFieldName.getText());
+		objectToEdit.setTokenSize((TokenSize) comboBoxTokenSize.getSelectedItem());
 		if (uploadFieldImage.hasContent()) {
-			objectToEdit.setTokenSize((TokenSize) comboBoxTokenSize.getSelectedItem());
 			objectToEdit.setImage(uploadFieldImage.getContent());
 		}
 		return objectToEdit;

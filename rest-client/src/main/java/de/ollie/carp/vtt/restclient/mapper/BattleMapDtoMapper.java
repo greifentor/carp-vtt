@@ -9,7 +9,7 @@ public class BattleMapDtoMapper {
 
 	public BattleMapDto map(BattleMapUpdateEvent battleMapUpdateEvent) {
 		BattleMapDto dto = new BattleMapDto();
-		dto.setId(battleMapUpdateEvent.getId());
+		dto.setId(battleMapUpdateEvent.getBattleMap().getId());
 		dto.setImage(battleMapUpdateEvent.getBattleMap().getImageContent());
 		dto.setName(battleMapUpdateEvent.getBattleMap().getName());
 		return dto;
