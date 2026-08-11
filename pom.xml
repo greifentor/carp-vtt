@@ -60,6 +60,7 @@
 	</build>
 	<modules>
 		<module>base-lib</module>
+		<module>graphics-manager</module>
 		<module>jpa-persistence</module>
 		<module>legacy-adapter</module>
 		<module>migration</module>
@@ -69,6 +70,7 @@
 		<module>service-interface</module>
 		<module>swing-gui</module>
 		<module>swing-gui-starter</module>
+		<module>web-gui</module>
 	</modules>
 	<dependencies>
 		<dependency>

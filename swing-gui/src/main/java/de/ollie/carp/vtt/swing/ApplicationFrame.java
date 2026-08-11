@@ -11,6 +11,7 @@ import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.core.service.port.web.BattleMapWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
+import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
@@ -48,6 +49,9 @@ public class ApplicationFrame
 
 	@Inject
 	private BattleMapWebPort battleMapWebPort;
+
+	@Inject
+	private GraphicsManager graphicsManager;
 
 	@Inject
 	private ResourceManager resourceManager;
@@ -147,6 +151,7 @@ public class ApplicationFrame
 			new BattleMapJInternalFrame(
 				desktopPane,
 				battleMapService,
+				graphicsManager,
 				tokenPositionService,
 				tokenService,
 				tokenWebPort,

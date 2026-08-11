@@ -15,7 +15,9 @@ import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenData;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
-import de.ollie.carp.vtt.swing.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import de.ollie.carp.vtt.swing.component.TokenSelectionDialog;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -48,6 +50,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 
 	private final JDesktopPane desktopPane;
 	private final transient BattleMapService mapService;
+	private final transient GraphicsManager graphicsManager;
 	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
 	private final transient TokenWebPort tokenWebPort;
@@ -103,7 +106,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 					new ByteArrayInputStream((((BattleMap) comboBoxBattleMaps.getSelectedItem()).getImageContent()))
 				);
 				ImageIcon imageIcon = new ImageIcon(image);
-				battleMapPanel = new MapPanel(imageIcon, tokens, this);
+				battleMapPanel = new MapPanel(imageIcon, tokens, this, graphicsManager);
 				battleMapPanel.addMouseListener(
 					new MouseAdapter() {
 						@Override

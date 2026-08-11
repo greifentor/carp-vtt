@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Serverzeit</title>
+
+    <!-- Seite lädt alle 10 Sekunden neu -->
+    <meta http-equiv="refresh" content="10">
+</head>
+<body>
+<h1>Aktuelle Serverzeit</h1>
+
+<p th:text="${time}"></p>
+
+<p>Diese Seite aktualisiert sich alle 10 Sekunden.</p>
+</body>
+</html>

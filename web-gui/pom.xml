@@ -10,11 +10,11 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>carp-vtt-swing</artifactId>
+	<artifactId>carp-vtt-web</artifactId>
 	<packaging>jar</packaging>
 
-	<name>CARP VTT (Swing)</name>
-	<description>The swing module of the application.</description>
+	<name>CARP VTT (Web)</name>
+	<description>The web GUI module of the application.</description>
 
 	<properties>
 		<plugin.prettier.goal>write</plugin.prettier.goal>
@@ -27,16 +27,15 @@
 			<artifactId>carp-vtt-service-interface</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-		<dependency>
-			<groupId>de.ollie</groupId>
-			<artifactId>carp-vtt-graphics-manager</artifactId>
-			<version>0.0.1</version>
-		</dependency>
 		<!-- java -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -104,6 +103,10 @@
 				<configuration>
 					<skipTests>false</skipTests>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>com.hubspot.maven.plugins</groupId>

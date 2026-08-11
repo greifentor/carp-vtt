@@ -2,16 +2,14 @@ package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.swing.TokenMap.MapToken;
-import java.awt.BasicStroke;
-import java.awt.Color;
+import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
@@ -24,20 +22,22 @@ import lombok.Getter;
 
 public class MapPanel extends JPanel {
 
+	public static final int OFFSET_IN_PIXELS = GraphicsManager.OFFSET_IN_PIXELS;
+	public static final int FIELD_SIZE_IN_PIXELS = GraphicsManager.FIELD_SIZE_IN_PIXELS;
+
 	public interface Observer {
 		void tokenHit(MapToken mapToken, Coordinates coordinates);
 	}
 
-	private static final int OFFSET_IN_PIXELS = 12;
-	private static final int FIELD_SIZE_IN_PIXELS = 50;
-
+	private GraphicsManager graphicsManager;
 	private ImageIcon mapImage;
 	private TokenMap tokens;
 
 	@Getter
 	private MapToken selectedToken;
 
-	public MapPanel(ImageIcon mapImage, TokenMap tokens, Observer observer) {
+	public MapPanel(ImageIcon mapImage, TokenMap tokens, Observer observer, GraphicsManager graphicsManager) {
+		this.graphicsManager = graphicsManager;
 		this.mapImage = mapImage;
 		this.tokens = tokens;
 		setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
@@ -67,37 +67,13 @@ public class MapPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(mapImage.getImage(), 0, 0, this);
-		for (MapToken mapToken : tokens.keySet()) {
-			Token token = mapToken.token();
-			Coordinates coordinates = tokens.get(mapToken);
-			int x = (coordinates.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			int y = (coordinates.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			int height = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();
-			int width = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();
-			try {
-				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
-				g.drawImage(tokenImage, x, y, width, height, this);
-				if (selectedToken == mapToken) {
-					g.setColor(Color.YELLOW);
-					((Graphics2D) g).setStroke(new BasicStroke(3));
-					((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-					g.drawArc(x, y, width, height, 0, 360);
-				}
-				if (tokens.hasTokenMoreThanOneTimes(token)) {
-					g.setColor(Color.BLACK);
-					((Graphics2D) g).setStroke(new BasicStroke(1));
-					g.drawRect(x + 3, y + 3, 15, 12);
-					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(x + 3, y + 3, 15, 12);
-					g.setColor(Color.RED);
-					g.setFont(new Font("Serif", Font.BOLD, 12));
-					g.drawString("" + mapToken.counter(), x + 4, y + 12);
-				}
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
+		graphicsManager.paintBattleMapForScenarioAndParty(
+			(Graphics2D) g,
+			tokens,
+			selectedToken,
+			mapImage,
+			getFocusCycleRootAncestor()
+		);
 	}
 
 	public MapToken getTokenAt(int x, int y) {

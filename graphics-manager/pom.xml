@@ -10,11 +10,11 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>carp-vtt-swing</artifactId>
+	<artifactId>carp-vtt-graphics-manager</artifactId>
 	<packaging>jar</packaging>
 
-	<name>CARP VTT (Swing)</name>
-	<description>The swing module of the application.</description>
+	<name>CARP VTT (Graphics-Manager)</name>
+	<description>The graphics manager module of the application.</description>
 
 	<properties>
 		<plugin.prettier.goal>write</plugin.prettier.goal>
@@ -25,11 +25,6 @@
 		<dependency>
 			<groupId>de.ollie</groupId>
 			<artifactId>carp-vtt-service-interface</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.ollie</groupId>
-			<artifactId>carp-vtt-graphics-manager</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<!-- java -->

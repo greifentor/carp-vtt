@@ -1,4 +1,4 @@
-package de.ollie.carp.vtt.swing;
+package de.ollie.carp.vtt.graphics.manager.model;
 
 import static de.ollie.baselib.util.Check.ensure;
 
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class TokenMap {
 
-	record MapToken(Token token, int counter, UUID id) {
+	public record MapToken(Token token, int counter, UUID id) {
 		public MapToken {
 			ensure(id != null, "id cannot be null!");
 			ensure(token != null, "token cannot be null!");
