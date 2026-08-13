@@ -159,6 +159,11 @@ public class ApplicationFrame
 			)
 				.prepare()
 				.setVisible(true);
+		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_BATTLE_MAPS) {
+			battleMapWebPort.synchronize((synced, total) -> System.out.println("Battle Map Synced " + synced + " of " + total)
+			);
+		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_TOKENS) {
+			tokenWebPort.synchronize((synced, total) -> System.out.println("Token Synced " + synced + " of " + total));
 		}
 	}
 
