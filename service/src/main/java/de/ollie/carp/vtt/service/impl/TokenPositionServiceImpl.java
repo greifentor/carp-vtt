@@ -7,6 +7,7 @@ import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenUpdatePersistencePort;
 import jakarta.inject.Named;
@@ -18,6 +19,11 @@ import lombok.RequiredArgsConstructor;
 class TokenPositionServiceImpl implements TokenPositionService {
 
 	private final TokenUpdatePersistencePort tokenUpdatePort;
+
+	@Override
+	public List<TokenMapPartyScenario> findAll() {
+		return tokenUpdatePort.findAll();
+	}
 
 	@Override
 	public List<TokenData> findAllBy(BattleMap battleMap, Party party, Scenario scenario) {

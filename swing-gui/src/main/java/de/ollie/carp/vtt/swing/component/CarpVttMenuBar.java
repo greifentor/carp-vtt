@@ -19,6 +19,7 @@ public class CarpVttMenuBar extends JMenuBar {
 	static final String RES_ID_MENU_SYNC = "MainMenuBar.menu.sync.label";
 	static final String RES_ID_MENU_SYNC_BATTLE_MAPS = "MainMenuBar.menu.sync.battlemaps.label";
 	static final String RES_ID_MENU_SYNC_TOKENS = "MainMenuBar.menu.sync.tokens.label";
+	static final String RES_ID_MENU_SYNC_TOKEN_POSITIONS = "MainMenuBar.menu.sync.tokenpositions.label";
 
 	public enum MenuItemIdentifier {
 		EDIT_BATTLE_MAP,
@@ -27,6 +28,7 @@ public class CarpVttMenuBar extends JMenuBar {
 		MAP_OPEN,
 		SYNC_BATTLE_MAPS,
 		SYNC_TOKENS,
+		SYNC_TOKEN_POSITIONS,
 	}
 
 	public interface Observer {
@@ -43,6 +45,7 @@ public class CarpVttMenuBar extends JMenuBar {
 	private JMenuItem menuItemMapOpen;
 	private JMenuItem menuItemSyncBattleMaps;
 	private JMenuItem menuItemSyncTokens;
+	private JMenuItem menuItemSyncTokenPositions;
 
 	public CarpVttMenuBar(Observer observer, SwingComponentFactory swingComponentFactory) {
 		super();
@@ -73,6 +76,10 @@ public class CarpVttMenuBar extends JMenuBar {
 		menuItemSyncTokens = swingComponentFactory.createMenuItem(RES_ID_MENU_SYNC_TOKENS);
 		menuItemSyncTokens.addActionListener(e -> observer.menuItemSelected(MenuItemIdentifier.SYNC_TOKENS));
 		menuSync.add(menuItemSyncTokens);
+		menuItemSyncTokenPositions = swingComponentFactory.createMenuItem(RES_ID_MENU_SYNC_TOKEN_POSITIONS);
+		menuItemSyncTokenPositions.addActionListener(e -> observer.menuItemSelected(MenuItemIdentifier.SYNC_TOKEN_POSITIONS)
+		);
+		menuSync.add(menuItemSyncTokenPositions);
 		add(menuSync);
 	}
 }

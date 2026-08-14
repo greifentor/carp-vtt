@@ -23,7 +23,7 @@ public class BattleMapWebAdapter implements BattleMapWebPort {
 	}
 
 	@Override
-	public void synchronize(SynchronizationObserver observer) {
+	public void synchronizeBattleMaps(SynchronizationObserver observer) {
 		List<BattleMap> battleMaps = battleMapService.findAll();
 		for (int i = 0, leni = battleMaps.size(); i < leni; i++) {
 			pushBattleMapUpdate(new BattleMapUpdateEvent(UUID.randomUUID(), battleMaps.get(i)));

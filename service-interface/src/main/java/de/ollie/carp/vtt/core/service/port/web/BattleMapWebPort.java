@@ -9,5 +9,5 @@ public interface BattleMapWebPort {
 
 	void pushBattleMapUpdate(BattleMapUpdateEvent battleMapUpdateEvent);
 
-	void synchronize(SynchronizationObserver observer);
+	void synchronizeBattleMaps(SynchronizationObserver observer);
 }

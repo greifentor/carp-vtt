@@ -12,5 +12,7 @@ public interface TokenWebPort {
 
 	void pushTokenUpdate(TokenUpdateEvent tokenUpdateEvent);
 
-	void synchronize(SynchronizationObserver observer);
+	void synchronizeTokens(SynchronizationObserver observer);
+
+	void synchronizeTokenUpdates(SynchronizationObserver observer);
 }

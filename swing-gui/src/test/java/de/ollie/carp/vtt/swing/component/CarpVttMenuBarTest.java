@@ -65,6 +65,8 @@ class CarpVttMenuBarTest {
 				.thenReturn(new JMenuItem(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_SYNC_TOKENS))
 				.thenReturn(new JMenuItem(LABEL));
+			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_SYNC_TOKEN_POSITIONS))
+				.thenReturn(new JMenuItem(LABEL));
 			unitUnderTest = new CarpVttMenuBar(observer, swingComponentFactory);
 		}
 

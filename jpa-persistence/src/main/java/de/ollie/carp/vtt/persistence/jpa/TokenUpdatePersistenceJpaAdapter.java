@@ -5,6 +5,7 @@ import static de.ollie.baselib.util.Check.ensure;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenUpdatePersistencePort;
 import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
@@ -12,6 +13,7 @@ import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenMapPartyScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.mapper.TokenDboMapper;
+import de.ollie.carp.vtt.persistence.jpa.mapper.TokenMapPartyScenarioDboMapper;
 import de.ollie.carp.vtt.persistence.jpa.repository.BattleMapDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
 import de.ollie.carp.vtt.persistence.jpa.repository.ScenarioDboRepository;
@@ -33,8 +35,14 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	private final TokenDboRepository tokenDboRepository;
 	private final TokenDboMapper tokenDboMapper;
 	private final TokenMapPartyScenarioDboRepository tokenMapPartyScenarioDboRepository;
+	private final TokenMapPartyScenarioDboMapper tokenMapPartyScenarioDboMapper;
 
 	private final UuidService uuidService;
+
+	@Override
+	public List<TokenMapPartyScenario> findAll() {
+		return tokenMapPartyScenarioDboMapper.toModels(tokenMapPartyScenarioDboRepository.findAll());
+	}
 
 	@Override
 	public List<TokenData> findAllByMapPartyScenario(UUID battleMapId, UUID partyId, UUID scenarioId) {
