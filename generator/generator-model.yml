@@ -1,6 +1,8 @@
 classes:
   - name: Coordinates
     properties:
+      - name: implements
+        value: CoordinatesInfoProvider
       - name: suppress-persistence
         value: true
       - name: suppress-service
@@ -100,6 +102,8 @@ classes:
           name: String
   - name: Token
     properties:
+      - name: implements
+        value: TokenInfoProvider
       - name: order
         value: name
     attributes:

@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-public class Coordinates {
+public class Coordinates implements CoordinatesInfoProvider {
 
 	private BigDecimal fieldX;
 	private BigDecimal fieldY;

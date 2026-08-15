@@ -1,7 +1,7 @@
 package de.ollie.carp.vtt.graphics.manager;
 
-import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
+import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import jakarta.inject.Named;
@@ -32,8 +32,8 @@ public class GraphicsManager {
 	) {
 		g.drawImage(mapImage.getImage(), 0, 0, imageObserver);
 		for (MapToken mapToken : tokens.keySet()) {
-			Token token = mapToken.token();
-			Coordinates coordinates = tokens.get(mapToken);
+			TokenInfoProvider token = mapToken.token();
+			CoordinatesInfoProvider coordinates = tokens.get(mapToken);
 			int x = (coordinates.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 			int y = (coordinates.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 			int height = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();

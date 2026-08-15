@@ -149,7 +149,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private void updatePosition(Coordinates coordinates) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
 			battleMapPanel.getSelectedToken().id(),
-			battleMapPanel.getSelectedToken().token(),
+			(Token) battleMapPanel.getSelectedToken().token(),
 			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
 			coordinates,
 			DUMMY_PARTY,

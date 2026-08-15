@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-public class TokenData {
+public class TokenData implements TokenDataInfoProvider {
 
 	private Coordinates coordinates;
 	private UUID id;

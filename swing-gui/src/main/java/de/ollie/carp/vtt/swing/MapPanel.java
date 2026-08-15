@@ -1,7 +1,8 @@
 package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
+import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
@@ -78,8 +79,8 @@ public class MapPanel extends JPanel {
 
 	public MapToken getTokenAt(int x, int y) {
 		for (MapToken mapToken : tokens.keySet()) {
-			Coordinates coordinates = tokens.get(mapToken);
-			Token token = mapToken.token();
+			CoordinatesInfoProvider coordinates = tokens.get(mapToken);
+			TokenInfoProvider token = mapToken.token();
 			int tokenX = (coordinates.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 			int tokenY = (coordinates.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 			try {

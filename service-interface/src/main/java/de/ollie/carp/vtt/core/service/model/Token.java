@@ -13,13 +13,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-public class Token {
+public class Token implements TokenInfoProvider {
 
 	private UUID id;
 	private String name;
-
-	@lombok.ToString.Exclude
 	private byte[] image;
-
 	private TokenSize tokenSize;
 }
