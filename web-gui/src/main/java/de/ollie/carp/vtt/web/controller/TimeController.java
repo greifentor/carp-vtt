@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TimeController {
 
-	@GetMapping("/")
+	@GetMapping("/time-controller")
 	public String getTime(Model model) {
 		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		model.addAttribute("time", now);

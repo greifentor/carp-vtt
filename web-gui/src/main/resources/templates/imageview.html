@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamisches Bild</title>
+</head>
+
+<body>
+<h1>Dynamisches Bild</h1>
+
+<img id="dynImage" th:src="${imageUrl}" alt="Dynamic Image" style="max-width: 600px;">
+
+<script>
+    function reloadImage() {
+        const img = document.getElementById("dynImage");
+
+        // Cache-Busting durch Zeitstempel
+        img.src = img.src.split("?")[0] + "?t=" + new Date().getTime();
+    }
+
+    // Alle 3 Sekunden nur das Bild neu laden
+    setInterval(reloadImage, 3000);
+</script>
+
+</body>
+</html>

@@ -32,6 +32,11 @@
 			<artifactId>carp-vtt-service-interface</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>carp-vtt-graphics-manager</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

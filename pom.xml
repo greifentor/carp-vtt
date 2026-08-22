@@ -66,6 +66,7 @@
 		<module>migration</module>
 		<module>rest-client</module>
 		<module>rest-server</module>
+		<module>security</module>
 		<module>service</module>
 		<module>service-interface</module>
 		<module>swing-gui</module>

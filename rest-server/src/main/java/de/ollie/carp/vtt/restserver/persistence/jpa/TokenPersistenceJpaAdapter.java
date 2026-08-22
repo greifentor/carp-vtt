@@ -38,8 +38,7 @@ public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
 
 	@Override
 	public Optional<Token> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repository.findById(id).map(mapper::toModel);
 	}
 
 	@Override
