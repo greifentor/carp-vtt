@@ -20,4 +20,11 @@ public class ExtendedTokenPositionPersistenceJpaAdapter implements ExtendedToken
 	public List<TokenPosition> findAllBy(UUID battleMapId, UUID partyId, UUID scenarioId) {
 		return mapper.toModels(repository.findAllByBattleMapIdAndPartyIdAndScenarioId(battleMapId, partyId, scenarioId));
 	}
+
+	@Override
+	public TokenPosition getSelectedToken(UUID battleMapId, UUID partyId, UUID scenarioId) {
+		return mapper.toModel(
+			repository.findByBattleMapIdAndPartyIdAndScenarioIdAndSelectedIsTrue(battleMapId, partyId, scenarioId)
+		);
+	}
 }

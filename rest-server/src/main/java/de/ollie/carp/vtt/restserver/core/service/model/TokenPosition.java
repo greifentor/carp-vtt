@@ -22,4 +22,5 @@ public class TokenPosition {
 	private UUID partyId;
 	private UUID scenarioId;
 	private UUID tokenId;
+	private boolean selected;
 }

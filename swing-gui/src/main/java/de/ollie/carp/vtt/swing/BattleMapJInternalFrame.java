@@ -118,7 +118,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 									uuidService.create()
 								);
 								battleMapPanel.setSelectedToken(newMapToken);
-								updatePosition(getFieldCoordinates(e.getX(), e.getY()));
+								updatePosition(getFieldCoordinates(e.getX(), e.getY()), true);
 								selectedToken = null;
 							}
 						}
@@ -146,14 +146,15 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		return tokens;
 	}
 
-	private void updatePosition(Coordinates coordinates) {
+	private void updatePosition(Coordinates coordinates, boolean selected) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
 			battleMapPanel.getSelectedToken().id(),
 			(Token) battleMapPanel.getSelectedToken().token(),
 			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
 			coordinates,
 			DUMMY_PARTY,
-			DUMMY_SCENARIO
+			DUMMY_SCENARIO,
+			selected
 		);
 		tokenPositionService.updateTokenPosition(event);
 		tokenWebPort.pushTokenPositionUpdate(event);
@@ -179,7 +180,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 				battleMapPanel.setSelectedToken(mapToken);
 			}
 		} else if (battleMapPanel.getSelectedToken() != null) {
-			updatePosition(coordinates);
+			updatePosition(coordinates, true);
 		}
 	}
 }

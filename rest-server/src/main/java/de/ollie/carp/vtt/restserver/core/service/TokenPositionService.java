@@ -19,7 +19,8 @@ public interface TokenPositionService {
 		int coordinateY,
 		UUID partyId,
 		UUID scenarioId,
-		UUID tokenId
+		UUID tokenId,
+		boolean selected
 	);
 
 	void deleteTokenPosition(UUID id);

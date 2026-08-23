@@ -11,9 +11,11 @@ import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @EqualsAndHashCode
 @Getter
+@ToString
 public class TokenPositionUpdateEvent {
 
 	@Setter
@@ -24,6 +26,7 @@ public class TokenPositionUpdateEvent {
 	private Coordinates coordinates;
 	private Party party;
 	private Scenario scenario;
+	private boolean selected;
 
 	public TokenPositionUpdateEvent(
 		UUID id,
@@ -31,7 +34,8 @@ public class TokenPositionUpdateEvent {
 		BattleMap battleMap,
 		Coordinates coordinates,
 		Party party,
-		Scenario scenario
+		Scenario scenario,
+		boolean selected
 	) {
 		ensure(coordinates != null, "coordinates cannot be null!");
 		ensure(battleMap != null, "map cannot be null!");
@@ -44,6 +48,7 @@ public class TokenPositionUpdateEvent {
 		this.id = id;
 		this.party = party;
 		this.scenario = scenario;
+		this.selected = selected;
 		this.token = token;
 	}
 

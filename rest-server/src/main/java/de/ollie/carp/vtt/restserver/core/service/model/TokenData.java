@@ -15,4 +15,5 @@ public class TokenData implements TokenInfoProvider {
 	private String name;
 	private byte[] image;
 	private de.ollie.carp.vtt.core.service.model.TokenSize tokenSize;
+	private boolean selected;
 }

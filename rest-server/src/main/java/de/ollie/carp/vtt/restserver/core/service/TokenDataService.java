@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface TokenDataService {
 	List<TokenData> findAllBy(UUID battleMapId, UUID partyId, UUID scenarioId);
+
+	TokenData getSelectedToken(UUID battleMapId, UUID partyId, UUID scenarioId);
 }

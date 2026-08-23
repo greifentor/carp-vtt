@@ -7,6 +7,7 @@ import de.ollie.carp.vtt.restserver.core.service.BattleMapService;
 import de.ollie.carp.vtt.restserver.core.service.TokenDataService;
 import de.ollie.carp.vtt.restserver.core.service.TokenPositionService;
 import de.ollie.carp.vtt.restserver.core.service.model.BattleMap;
+import de.ollie.carp.vtt.restserver.core.service.model.TokenData;
 import de.ollie.carp.vtt.restserver.rest.api.ImageApi;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -38,12 +39,16 @@ public class ImageRestController implements ImageApi {
 		BattleMap battleMap = battleMapService
 			.findById(battleMapId)
 			.orElseThrow(() -> new NoSuchElementException("No battle map with id found: " + battleMapId));
+		TokenData selected = tokenDataService.getSelectedToken(battleMapId, partyId, scenarioId);
+		MapToken selectedToken = selected != null
+			? new MapToken(selected, tokenMap.getNextCounterFor(selected), selected.getId())
+			: null;
 		try {
 			BufferedImage imageIconBattleMap = ImageIO.read(new ByteArrayInputStream(battleMap.getImage()));
 			graphicsManager.paintBattleMapForScenarioAndParty(
 				(Graphics2D) imageIconBattleMap.getGraphics(),
 				tokenMap,
-				null,
+				selectedToken,
 				new ImageIcon(imageIconBattleMap),
 				null
 			);

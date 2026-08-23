@@ -41,7 +41,7 @@ public class GraphicsManager {
 			try {
 				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
 				g.drawImage(tokenImage, x, y, width, height, imageObserver);
-				if (selectedToken == mapToken) {
+				if ((selectedToken != null) && selectedToken.id().equals(mapToken.id())) {
 					g.setColor(Color.YELLOW);
 					g.setStroke(new BasicStroke(3));
 					g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

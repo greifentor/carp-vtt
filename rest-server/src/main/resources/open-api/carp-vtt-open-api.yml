@@ -149,7 +149,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
-
 components:
   securitySchemes:
     bearerAuth:
@@ -217,6 +216,7 @@ components:
         - tokenId
         - coordinateX
         - coordinateY
+        - selected
       properties:
         id:
           type: string
@@ -246,7 +246,9 @@ components:
           type: integer
           format: int32
           example: 1701
-
+        selected:
+          type: boolean
+          example: false
     ErrorDto:
       type: object
       required:

@@ -112,7 +112,7 @@ class TokenPositionServiceImplTest {
 			when(token.getId()).thenReturn(TOKEN_ID);
 			// Run
 			unitUnderTest.updateTokenPosition(
-				new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, scenario)
+				new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, scenario, true)
 			);
 			// Check
 			verify(tokenUpdatePort, times(1)).updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);

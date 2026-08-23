@@ -15,7 +15,15 @@ import lombok.Generated;
 @Generated
 @Named
 public interface TokenPositionPersistencePort {
-	TokenPosition create(UUID battleMapId, int coordinateX, int coordinateY, UUID partyId, UUID scenarioId, UUID tokenId);
+	TokenPosition create(
+		UUID battleMapId,
+		int coordinateX,
+		int coordinateY,
+		UUID partyId,
+		UUID scenarioId,
+		UUID tokenId,
+		boolean selected
+	);
 
 	void deleteById(UUID id);
 

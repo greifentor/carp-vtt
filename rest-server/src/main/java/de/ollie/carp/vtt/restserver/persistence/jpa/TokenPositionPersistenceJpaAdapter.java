@@ -31,7 +31,8 @@ public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersiste
 		int coordinateY,
 		UUID partyId,
 		UUID scenarioId,
-		UUID tokenId
+		UUID tokenId,
+		boolean selected
 	) {
 		// TODO Auto-generated method stub
 		return null;
@@ -55,6 +56,13 @@ public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersiste
 
 	@Override
 	public TokenPosition update(TokenPosition toSave) {
+		if (toSave.isSelected()) {
+			repository.resetSelectedForBattleMapPartyAndScenario(
+				toSave.getBattleMapId(),
+				toSave.getPartyId(),
+				toSave.getScenarioId()
+			);
+		}
 		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
 	}
 }

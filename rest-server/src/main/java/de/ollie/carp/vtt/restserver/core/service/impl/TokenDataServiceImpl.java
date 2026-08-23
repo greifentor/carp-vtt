@@ -41,6 +41,12 @@ public class TokenDataServiceImpl implements TokenDataService {
 			.setId(tp.getId())
 			.setImage(token.getImage())
 			.setName(token.getName())
+			.setSelected(tp.isSelected())
 			.setTokenSize(de.ollie.carp.vtt.core.service.model.TokenSize.valueOf(token.getTokenSize().name()));
+	}
+
+	@Override
+	public TokenData getSelectedToken(UUID battleMapId, UUID partyId, UUID scenarioId) {
+		return findAllBy(battleMapId, partyId, scenarioId).stream().filter(t -> t.isSelected()).findFirst().orElse(null);
 	}
 }

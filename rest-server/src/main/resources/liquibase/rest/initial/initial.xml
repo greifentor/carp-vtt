@@ -56,4 +56,11 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="dm-comp" id="Add-Selected-Column-To-TOKEN_POSITION" runOnChange="true">
+        <addColumn tableName="TOKEN_POSITION">
+            <column name="SELECTED" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

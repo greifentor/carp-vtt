@@ -42,4 +42,7 @@ public class TokenPositionDbo {
 
 	@Column(name = "TOKEN_ID", nullable = false)
 	private UUID tokenId;
+
+	@Column(name = "SELECTED", nullable = false)
+	private boolean selected;
 }

@@ -15,6 +15,7 @@ public class TokenPositionDtoMapper {
 		dto.setCoordinateY(tokenPositionUpdateEvent.getCoordinates().getFieldY().intValue());
 		dto.setPartyId(tokenPositionUpdateEvent.getPartyId());
 		dto.setScenarioId(tokenPositionUpdateEvent.getScenarioId());
+		dto.setSelected(tokenPositionUpdateEvent.isSelected());
 		dto.setTokenId(tokenPositionUpdateEvent.getTokenId());
 		return dto;
 	}

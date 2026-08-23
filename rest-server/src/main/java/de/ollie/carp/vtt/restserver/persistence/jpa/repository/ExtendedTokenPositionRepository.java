@@ -9,4 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ExtendedTokenPositionRepository extends JpaRepository<TokenPositionDbo, UUID> {
 	List<TokenPositionDbo> findAllByBattleMapIdAndPartyIdAndScenarioId(UUID battleMapId, UUID partyId, UUID scenarioId);
+
+	TokenPositionDbo findByBattleMapIdAndPartyIdAndScenarioIdAndSelectedIsTrue(
+		UUID battleMapId,
+		UUID partyId,
+		UUID scenarioId
+	);
 }

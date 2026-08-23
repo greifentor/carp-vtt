@@ -123,6 +123,12 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
+      - name: selected
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: boolean
 enums:
   - name: AccessRight
     properties:

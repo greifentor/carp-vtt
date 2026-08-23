@@ -22,6 +22,7 @@ public class TokenPositionClient {
 		client.setBasePath(restClientConfiguration.getBaseUrl());
 		client.setBearerToken(bearerTokenGenerator.create());
 		TokenPositionApi api = new TokenPositionApi(client);
+		System.out.println(tokenPositionUpdateEvent);
 		TokenPositionDto dto = tokenPositionDtoMapper.map(tokenPositionUpdateEvent);
 		try {
 			api.updateTokenPosition(dto);

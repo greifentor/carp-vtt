@@ -27,6 +27,7 @@ public class TokenPositionRestController implements TokenPositionApi {
 		if (!accessRightConfiguration.hasAccess(UserContextProvider.getUserId().userId(), AccessRight.UPDATE_POSITION)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
 		}
+		System.out.println(tokenPositionDto);
 		TokenPosition tokenPosition = tokenPositionDtoMapper.toModel(tokenPositionDto);
 		tokenPosition = tokenPositionService.updateTokenPosition(tokenPosition);
 		return ResponseEntity.ofNullable(tokenPositionDtoMapper.toDto(tokenPosition));
