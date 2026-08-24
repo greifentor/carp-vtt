@@ -10,6 +10,7 @@ import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.restclient.TokenClient;
 import de.ollie.carp.vtt.restclient.TokenPositionClient;
+import de.ollie.carp.vtt.restclient.UnselectClient;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class TokenWebAdapter implements TokenWebPort {
 	private final TokenPositionClient tokenPositionClient;
 	private final TokenPositionService tokenPositionService;
 	private final TokenService tokenService;
+	private final UnselectClient unselectClient;
 
 	@Override
 	public void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
@@ -65,5 +67,10 @@ public class TokenWebAdapter implements TokenWebPort {
 				observer.progress(i, leni - 1);
 			}
 		}
+	}
+
+	@Override
+	public void unselect(UUID battleMapId, UUID partyId, UUID scenarioId) {
+		unselectClient.unselect(battleMapId, partyId, scenarioId);
 	}
 }

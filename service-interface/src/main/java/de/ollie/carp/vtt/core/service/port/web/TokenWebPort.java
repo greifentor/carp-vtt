@@ -2,6 +2,7 @@ package de.ollie.carp.vtt.core.service.port.web;
 
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
+import java.util.UUID;
 
 public interface TokenWebPort {
 	interface SynchronizationObserver {
@@ -15,4 +16,6 @@ public interface TokenWebPort {
 	void synchronizeTokens(SynchronizationObserver observer);
 
 	void synchronizeTokenUpdates(SynchronizationObserver observer);
+
+	void unselect(UUID battleMapId, UUID partyId, UUID scenarioId);
 }

@@ -8,4 +8,6 @@ public interface TokenDataService {
 	List<TokenData> findAllBy(UUID battleMapId, UUID partyId, UUID scenarioId);
 
 	TokenData getSelectedToken(UUID battleMapId, UUID partyId, UUID scenarioId);
+
+	void unselect(UUID battleMapId, UUID partyId, UUID scenarioId);
 }

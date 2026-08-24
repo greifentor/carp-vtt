@@ -87,6 +87,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
+  /api/v1/unselect/scenario/{scenarioId}/parties/{partyId}/battlemaps/{battleMapId}:
+    put:
+      tags:
+        - Unselect
+      summary: Unselects the token for scenario, party and battle map.
+      operationId: unselect
+      parameters:
+        - name: battleMapId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: partyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: scenarioId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Token for scenario, party and battle map is unselected.
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
   /api/v1/tokens:
     put:
       tags:

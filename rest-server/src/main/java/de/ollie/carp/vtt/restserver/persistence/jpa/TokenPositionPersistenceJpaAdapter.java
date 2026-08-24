@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.restserver.persistence.jpa;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import de.ollie.carp.vtt.restserver.core.service.port.persistence.TokenPositionPersistencePort;
 import de.ollie.carp.vtt.restserver.persistence.jpa.mapper.TokenPositionDboMapper;
+import de.ollie.carp.vtt.restserver.persistence.jpa.repository.ExtendedTokenPositionRepository;
 import de.ollie.carp.vtt.restserver.persistence.jpa.repository.TokenPositionDboRepository;
 import jakarta.inject.Named;
 import java.util.List;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersistencePort {
 
+	private final ExtendedTokenPositionRepository extendedRepository;
 	private final TokenPositionDboMapper mapper;
 	private final TokenPositionDboRepository repository;
 
@@ -57,7 +59,7 @@ public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersiste
 	@Override
 	public TokenPosition update(TokenPosition toSave) {
 		if (toSave.isSelected()) {
-			repository.resetSelectedForBattleMapPartyAndScenario(
+			extendedRepository.resetSelectedForBattleMapPartyAndScenario(
 				toSave.getBattleMapId(),
 				toSave.getPartyId(),
 				toSave.getScenarioId()

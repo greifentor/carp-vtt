@@ -49,4 +49,9 @@ public class TokenDataServiceImpl implements TokenDataService {
 	public TokenData getSelectedToken(UUID battleMapId, UUID partyId, UUID scenarioId) {
 		return findAllBy(battleMapId, partyId, scenarioId).stream().filter(t -> t.isSelected()).findFirst().orElse(null);
 	}
+
+	@Override
+	public void unselect(UUID battleMapId, UUID partyId, UUID scenarioId) {
+		extendedTokenPositionPersistencePort.unselect(battleMapId, partyId, scenarioId);
+	}
 }

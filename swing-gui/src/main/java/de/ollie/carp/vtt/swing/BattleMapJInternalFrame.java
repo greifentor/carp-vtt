@@ -176,8 +176,14 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		if (mapToken != null) {
 			if (mapToken == battleMapPanel.getSelectedToken()) {
 				battleMapPanel.setSelectedToken(null);
+				tokenWebPort.unselect(
+					((BattleMap) comboBoxBattleMaps.getSelectedItem()).getId(),
+					DUMMY_PARTY.getId(),
+					DUMMY_SCENARIO.getId()
+				);
 			} else {
 				battleMapPanel.setSelectedToken(mapToken);
+				updatePosition(coordinates, true);
 			}
 		} else if (battleMapPanel.getSelectedToken() != null) {
 			updatePosition(coordinates, true);

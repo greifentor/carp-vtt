@@ -27,4 +27,9 @@ public class ExtendedTokenPositionPersistenceJpaAdapter implements ExtendedToken
 			repository.findByBattleMapIdAndPartyIdAndScenarioIdAndSelectedIsTrue(battleMapId, partyId, scenarioId)
 		);
 	}
+
+	@Override
+	public void unselect(UUID battleMapId, UUID partyId, UUID scenarioId) {
+		repository.resetSelectedForBattleMapPartyAndScenario(battleMapId, partyId, scenarioId);
+	}
 }

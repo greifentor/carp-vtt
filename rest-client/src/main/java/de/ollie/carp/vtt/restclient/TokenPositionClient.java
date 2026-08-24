@@ -22,11 +22,9 @@ public class TokenPositionClient {
 		client.setBasePath(restClientConfiguration.getBaseUrl());
 		client.setBearerToken(bearerTokenGenerator.create());
 		TokenPositionApi api = new TokenPositionApi(client);
-		System.out.println(tokenPositionUpdateEvent);
 		TokenPositionDto dto = tokenPositionDtoMapper.map(tokenPositionUpdateEvent);
 		try {
 			api.updateTokenPosition(dto);
-			System.out.println(dto.getId() + " - " + dto.getCoordinateX() + "," + dto.getCoordinateY() + " - updated");
 		} catch (ApiException ae) {
 			throw new UploadException("token position upload error: " + ae.getMessage());
 		}
