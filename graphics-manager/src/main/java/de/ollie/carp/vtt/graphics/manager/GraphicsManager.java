@@ -47,7 +47,11 @@ public class GraphicsManager {
 					g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 					g.drawArc(x, y, width, height, 0, 360);
 				}
+				System.out.println(
+					"!" + token.getId() + " - " + tokens.hasTokenMoreThanOneTimes(token) + " > " + tokens.getIds()
+				);
 				if (tokens.hasTokenMoreThanOneTimes(token)) {
+					System.out.println("+");
 					g.setColor(Color.BLACK);
 					g.setStroke(new BasicStroke(1));
 					g.drawRect(x + 3, y + 3, 15, 12);

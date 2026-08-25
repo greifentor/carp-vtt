@@ -5,7 +5,6 @@ import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import de.ollie.carp.vtt.restserver.core.service.BattleMapService;
 import de.ollie.carp.vtt.restserver.core.service.TokenDataService;
-import de.ollie.carp.vtt.restserver.core.service.TokenPositionService;
 import de.ollie.carp.vtt.restserver.core.service.model.BattleMap;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenData;
 import de.ollie.carp.vtt.restserver.rest.api.ImageApi;
@@ -30,7 +29,6 @@ public class ImageRestController implements ImageApi {
 
 	private final BattleMapService battleMapService;
 	private final GraphicsManager graphicsManager;
-	private final TokenPositionService tokenPositionService;
 	private final TokenDataService tokenDataService;
 
 	@Override

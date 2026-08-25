@@ -38,7 +38,7 @@ public class TokenDataServiceImpl implements TokenDataService {
 			.setCoordinates(
 				new Coordinates().setFieldX(new BigDecimal(tp.getCoordinateX())).setFieldY(new BigDecimal(tp.getCoordinateY()))
 			)
-			.setId(tp.getId())
+			.setId(token.getId())
 			.setImage(token.getImage())
 			.setName(token.getName())
 			.setSelected(tp.isSelected())

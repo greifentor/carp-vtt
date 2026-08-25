@@ -21,6 +21,10 @@ public class TokenMap {
 
 	private Map<MapToken, CoordinatesInfoProvider> tokens = new HashMap<>();
 
+	public void clear() {
+		tokens.clear();
+	}
+
 	public CoordinatesInfoProvider get(MapToken key) {
 		return tokens.get(key);
 	}
@@ -52,7 +56,7 @@ public class TokenMap {
 		tokens.put(key, coordinates);
 	}
 
-	public void clear() {
-		tokens.clear();
+	public String getIds() {
+		return tokens.keySet().stream().map(k -> k.id().toString()).reduce((k0, k1) -> k0 + "," + k1).orElse("");
 	}
 }
