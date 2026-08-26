@@ -37,8 +37,7 @@ public class ScenarioPersistenceJpaAdapter implements ScenarioPersistencePort {
 
 	@Override
 	public Optional<Scenario> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repository.findById(id).map(mapper::toModel);
 	}
 
 	@Override

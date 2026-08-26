@@ -28,6 +28,9 @@ public class TokenPositionDbo {
 	@Column(name = "BATTLE_MAP_ID", nullable = false)
 	private UUID battleMapId;
 
+	@Column(name = "COUNTER", nullable = false)
+	private int counter;
+
 	@Column(name = "COORDINATE_X", nullable = false)
 	private int coordinateX;
 

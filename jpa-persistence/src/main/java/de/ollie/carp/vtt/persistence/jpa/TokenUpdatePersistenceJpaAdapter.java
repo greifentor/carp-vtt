@@ -85,7 +85,8 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 		UUID battleMapId,
 		UUID partyId,
 		UUID scenarioId,
-		Coordinates coordinates
+		Coordinates coordinates,
+		int counter
 	) {
 		ensure(coordinates != null, "coordinates can not be null!");
 		ensure(id != null, "id can not be null!");

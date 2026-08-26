@@ -17,6 +17,7 @@ public class TokenPosition {
 
 	private UUID id;
 	private UUID battleMapId;
+	private int counter;
 	private int coordinateX;
 	private int coordinateY;
 	private UUID partyId;

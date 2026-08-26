@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.restserver.core.service.model;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
+import lombok.ToString.Exclude;
 import lombok.experimental.Accessors;
 
 /**
@@ -17,5 +18,7 @@ public class BattleMap {
 
 	private UUID id;
 	private String name;
+
+	@Exclude
 	private byte[] image;
 }

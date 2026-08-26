@@ -11,6 +11,7 @@ public class TokenMapPartyScenario {
 
 	private UUID id;
 	private BattleMap battleMap;
+	private int counter;
 	private Token token;
 	private Party party;
 	private Scenario scenario;

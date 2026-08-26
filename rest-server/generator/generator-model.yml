@@ -84,6 +84,12 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
+      - name: counter
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
       - name: coordinateX
         properties:
           - name: nullable

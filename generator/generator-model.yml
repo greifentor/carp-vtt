@@ -139,6 +139,8 @@ classes:
               value: true
   - name: TokenData
     properties:
+      - name: implements
+        value: TokenDataInfoProvider
       - name: suppress-persistence
         value: true
       - name: suppress-service
@@ -153,6 +155,12 @@ classes:
           properties:
             - name: project-type
               value: true
+      - name: counter
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
       - name: id
         properties:
           - name: nullable

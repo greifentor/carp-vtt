@@ -57,6 +57,7 @@ public class TokenWebAdapter implements TokenWebPort {
 					tokenPosition.getId(),
 					tokenPosition.getToken(),
 					tokenPosition.getBattleMap(),
+					tokenPosition.getCounter(),
 					new Coordinates().setFieldX(tokenPosition.getFieldX()).setFieldY(tokenPosition.getFieldY()),
 					tokenPosition.getParty(),
 					tokenPosition.getScenario(),

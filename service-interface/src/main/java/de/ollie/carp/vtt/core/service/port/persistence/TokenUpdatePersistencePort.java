@@ -11,5 +11,13 @@ public interface TokenUpdatePersistencePort {
 
 	List<TokenData> findAllByMapPartyScenario(UUID mapId, UUID partyId, UUID scenarioId);
 
-	UUID updateTokenPosition(UUID id, UUID tokenId, UUID mapId, UUID partyId, UUID scenarioId, Coordinates coordinates);
+	UUID updateTokenPosition(
+		UUID id,
+		UUID tokenId,
+		UUID mapId,
+		UUID partyId,
+		UUID scenarioId,
+		Coordinates coordinates,
+		int counter
+	);
 }

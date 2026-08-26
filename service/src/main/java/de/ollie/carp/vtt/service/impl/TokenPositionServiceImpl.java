@@ -43,7 +43,8 @@ class TokenPositionServiceImpl implements TokenPositionService {
 				tokenPositionUpdateEvent.getBattleMapId(),
 				tokenPositionUpdateEvent.getPartyId(),
 				tokenPositionUpdateEvent.getScenarioId(),
-				tokenPositionUpdateEvent.getCoordinates()
+				tokenPositionUpdateEvent.getCoordinates(),
+				tokenPositionUpdateEvent.getCounter()
 			)
 		);
 	}

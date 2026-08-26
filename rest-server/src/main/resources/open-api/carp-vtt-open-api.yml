@@ -256,6 +256,7 @@ components:
         - tokenId
         - coordinateX
         - coordinateY
+        - counter
         - selected
       properties:
         id:
@@ -286,6 +287,10 @@ components:
           type: integer
           format: int32
           example: 1701
+        counter:
+          type: integer
+          format: int32
+          example: 4711
         selected:
           type: boolean
           example: false

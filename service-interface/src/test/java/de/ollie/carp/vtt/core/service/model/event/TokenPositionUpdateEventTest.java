@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TokenPositionUpdateEventTest {
 
+	private static final int COUNTER = 4711;
 	private static final UUID ID = UUID.randomUUID();
 
 	@Mock
@@ -41,7 +42,7 @@ class TokenPositionUpdateEventTest {
 
 	@BeforeEach
 	private void beforeEach() {
-		unitUnderTest = new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, scenario, true);
+		unitUnderTest = new TokenPositionUpdateEvent(ID, token, battleMap, COUNTER, coordinates, party, scenario, true);
 	}
 
 	@Nested
@@ -51,7 +52,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Coordinates() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, battleMap, null, party, scenario, true)
+				() -> new TokenPositionUpdateEvent(ID, token, battleMap, COUNTER, null, party, scenario, true)
 			);
 		}
 
@@ -59,7 +60,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Id() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(null, token, battleMap, coordinates, party, scenario, true)
+				() -> new TokenPositionUpdateEvent(null, token, battleMap, COUNTER, coordinates, party, scenario, true)
 			);
 		}
 
@@ -67,7 +68,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Map() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, null, coordinates, party, scenario, true)
+				() -> new TokenPositionUpdateEvent(ID, token, null, COUNTER, coordinates, party, scenario, true)
 			);
 		}
 
@@ -75,7 +76,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Party() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, null, scenario, true)
+				() -> new TokenPositionUpdateEvent(ID, token, battleMap, COUNTER, coordinates, null, scenario, true)
 			);
 		}
 
@@ -83,7 +84,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Scenario() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, token, battleMap, coordinates, party, null, true)
+				() -> new TokenPositionUpdateEvent(ID, token, battleMap, COUNTER, coordinates, party, null, true)
 			);
 		}
 
@@ -91,7 +92,7 @@ class TokenPositionUpdateEventTest {
 		void throwsAnException_passingANullValueAs_Token() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> new TokenPositionUpdateEvent(ID, null, battleMap, coordinates, party, scenario, true)
+				() -> new TokenPositionUpdateEvent(ID, null, battleMap, COUNTER, coordinates, party, scenario, true)
 			);
 		}
 	}

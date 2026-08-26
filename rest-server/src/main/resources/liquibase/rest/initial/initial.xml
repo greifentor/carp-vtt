@@ -63,4 +63,11 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="dm-comp" id="Add-COUNTER-Column-To-TOKEN_POSITION" runOnChange="true">
+        <addColumn tableName="TOKEN_POSITION">
+            <column name="COUNTER" type="INT" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -167,4 +167,11 @@
                 referencedColumnNames="ID"
                 constraintName="FK_TOKEN_BATTLE_MAP_PARTY_SCENARIO_TO_SCENARIO"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Added-Field-COUNTER-to-table-TOKEN_MAP_PARTY_SCENARIO" runInTransaction="true" runOnChange="true">
+        <addColumn tableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO">
+            <column name="COUNTER" type="INT" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -23,6 +23,7 @@ public class TokenPositionUpdateEvent {
 
 	private Token token;
 	private BattleMap battleMap;
+	private int counter;
 	private Coordinates coordinates;
 	private Party party;
 	private Scenario scenario;
@@ -32,6 +33,7 @@ public class TokenPositionUpdateEvent {
 		UUID id,
 		Token token,
 		BattleMap battleMap,
+		int counter,
 		Coordinates coordinates,
 		Party party,
 		Scenario scenario,
@@ -43,8 +45,9 @@ public class TokenPositionUpdateEvent {
 		ensure(party != null, "party cannot be null!");
 		ensure(scenario != null, "scenario cannot be null!");
 		ensure(token != null, "token cannot be null!");
-		this.coordinates = coordinates;
 		this.battleMap = battleMap;
+		this.coordinates = coordinates;
+		this.counter = counter;
 		this.id = id;
 		this.party = party;
 		this.scenario = scenario;

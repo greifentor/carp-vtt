@@ -32,6 +32,9 @@ public class TokenMapPartyScenarioDbo {
 	@JoinColumn(name = "BATTLE_MAP_ID", nullable = false)
 	private BattleMapDbo battleMap;
 
+	@Column(name = "COUNTER", nullable = false)
+	private int counter;
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "TOKEN_ID", nullable = false)
 	private TokenDbo token;

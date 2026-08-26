@@ -48,8 +48,7 @@ public class ${ClassName}PersistenceJpaAdapter implements ${ClassName}Persistenc
 
 	@Override
 	public Optional<${ClassName}> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repository.findById(id).map(mapper::toModel);
 	}
 #foreach($Attribute in ${Class.getAttributesWithPropertySet("findable")})
 

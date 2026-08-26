@@ -17,6 +17,7 @@ import lombok.Generated;
 public interface TokenPositionPersistencePort {
 	TokenPosition create(
 		UUID battleMapId,
+		int counter,
 		int coordinateX,
 		int coordinateY,
 		UUID partyId,

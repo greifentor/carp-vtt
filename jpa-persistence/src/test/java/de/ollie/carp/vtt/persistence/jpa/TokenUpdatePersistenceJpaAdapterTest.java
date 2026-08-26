@@ -36,6 +36,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TokenUpdatePersistenceJpaAdapterTest {
 
+	private static final int COUNTER = 1;
 	private static final BigDecimal FIELD_X = new BigDecimal(1701);
 	private static final BigDecimal FIELD_Y = new BigDecimal(4711);
 	private static final UUID ID = UUID.randomUUID();
@@ -149,7 +150,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_Coordinates() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, null)
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, null, COUNTER)
 			);
 		}
 
@@ -157,7 +158,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_Id() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(null, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.updateTokenPosition(null, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates, COUNTER)
 			);
 		}
 
@@ -165,7 +166,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_MapId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, null, PARTY_ID, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, null, PARTY_ID, SCENARIO_ID, coordinates, COUNTER)
 			);
 		}
 
@@ -173,7 +174,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_PartyId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, null, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, null, SCENARIO_ID, coordinates, COUNTER)
 			);
 		}
 
@@ -181,7 +182,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_ScenarioId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, null, coordinates)
+				() -> unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, null, coordinates, COUNTER)
 			);
 		}
 
@@ -189,7 +190,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 		void throwsAnException_passingANullValueAs_TokenId() {
 			assertThrows(
 				IllegalArgumentException.class,
-				() -> unitUnderTest.updateTokenPosition(ID, null, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates)
+				() -> unitUnderTest.updateTokenPosition(ID, null, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates, COUNTER)
 			);
 		}
 
@@ -212,7 +213,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
 			// Run
-			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
+			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates, COUNTER);
 			// Check
 			assertEquals(FIELD_X, dbo.getFieldX());
 			assertEquals(FIELD_Y, dbo.getFieldY());
@@ -242,7 +243,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
 			when(tokenDboRepository.findById(TOKEN_ID)).thenReturn(Optional.of(tokenDbo));
 			// Run
-			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates);
+			unitUnderTest.updateTokenPosition(ID, TOKEN_ID, MAP_ID, PARTY_ID, SCENARIO_ID, coordinates, COUNTER);
 			// Check
 			verify(tokenMapPartyScenarioDboRepository, times(1)).save(dbo);
 		}

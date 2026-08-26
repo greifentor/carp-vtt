@@ -37,8 +37,7 @@ public class PartyPersistenceJpaAdapter implements PartyPersistencePort {
 
 	@Override
 	public Optional<Party> findById(UUID id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return repository.findById(id).map(mapper::toModel);
 	}
 
 	@Override

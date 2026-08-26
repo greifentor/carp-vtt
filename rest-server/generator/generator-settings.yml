@@ -85,8 +85,8 @@ generators:
   - type: CLASS
     package: de.ollie.carp.vtt.restserver.persistence.jpa.mapper
     suppress-when: classModel Load suppress-persistence HasProperty
-    path: ../generator
     target-file-name: ${UnitName}DboMapper
+    path: ../generator
     template: templates/jpa/DboMapper.vc
     properties:
       - name: target-path
