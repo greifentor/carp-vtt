@@ -18,5 +18,6 @@ public class TokenData implements TokenDataInfoProvider {
 	private Coordinates coordinates;
 	private int counter;
 	private UUID id;
+	private boolean selected;
 	private Token token;
 }

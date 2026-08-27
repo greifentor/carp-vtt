@@ -14,6 +14,7 @@ import java.awt.RenderingHints;
 import java.awt.image.ImageObserver;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.function.BiFunction;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -28,7 +29,8 @@ public class GraphicsManager {
 		TokenMap tokens,
 		MapToken selectedToken,
 		ImageIcon mapImage,
-		ImageObserver imageObserver
+		ImageObserver imageObserver,
+		BiFunction<MapToken, MapToken, Boolean> isSelected
 	) {
 		g.drawImage(mapImage.getImage(), 0, 0, imageObserver);
 		for (MapToken mapToken : tokens.keySet()) {
@@ -41,17 +43,15 @@ public class GraphicsManager {
 			try {
 				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
 				g.drawImage(tokenImage, x, y, width, height, imageObserver);
-				if ((selectedToken != null) && selectedToken.id().equals(mapToken.id())) {
+				System.out.println(mapToken.id() + " - " + isSelected.apply(mapToken, selectedToken));
+				if (Boolean.TRUE.equals(isSelected.apply(mapToken, selectedToken))) {
+					System.out.println("$");
 					g.setColor(Color.YELLOW);
 					g.setStroke(new BasicStroke(3));
 					g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 					g.drawArc(x, y, width, height, 0, 360);
 				}
-				System.out.println(
-					"!" + token.getId() + " - " + tokens.hasTokenMoreThanOneTimes(token) + " > " + tokens.getIds()
-				);
 				if (tokens.hasTokenMoreThanOneTimes(token)) {
-					System.out.println("+");
 					g.setColor(Color.BLACK);
 					g.setStroke(new BasicStroke(1));
 					g.drawRect(x + 3, y + 3, 15, 12);

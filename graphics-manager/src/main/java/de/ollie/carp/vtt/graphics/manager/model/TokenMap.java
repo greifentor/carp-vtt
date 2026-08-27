@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class TokenMap {
 
-	public record MapToken(TokenInfoProvider token, int counter, UUID id) {
+	public record MapToken(TokenInfoProvider token, int counter, UUID id, boolean selected) {
 		public MapToken {
 			ensure(id != null, "id cannot be null!");
 			ensure(token != null, "token cannot be null!");

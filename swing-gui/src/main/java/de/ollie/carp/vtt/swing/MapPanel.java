@@ -73,8 +73,13 @@ public class MapPanel extends JPanel {
 			tokens,
 			selectedToken,
 			mapImage,
-			getFocusCycleRootAncestor()
+			getFocusCycleRootAncestor(),
+			this::isSelectedTokenSelected
 		);
+	}
+
+	private boolean isSelectedTokenSelected(MapToken mapToken, MapToken selectedToken) {
+		return mapToken.id().equals(selectedToken != null ? selectedToken.id() : null);
 	}
 
 	public MapToken getTokenAt(int x, int y) {

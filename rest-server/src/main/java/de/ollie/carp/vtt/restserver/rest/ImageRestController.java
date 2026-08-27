@@ -39,7 +39,7 @@ public class ImageRestController implements ImageApi {
 			.orElseThrow(() -> new NoSuchElementException("No battle map with id found: " + battleMapId));
 		TokenData selected = tokenDataService.getSelectedToken(battleMapId, partyId, scenarioId);
 		MapToken selectedToken = selected != null
-			? new MapToken(selected, tokenMap.getNextCounterFor(selected), selected.getId())
+			? new MapToken(selected, tokenMap.getNextCounterFor(selected), selected.getId(), selected.isSelected())
 			: null;
 		try {
 			BufferedImage imageIconBattleMap = ImageIO.read(new ByteArrayInputStream(battleMap.getImage()));
@@ -48,7 +48,8 @@ public class ImageRestController implements ImageApi {
 				tokenMap,
 				selectedToken,
 				new ImageIcon(imageIconBattleMap),
-				null
+				null,
+				this::isSelectedTokenSelected
 			);
 			// Bild serialisieren
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -63,11 +64,17 @@ public class ImageRestController implements ImageApi {
 		}
 	}
 
+	private boolean isSelectedTokenSelected(MapToken mapToken, MapToken selectedToken) {
+		return mapToken.selected();
+	}
+
 	private TokenMap createTokenMap(UUID battleMapId, UUID partyId, UUID scenarioId) {
 		TokenMap tokenMap = new TokenMap();
 		tokenDataService
 			.findAllBy(battleMapId, partyId, scenarioId)
-			.forEach(td -> tokenMap.put(new MapToken(td, tokenMap.getNextCounterFor(td), td.getId()), td.getCoordinates()));
+			.forEach(td ->
+				tokenMap.put(new MapToken(td, tokenMap.getNextCounterFor(td), td.getId(), td.isSelected()), td.getCoordinates())
+			);
 		return tokenMap;
 	}
 }

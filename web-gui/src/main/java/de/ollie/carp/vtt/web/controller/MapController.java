@@ -21,7 +21,7 @@ public class MapController {
 	private final RestTemplate restTemplate = new RestTemplate();
 
 	// Der externe REST-Endpunkt, der byte[] liefert
-	private static final String IMAGE_SOURCE_URL = "http://localhost:8080/api/v1/images";
+	private static final String IMAGE_SOURCE_URL = "http://localhost:8081/api/v1/images";
 
 	@GetMapping("/")
 	public String showImage(Model model) {
