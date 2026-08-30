@@ -118,6 +118,7 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 			.orElseGet(() -> {
 				TokenMapPartyScenarioDbo tmps = new TokenMapPartyScenarioDbo()
 					.setId(id)
+					.setCounter(counter)
 					.setFieldX(coordinates.getFieldX())
 					.setFieldY(coordinates.getFieldY())
 					.setBattleMap(battleMapDbo)

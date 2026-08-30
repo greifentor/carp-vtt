@@ -72,9 +72,7 @@ public class ImageRestController implements ImageApi {
 		TokenMap tokenMap = new TokenMap();
 		tokenDataService
 			.findAllBy(battleMapId, partyId, scenarioId)
-			.forEach(td ->
-				tokenMap.put(new MapToken(td, tokenMap.getNextCounterFor(td), td.getId(), td.isSelected()), td.getCoordinates())
-			);
+			.forEach(td -> tokenMap.put(new MapToken(td, td.getCounter(), td.getId(), td.isSelected()), td.getCoordinates()));
 		return tokenMap;
 	}
 }

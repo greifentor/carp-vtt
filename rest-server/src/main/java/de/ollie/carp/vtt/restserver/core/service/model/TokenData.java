@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 public class TokenData implements TokenInfoProvider {
 
 	private Coordinates coordinates;
+	private int counter;
 	private UUID id;
 	private String name;
 	private byte[] image;

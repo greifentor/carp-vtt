@@ -155,7 +155,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			battleMapPanel.getSelectedToken().id(),
 			(Token) battleMapPanel.getSelectedToken().token(),
 			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
-			1,
+			4711,
 			coordinates,
 			DUMMY_PARTY,
 			DUMMY_SCENARIO,

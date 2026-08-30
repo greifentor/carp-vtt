@@ -228,6 +228,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			ScenarioDbo scenarioDbo = mock(ScenarioDbo.class);
 			TokenDbo tokenDbo = mock(TokenDbo.class);
 			TokenMapPartyScenarioDbo dbo = new TokenMapPartyScenarioDbo()
+				.setCounter(COUNTER)
 				.setFieldX(FIELD_X)
 				.setFieldY(FIELD_Y)
 				.setId(ID)

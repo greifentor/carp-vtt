@@ -5,21 +5,22 @@ import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import jakarta.inject.Named;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.image.ImageObserver;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.function.BiFunction;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import lombok.RequiredArgsConstructor;
 
 @Named
+@RequiredArgsConstructor
 public class GraphicsManager {
+
+	private final CounterMarker counterMarker;
+	private final SelectedTokenMarker selectedTokenMarker;
 
 	public static final int OFFSET_IN_PIXELS = 12;
 	public static final int FIELD_SIZE_IN_PIXELS = 50;
@@ -43,23 +44,11 @@ public class GraphicsManager {
 			try {
 				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
 				g.drawImage(tokenImage, x, y, width, height, imageObserver);
-				System.out.println(mapToken.id() + " - " + isSelected.apply(mapToken, selectedToken));
 				if (Boolean.TRUE.equals(isSelected.apply(mapToken, selectedToken))) {
-					System.out.println("$");
-					g.setColor(Color.YELLOW);
-					g.setStroke(new BasicStroke(3));
-					g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-					g.drawArc(x, y, width, height, 0, 360);
+					selectedTokenMarker.renderSelectedMarker(g, x, y, width, height);
 				}
 				if (tokens.hasTokenMoreThanOneTimes(token)) {
-					g.setColor(Color.BLACK);
-					g.setStroke(new BasicStroke(1));
-					g.drawRect(x + 3, y + 3, 15, 12);
-					g.setColor(Color.LIGHT_GRAY);
-					g.fillRect(x + 3, y + 3, 15, 12);
-					g.setColor(Color.RED);
-					g.setFont(new Font("Serif", Font.BOLD, 12));
-					g.drawString("" + mapToken.counter(), x + 4, y + 12);
+					counterMarker.renderCounterMarker(g, x, y, mapToken.counter());
 				}
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
