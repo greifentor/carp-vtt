@@ -11,7 +11,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Generated
 @SpringBootApplication
 @ComponentScans(
-	{ @ComponentScan("de.ollie.carp.vtt.restserver"), @ComponentScan("de.ollie.carp.vtt.graphics.manager") }
+	{
+		@ComponentScan("de.ollie.baselib.util.graphics"),
+		@ComponentScan("de.ollie.carp.vtt.restserver"),
+		@ComponentScan("de.ollie.carp.vtt.graphics.manager"),
+	}
 )
 @EntityScan("de.ollie.carp.vtt.restserver.persistence.jpa.dbo")
 @EnableJpaRepositories(basePackages = "de.ollie.carp.vtt.restserver.persistence.jpa.repository")

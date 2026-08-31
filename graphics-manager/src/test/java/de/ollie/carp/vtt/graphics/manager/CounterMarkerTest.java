@@ -34,8 +34,10 @@ class CounterMarkerTest {
 
 		@Test
 		void doesTheSettingsInTheRightOrder() {
+			// Prepare
+			TokenInfo tokenInfo = new TokenInfo(X, Y, -1, -1, null, COUNT);
 			// Run
-			unitUnderTest.renderCounterMarker(graphics, X, Y, COUNT);
+			unitUnderTest.renderCounterMarker(graphics, tokenInfo);
 			// Check
 			InOrder inOrder = inOrder(graphics);
 			inOrder.verify(graphics).setColor(Color.BLACK);
@@ -49,8 +51,10 @@ class CounterMarkerTest {
 
 		@Test
 		void drawTheCounterCorrectly() {
+			// Prepare
+			TokenInfo tokenInfo = new TokenInfo(X, Y, -1, -1, null, COUNT);
 			// Run
-			unitUnderTest.renderCounterMarker(graphics, X, Y, COUNT);
+			unitUnderTest.renderCounterMarker(graphics, tokenInfo);
 			// Check
 			verify(graphics, times(1)).drawString("" + COUNT, X + 4, Y + 12);
 		}

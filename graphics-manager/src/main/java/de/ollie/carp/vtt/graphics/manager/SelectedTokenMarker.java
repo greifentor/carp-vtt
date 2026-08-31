@@ -7,12 +7,12 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 @Named
-public class SelectedTokenMarker {
+class SelectedTokenMarker {
 
-	public void renderSelectedMarker(Graphics2D g, int x, int y, int width, int height) {
+	void renderSelectedMarker(Graphics2D g, TokenInfo tokenInfo) {
 		g.setColor(Color.YELLOW);
 		g.setStroke(new BasicStroke(3));
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.drawArc(x, y, width, height, 0, 360);
+		g.drawArc(tokenInfo.x(), tokenInfo.y(), tokenInfo.width(), tokenInfo.height(), 0, 360);
 	}
 }

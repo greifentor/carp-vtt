@@ -22,6 +22,8 @@ class SelectedTokenMarkerTest {
 	private static final int X = 42;
 	private static final int Y = 7;
 
+	private static final TokenInfo TOKEN_INFO = new TokenInfo(X, Y, WIDTH, HEIGHT, null, -1);
+
 	@Mock
 	private Graphics2D graphics;
 
@@ -34,7 +36,7 @@ class SelectedTokenMarkerTest {
 		@Test
 		void drawsTheSelectMarkerCorrectly() {
 			// Run
-			unitUnderTest.renderSelectedMarker(graphics, X, Y, WIDTH, HEIGHT);
+			unitUnderTest.renderSelectedMarker(graphics, TOKEN_INFO);
 			// Check
 			verify(graphics, times(1)).drawArc(X, Y, WIDTH, HEIGHT, 0, 360);
 		}
@@ -42,7 +44,7 @@ class SelectedTokenMarkerTest {
 		@Test
 		void setTheCorrectColor() {
 			// Run
-			unitUnderTest.renderSelectedMarker(graphics, X, Y, WIDTH, HEIGHT);
+			unitUnderTest.renderSelectedMarker(graphics, TOKEN_INFO);
 			// Check
 			verify(graphics, times(1)).setColor(Color.YELLOW);
 		}
@@ -50,7 +52,7 @@ class SelectedTokenMarkerTest {
 		@Test
 		void setTheCorrectRenderingHints() {
 			// Run
-			unitUnderTest.renderSelectedMarker(graphics, X, Y, WIDTH, HEIGHT);
+			unitUnderTest.renderSelectedMarker(graphics, TOKEN_INFO);
 			// Check
 			verify(graphics, times(1)).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		}
@@ -58,7 +60,7 @@ class SelectedTokenMarkerTest {
 		@Test
 		void setTheCorrectStroke() {
 			// Run
-			unitUnderTest.renderSelectedMarker(graphics, X, Y, WIDTH, HEIGHT);
+			unitUnderTest.renderSelectedMarker(graphics, TOKEN_INFO);
 			// Check
 			verify(graphics, times(1)).setStroke(new BasicStroke(3));
 		}

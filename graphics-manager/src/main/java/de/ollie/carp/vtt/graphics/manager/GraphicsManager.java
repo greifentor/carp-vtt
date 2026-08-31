@@ -6,12 +6,9 @@ import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import jakarta.inject.Named;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.ImageObserver;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.function.BiFunction;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GraphicsManager {
 
+	private final BattleMapDrawer battleMapDrawer;
 	private final CounterMarker counterMarker;
 	private final SelectedTokenMarker selectedTokenMarker;
+	private final TokenDrawer tokenDrawer;
+	private final TokenInfoMapper tokenInfoMapper;
 
 	public static final int OFFSET_IN_PIXELS = 12;
 	public static final int FIELD_SIZE_IN_PIXELS = 50;
@@ -33,22 +33,18 @@ public class GraphicsManager {
 		ImageObserver imageObserver,
 		BiFunction<MapToken, MapToken, Boolean> isSelected
 	) {
-		g.drawImage(mapImage.getImage(), 0, 0, imageObserver);
+		battleMapDrawer.drawBattleMap(g, mapImage.getImage(), imageObserver);
 		for (MapToken mapToken : tokens.keySet()) {
 			TokenInfoProvider token = mapToken.token();
 			CoordinatesInfoProvider coordinates = tokens.get(mapToken);
-			int x = (coordinates.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			int y = (coordinates.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			int height = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();
-			int width = FIELD_SIZE_IN_PIXELS * token.getTokenSize().getFields();
+			TokenInfo ti = tokenInfoMapper.toTokenInfo(token, coordinates, mapToken.counter());
 			try {
-				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
-				g.drawImage(tokenImage, x, y, width, height, imageObserver);
+				tokenDrawer.drawToken(g, ti, imageObserver);
 				if (Boolean.TRUE.equals(isSelected.apply(mapToken, selectedToken))) {
-					selectedTokenMarker.renderSelectedMarker(g, x, y, width, height);
+					selectedTokenMarker.renderSelectedMarker(g, ti);
 				}
 				if (tokens.hasTokenMoreThanOneTimes(token)) {
-					counterMarker.renderCounterMarker(g, x, y, mapToken.counter());
+					counterMarker.renderCounterMarker(g, ti);
 				}
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
