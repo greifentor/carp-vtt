@@ -1,14 +1,21 @@
 package de.ollie.carp.vtt.graphics.manager;
 
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
+import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
+import java.io.IOException;
+import java.util.Set;
 import java.util.function.BiFunction;
 import javax.swing.ImageIcon;
 import org.junit.jupiter.api.Nested;
@@ -21,11 +28,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class GraphicsManagerTest {
 
+	private static final int COUNTER = 42;
 	private static final BiFunction<MapToken, MapToken, Boolean> IS_NOT_SELECTED = (m0, m1) -> false;
 	private static final BiFunction<MapToken, MapToken, Boolean> IS_SELECTED = (m0, m1) -> true;
 
 	@Mock
 	private BattleMapDrawer battleMapDrawer;
+
+	@Mock
+	private CoordinatesInfoProvider coordinatesInfoProvider;
+
+	@Mock
+	private CounterMarker counterMarker;
 
 	@Mock
 	private Graphics2D graphics;
@@ -43,7 +57,22 @@ class GraphicsManagerTest {
 	private MapToken mapToken;
 
 	@Mock
+	private TokenDrawer tokenDrawer;
+
+	@Mock
+	private TokenInfo tokenInfo;
+
+	@Mock
+	private TokenInfoMapper tokenInfoMapper;
+
+	@Mock
+	private TokenInfoProvider tokenInfoProvider;
+
+	@Mock
 	private TokenMap tokenMap;
+
+	@Mock
+	private SelectedTokenMarker selectedTokenMarker;
 
 	@InjectMocks
 	private GraphicsManager unitUnderTest;
@@ -66,6 +95,46 @@ class GraphicsManagerTest {
 			);
 			// Check
 			verify(battleMapDrawer, times(1)).drawBattleMap(graphics, image, imageObserver);
+		}
+
+		@Test
+		void callNothingExceptTheBattleMapDrawer() {
+			// Prepare
+			when(tokenMap.keySet()).thenReturn(Set.of());
+			// Run
+			unitUnderTest.paintBattleMapForScenarioAndParty(
+				graphics,
+				tokenMap,
+				mapToken,
+				mapImage,
+				imageObserver,
+				IS_SELECTED
+			);
+			// Check
+			verifyNoInteractions(counterMarker, tokenDrawer, tokenInfoMapper, selectedTokenMarker);
+		}
+
+		@Test
+		void throwsAnException_whenTokenDrawingFails() throws Exception {
+			// Prepare
+			IOException exception = mock(IOException.class);
+			when(mapToken.counter()).thenReturn(COUNTER);
+			when(mapToken.token()).thenReturn(tokenInfoProvider);
+			doThrow(exception).when(tokenDrawer).drawToken(graphics, tokenInfo, imageObserver);
+			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
+			when(tokenMap.keySet()).thenReturn(Set.of(mapToken));
+			when(tokenMap.get(mapToken)).thenReturn(coordinatesInfoProvider);
+			// Run
+			unitUnderTest.paintBattleMapForScenarioAndParty(
+				graphics,
+				tokenMap,
+				mapToken,
+				mapImage,
+				imageObserver,
+				IS_SELECTED
+			);
+			// Check
+			verify(exception, times(1)).printStackTrace();
 		}
 	}
 }
