@@ -32,7 +32,7 @@ public class MapPanel extends JPanel {
 
 	private GraphicsManager graphicsManager;
 	private ImageIcon mapImage;
-	private TokenMap tokens;
+	private TokenMap tokenMap;
 
 	@Getter
 	private MapToken selectedToken;
@@ -40,7 +40,7 @@ public class MapPanel extends JPanel {
 	public MapPanel(ImageIcon mapImage, TokenMap tokens, Observer observer, GraphicsManager graphicsManager) {
 		this.graphicsManager = graphicsManager;
 		this.mapImage = mapImage;
-		this.tokens = tokens;
+		this.tokenMap = tokens;
 		setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
 		// Hit-Detection aktivieren
 		addMouseListener(
@@ -70,7 +70,7 @@ public class MapPanel extends JPanel {
 		super.paintComponent(g);
 		graphicsManager.paintBattleMapForScenarioAndParty(
 			(Graphics2D) g,
-			tokens,
+			tokenMap,
 			selectedToken,
 			mapImage,
 			getFocusCycleRootAncestor(),
@@ -83,8 +83,8 @@ public class MapPanel extends JPanel {
 	}
 
 	public MapToken getTokenAt(int x, int y) {
-		for (MapToken mapToken : tokens.keySet()) {
-			CoordinatesInfoProvider coordinates = tokens.get(mapToken);
+		for (MapToken mapToken : tokenMap.keySet()) {
+			CoordinatesInfoProvider coordinates = tokenMap.get(mapToken);
 			TokenInfoProvider token = mapToken.token();
 			int tokenX = (coordinates.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 			int tokenY = (coordinates.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
@@ -109,7 +109,7 @@ public class MapPanel extends JPanel {
 	}
 
 	public void updateTokens(TokenMap newTokens) {
-		this.tokens = newTokens;
+		this.tokenMap = newTokens;
 		repaint();
 	}
 }

@@ -8,7 +8,7 @@ import jakarta.inject.Named;
 import java.awt.Graphics2D;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
-import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import javax.swing.ImageIcon;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +31,7 @@ public class GraphicsManager {
 		MapToken selectedToken,
 		ImageIcon mapImage,
 		ImageObserver imageObserver,
-		BiFunction<MapToken, MapToken, Boolean> isSelected
+		BiPredicate<MapToken, MapToken> isSelected
 	) {
 		battleMapDrawer.drawBattleMap(g, mapImage.getImage(), imageObserver);
 		for (MapToken mapToken : tokens.keySet()) {
@@ -40,7 +40,7 @@ public class GraphicsManager {
 			TokenInfo ti = tokenInfoMapper.toTokenInfo(token, coordinates, mapToken.counter());
 			try {
 				tokenDrawer.drawToken(g, ti, imageObserver);
-				if (Boolean.TRUE.equals(isSelected.apply(mapToken, selectedToken))) {
+				if (Boolean.TRUE.equals(isSelected.test(mapToken, selectedToken))) {
 					selectedTokenMarker.renderSelectedMarker(g, ti);
 				}
 				if (tokens.hasTokenMoreThanOneTimes(token)) {

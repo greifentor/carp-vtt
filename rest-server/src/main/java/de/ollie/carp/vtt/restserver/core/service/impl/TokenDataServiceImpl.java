@@ -39,10 +39,11 @@ public class TokenDataServiceImpl implements TokenDataService {
 				new Coordinates().setFieldX(new BigDecimal(tp.getCoordinateX())).setFieldY(new BigDecimal(tp.getCoordinateY()))
 			)
 			.setCounter(tp.getCounter())
-			.setId(token.getId())
+			.setId(tp.getId())
 			.setImage(token.getImage())
 			.setName(token.getName())
 			.setSelected(tp.isSelected())
+			.setTokenId(token.getId())
 			.setTokenSize(de.ollie.carp.vtt.core.service.model.TokenSize.valueOf(token.getTokenSize().name()));
 	}
 

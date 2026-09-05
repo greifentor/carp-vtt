@@ -61,7 +61,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private JPanel panelImage;
 	private MapPanel battleMapPanel;
 	private Token selectedToken;
-	private TokenMap tokens = new TokenMap();
+	private TokenMap tokenMap = new TokenMap();
 
 	public BattleMapJInternalFrame prepare() {
 		desktopPane.add(this);
@@ -106,7 +106,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 					new ByteArrayInputStream((((BattleMap) comboBoxBattleMaps.getSelectedItem()).getImageContent()))
 				);
 				ImageIcon imageIcon = new ImageIcon(image);
-				battleMapPanel = new MapPanel(imageIcon, tokens, this, graphicsManager);
+				battleMapPanel = new MapPanel(imageIcon, tokenMap, this, graphicsManager);
 				battleMapPanel.addMouseListener(
 					new MouseAdapter() {
 						@Override
@@ -114,7 +114,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 							if (selectedToken != null) {
 								MapToken newMapToken = new MapToken(
 									selectedToken,
-									tokens.getNextCounterFor(selectedToken),
+									tokenMap.getNextCounterFor(selectedToken),
 									uuidService.create(),
 									true
 								);
@@ -140,14 +140,14 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	}
 
 	private TokenMap map(List<TokenData> tokenData) {
-		tokens.clear();
+		tokenMap.clear();
 		tokenData.forEach(td ->
-			tokens.put(
-				new MapToken(td.getToken(), tokens.getNextCounterFor(td.getToken()), td.getId(), td.isSelected()),
+			tokenMap.put(
+				new MapToken(td.getToken(), tokenMap.getNextCounterFor(td.getToken()), td.getId(), td.isSelected()),
 				td.getCoordinates()
 			)
 		);
-		return tokens;
+		return tokenMap;
 	}
 
 	private void updatePosition(Coordinates coordinates, boolean selected) {
@@ -163,8 +163,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		);
 		tokenPositionService.updateTokenPosition(event);
 		tokenWebPort.pushTokenPositionUpdate(event);
-		tokens.put(battleMapPanel.getSelectedToken(), coordinates);
-		battleMapPanel.updateTokens(tokens);
+		tokenMap.put(battleMapPanel.getSelectedToken(), coordinates);
+		battleMapPanel.updateTokens(tokenMap);
 	}
 
 	private static final int OFFSET_IN_PIXELS = 25;

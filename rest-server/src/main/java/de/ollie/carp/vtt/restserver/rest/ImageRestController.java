@@ -59,7 +59,6 @@ public class ImageRestController implements ImageApi {
 			ByteArrayResource resource = new ByteArrayResource(imageBytes);
 			return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).contentLength(imageBytes.length).body(resource);
 		} catch (Exception e) {
-			System.out.println("\n\n" + e.getMessage() + "\n\n");
 			throw new RuntimeException(e.getMessage());
 		}
 	}
@@ -72,7 +71,9 @@ public class ImageRestController implements ImageApi {
 		TokenMap tokenMap = new TokenMap();
 		tokenDataService
 			.findAllBy(battleMapId, partyId, scenarioId)
-			.forEach(td -> tokenMap.put(new MapToken(td, td.getCounter(), td.getId(), td.isSelected()), td.getCoordinates()));
+			.forEach(td ->
+				tokenMap.put(new MapToken(td, td.getCounter(), td.getTokenId(), td.isSelected()), td.getCoordinates())
+			);
 		return tokenMap;
 	}
 }

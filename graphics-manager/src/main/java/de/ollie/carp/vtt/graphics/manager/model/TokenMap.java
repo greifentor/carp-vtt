@@ -43,6 +43,8 @@ public class TokenMap {
 	}
 
 	public boolean hasTokenMoreThanOneTimes(TokenInfoProvider token) {
+		System.out.println("-----");
+		tokens.keySet().stream().forEach(mt -> System.out.println(mt.token().getId() + " == " + token.getId()));
 		return (
 			tokens.keySet().stream().filter(mt -> mt.token().getId().equals(token.getId())).mapToInt(mt -> 1).count() > 1
 		);
