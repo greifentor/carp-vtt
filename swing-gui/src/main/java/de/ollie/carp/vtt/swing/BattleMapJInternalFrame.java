@@ -116,8 +116,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 									selectedToken,
 									tokenMap.getNextCounterFor(selectedToken),
 									uuidService.create(),
-									true,
-									null
+									true
 								);
 								battleMapPanel.setSelectedToken(newMapToken);
 								updatePosition(getFieldCoordinates(e.getX(), e.getY()), true);
@@ -153,8 +152,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 
 	private void updatePosition(Coordinates coordinates, boolean selected) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
-			battleMapPanel.getSelectedToken().id(),
-			(Token) battleMapPanel.getSelectedToken().token(),
+			battleMapPanel.getSelectedToken().getId(),
+			(Token) battleMapPanel.getSelectedToken().getToken(),
 			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
 			4711,
 			coordinates,
@@ -164,7 +163,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		);
 		tokenPositionService.updateTokenPosition(event);
 		tokenWebPort.pushTokenPositionUpdate(event);
-		tokenMap.put(battleMapPanel.getSelectedToken(), coordinates);
+		tokenMap.putCoordinates(battleMapPanel.getSelectedToken().getId(), coordinates);
 		battleMapPanel.updateTokens(tokenMap);
 	}
 

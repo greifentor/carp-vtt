@@ -31,6 +31,17 @@ public class TokenMap {
 			this.token = token;
 			this.selected = selected;
 		}
+
+		public MapToken(
+			TokenInfoProvider token,
+			int counter,
+			UUID id,
+			boolean selected,
+			CoordinatesInfoProvider coordinates
+		) {
+			this(token, counter, id, selected);
+			this.coordinates = coordinates;
+		}
 	}
 
 	private Map<UUID, MapToken> tokens = new HashMap<>();
@@ -82,6 +93,9 @@ public class TokenMap {
 	public void putCoordinates(UUID key, CoordinatesInfoProvider coordinates) {
 		ensure(key != null, "key cannot be null!");
 		ensure(coordinates != null, "coordinates cannot be null!");
+		MapToken mapToken = get(key);
+		ensure(mapToken != null, "There is no mapToken for key: " + key);
+		mapToken.setCoordinates(coordinates);
 	}
 
 	public String getIds() {

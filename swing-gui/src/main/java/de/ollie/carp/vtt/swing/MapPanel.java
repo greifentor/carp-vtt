@@ -1,7 +1,6 @@
 package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
@@ -16,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -49,7 +49,7 @@ public class MapPanel extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					MapToken mt = getTokenAt(e.getX(), e.getY());
 					if (mt != null) {
-						System.out.println("Token hit: " + mt.token().getName() + " - " + mt.counter());
+						System.out.println("Token hit: " + mt.getToken().getName() + " - " + mt.getCounter());
 					}
 					if (observer != null) {
 						observer.tokenHit(mt, getFieldCoordinates(e.getX(), e.getY()));
@@ -79,15 +79,15 @@ public class MapPanel extends JPanel {
 	}
 
 	private boolean isSelectedTokenSelected(MapToken mapToken, MapToken selectedToken) {
-		return mapToken.id().equals(selectedToken != null ? selectedToken.id() : null);
+		return mapToken.getId().equals(selectedToken != null ? selectedToken.getId() : null);
 	}
 
 	public MapToken getTokenAt(int x, int y) {
-		for (MapToken mapToken : tokenMap.keySet()) {
-			CoordinatesInfoProvider coordinates = tokenMap.get(mapToken);
-			TokenInfoProvider token = mapToken.token();
-			int tokenX = (coordinates.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			int tokenY = (coordinates.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
+		for (UUID id : tokenMap.keySet()) {
+			MapToken mapToken = tokenMap.get(id);
+			TokenInfoProvider token = mapToken.getToken();
+			int tokenX = (mapToken.getCoordinates().getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
+			int tokenY = (mapToken.getCoordinates().getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 			try {
 				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
 				int w = tokenImage.getWidth(null);

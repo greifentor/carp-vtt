@@ -72,6 +72,7 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 			.map(dbo ->
 				new TokenData()
 					.setCoordinates(new Coordinates().setFieldX(dbo.getFieldX()).setFieldY(dbo.getFieldY()))
+					.setCounter(dbo.getCounter())
 					.setId(dbo.getId())
 					.setToken(tokenDboMapper.toModel(dbo.getToken()))
 			)

@@ -16,6 +16,7 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.BiPredicate;
 import javax.swing.ImageIcon;
 import org.junit.jupiter.api.Nested;
@@ -29,6 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class GraphicsManagerTest {
 
 	private static final int COUNTER = 42;
+	private static final UUID ID = UUID.randomUUID();
 	private static final BiPredicate<MapToken, MapToken> IS_NOT_SELECTED = (m0, m1) -> false;
 	private static final BiPredicate<MapToken, MapToken> IS_SELECTED = (m0, m1) -> true;
 
@@ -118,12 +120,13 @@ class GraphicsManagerTest {
 		void throwsAnException_whenTokenDrawingFails() throws Exception {
 			// Prepare
 			IOException exception = mock(IOException.class);
-			when(mapToken.counter()).thenReturn(COUNTER);
-			when(mapToken.token()).thenReturn(tokenInfoProvider);
+			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
+			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
 			doThrow(exception).when(tokenDrawer).drawToken(graphics, tokenInfo, imageObserver);
 			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
-			when(tokenMap.keySet()).thenReturn(Set.of(mapToken));
-			when(tokenMap.get(mapToken)).thenReturn(coordinatesInfoProvider);
+			when(tokenMap.keySet()).thenReturn(Set.of(ID));
+			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run
 			unitUnderTest.paintBattleMapForScenarioAndParty(
 				graphics,
@@ -140,11 +143,12 @@ class GraphicsManagerTest {
 		@Test
 		void callsTheDrawTokenMethodOfTheTokenDrawerCorrectly_noSelectionNoCounter() throws Exception {
 			// Prepare
-			when(mapToken.counter()).thenReturn(COUNTER);
-			when(mapToken.token()).thenReturn(tokenInfoProvider);
+			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
+			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
 			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
-			when(tokenMap.keySet()).thenReturn(Set.of(mapToken));
-			when(tokenMap.get(mapToken)).thenReturn(coordinatesInfoProvider);
+			when(tokenMap.keySet()).thenReturn(Set.of(ID));
+			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run
 			unitUnderTest.paintBattleMapForScenarioAndParty(
 				graphics,
@@ -162,12 +166,13 @@ class GraphicsManagerTest {
 		@Test
 		void callsTheCounterMarkerCorrectly_noSelection() {
 			// Prepare
-			when(mapToken.counter()).thenReturn(COUNTER);
-			when(mapToken.token()).thenReturn(tokenInfoProvider);
+			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
+			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
 			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
 			when(tokenMap.hasTokenMoreThanOneTimes(tokenInfoProvider)).thenReturn(true);
-			when(tokenMap.keySet()).thenReturn(Set.of(mapToken));
-			when(tokenMap.get(mapToken)).thenReturn(coordinatesInfoProvider);
+			when(tokenMap.keySet()).thenReturn(Set.of(ID));
+			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run
 			unitUnderTest.paintBattleMapForScenarioAndParty(
 				graphics,
@@ -185,11 +190,12 @@ class GraphicsManagerTest {
 		@Test
 		void callsTheSelectedTokenMarkerCorrectly_noCounter() {
 			// Prepare
-			when(mapToken.counter()).thenReturn(COUNTER);
-			when(mapToken.token()).thenReturn(tokenInfoProvider);
+			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
+			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
 			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
-			when(tokenMap.keySet()).thenReturn(Set.of(mapToken));
-			when(tokenMap.get(mapToken)).thenReturn(coordinatesInfoProvider);
+			when(tokenMap.keySet()).thenReturn(Set.of(ID));
+			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run
 			unitUnderTest.paintBattleMapForScenarioAndParty(
 				graphics,

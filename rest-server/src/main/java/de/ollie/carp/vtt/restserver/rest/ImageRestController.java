@@ -64,7 +64,7 @@ public class ImageRestController implements ImageApi {
 	}
 
 	private boolean isSelectedTokenSelected(MapToken mapToken, MapToken selectedToken) {
-		return mapToken.selected();
+		return mapToken.isSelected();
 	}
 
 	private TokenMap createTokenMap(UUID battleMapId, UUID partyId, UUID scenarioId) {
@@ -72,7 +72,10 @@ public class ImageRestController implements ImageApi {
 		tokenDataService
 			.findAllBy(battleMapId, partyId, scenarioId)
 			.forEach(td ->
-				tokenMap.put(new MapToken(td, td.getCounter(), td.getTokenId(), td.isSelected()), td.getCoordinates())
+				tokenMap.put(
+					td.getId(),
+					new MapToken(td, td.getCounter(), td.getTokenId(), td.isSelected(), td.getCoordinates())
+				)
 			);
 		return tokenMap;
 	}

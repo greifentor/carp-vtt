@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
@@ -176,13 +178,28 @@ class TokenMapTest {
 	class putCoordinates_UUID_CoordinatesInfoProvider {
 
 		@Test
-		void throwsAmException_passingANullValueAsKey() {
+		void throwsAnException_passingANullValueAsKey() {
 			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(null, coordinates));
 		}
 
 		@Test
-		void throwsAmException_passingANullValueAsMapToken() {
+		void throwsAnException_passingANullValueAsMapToken() {
 			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, null));
+		}
+
+		@Test
+		void throwsAnException_passingAnIdWhichIsNotAlreadyStored() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, coordinates));
+		}
+
+		@Test
+		void changesTheCoordinatesCorrectly() {
+			// Prepare
+			unitUnderTest.put(ID, mapToken);
+			// Run
+			unitUnderTest.putCoordinates(ID, coordinates);
+			// Check
+			verify(mapToken, times(1)).setCoordinates(coordinates);
 		}
 	}
 }
