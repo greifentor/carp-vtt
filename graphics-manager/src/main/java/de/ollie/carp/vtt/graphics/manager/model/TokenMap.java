@@ -68,6 +68,7 @@ public class TokenMap {
 	}
 
 	public boolean hasTokenMoreThanOneTimes(TokenInfoProvider token) {
+		System.out.println(token.getId());
 		return (
 			tokens
 				.entrySet()

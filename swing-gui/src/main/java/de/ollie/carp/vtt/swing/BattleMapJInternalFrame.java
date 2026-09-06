@@ -141,12 +141,13 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 
 	private TokenMap map(List<TokenData> tokenData) {
 		tokenMap.clear();
-		tokenData.forEach(td ->
+		tokenData.forEach(td -> {
+			System.out.println(td.getId() + " - " + td.getToken());
 			tokenMap.put(
 				td.getId(),
 				new MapToken(td.getToken(), td.getCounter(), td.getId(), td.isSelected(), td.getCoordinates())
-			)
-		);
+			);
+		});
 		return tokenMap;
 	}
 
@@ -155,7 +156,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			battleMapPanel.getSelectedToken().getId(),
 			(Token) battleMapPanel.getSelectedToken().getToken(),
 			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
-			4711,
+			tokenMap.getNextCounterFor(selectedToken),
 			coordinates,
 			DUMMY_PARTY,
 			DUMMY_SCENARIO,
