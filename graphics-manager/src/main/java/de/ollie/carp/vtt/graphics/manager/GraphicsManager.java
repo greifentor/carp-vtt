@@ -3,11 +3,11 @@ package de.ollie.carp.vtt.graphics.manager;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import jakarta.inject.Named;
 import java.awt.Graphics2D;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
-import java.util.UUID;
 import java.util.function.BiPredicate;
 import javax.swing.ImageIcon;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class GraphicsManager {
 		BiPredicate<MapToken, MapToken> isSelected
 	) {
 		battleMapDrawer.drawBattleMap(g, mapImage.getImage(), imageObserver);
-		for (UUID id : tokens.keySet()) {
+		for (MapTokenId id : tokens.keySet()) {
 			MapToken mapToken = tokens.get(id);
 			TokenInfoProvider token = mapToken.getToken();
 			TokenInfo ti = tokenInfoMapper.toTokenInfo(token, mapToken.getCoordinates(), mapToken.getCounter());

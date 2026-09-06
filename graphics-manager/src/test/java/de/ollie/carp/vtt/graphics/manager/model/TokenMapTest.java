@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TokenMapTest {
 
-	private static final UUID ID = UUID.randomUUID();
+	private static final MapTokenId ID = new MapTokenId(UUID.randomUUID());
 
 	@Mock
 	private CoordinatesInfoProvider coordinates;
@@ -41,7 +42,6 @@ class TokenMapTest {
 		@Test
 		void worksWithAnEmptyTokenMap() {
 			// Prepare
-			MapToken mapToken = mock(MapToken.class);
 			unitUnderTest.put(ID, mapToken);
 			// Run
 			unitUnderTest.clear();
@@ -138,7 +138,7 @@ class TokenMapTest {
 			when(token3.getId()).thenReturn(TOKEN_ID);
 			when(token2.getId()).thenReturn(TOKEN_ID);
 			unitUnderTest.put(ID, mapToken);
-			unitUnderTest.put(UUID.randomUUID(), mapToken2);
+			unitUnderTest.put(new MapTokenId(UUID.randomUUID()), mapToken2);
 			// Run & Check
 			assertTrue(unitUnderTest.hasTokenMoreThanOneTimes(token2));
 		}

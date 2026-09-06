@@ -11,6 +11,7 @@ import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
@@ -30,7 +31,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class GraphicsManagerTest {
 
 	private static final int COUNTER = 42;
-	private static final UUID ID = UUID.randomUUID();
+	private static final MapTokenId ID = new MapTokenId(UUID.randomUUID());
 	private static final BiPredicate<MapToken, MapToken> IS_NOT_SELECTED = (m0, m1) -> false;
 	private static final BiPredicate<MapToken, MapToken> IS_SELECTED = (m0, m1) -> true;
 

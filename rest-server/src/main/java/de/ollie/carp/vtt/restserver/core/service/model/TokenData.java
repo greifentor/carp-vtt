@@ -14,7 +14,7 @@ public class TokenData implements TokenInfoProvider {
 	private Coordinates coordinates;
 	private int counter;
 	private UUID id;
-	private UUID tokenId;
+	private UUID mapTokenId;
 	private String name;
 
 	@Exclude

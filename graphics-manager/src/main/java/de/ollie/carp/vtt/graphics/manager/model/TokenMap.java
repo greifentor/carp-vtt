@@ -9,20 +9,28 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 public class TokenMap {
+
+	@Data
+	@AllArgsConstructor
+	public static class MapTokenId {
+
+		private UUID uuid;
+	}
 
 	@Data
 	public static class MapToken {
 
 		private CoordinatesInfoProvider coordinates;
 		private int counter;
-		private UUID id;
+		private MapTokenId id;
 		private TokenInfoProvider token;
 		private boolean selected;
 
-		public MapToken(TokenInfoProvider token, int counter, UUID id, boolean selected) {
+		public MapToken(TokenInfoProvider token, int counter, MapTokenId id, boolean selected) {
 			ensure(counter > 0, "counter cannot be lesser than one!");
 			ensure(id != null, "id cannot be null!");
 			ensure(token != null, "token cannot be null!");
@@ -35,7 +43,7 @@ public class TokenMap {
 		public MapToken(
 			TokenInfoProvider token,
 			int counter,
-			UUID id,
+			MapTokenId id,
 			boolean selected,
 			CoordinatesInfoProvider coordinates
 		) {
@@ -44,13 +52,13 @@ public class TokenMap {
 		}
 	}
 
-	private Map<UUID, MapToken> tokens = new HashMap<>();
+	private Map<MapTokenId, MapToken> tokens = new HashMap<>();
 
 	public void clear() {
 		tokens.clear();
 	}
 
-	public MapToken get(UUID key) {
+	public MapToken get(MapTokenId key) {
 		return tokens.get(key);
 	}
 
@@ -60,7 +68,7 @@ public class TokenMap {
 				.entrySet()
 				.stream()
 				.map(Entry::getValue)
-				.filter(mt -> mt.getToken().getId().equals(token.getId()))
+				.filter(mt -> mt.getToken().getId().equals(token != null ? token.getId() : null))
 				.map(mt -> 1)
 				.count() +
 			1
@@ -68,7 +76,6 @@ public class TokenMap {
 	}
 
 	public boolean hasTokenMoreThanOneTimes(TokenInfoProvider token) {
-		System.out.println(token.getId());
 		return (
 			tokens
 				.entrySet()
@@ -81,17 +88,17 @@ public class TokenMap {
 		);
 	}
 
-	public Set<UUID> keySet() {
+	public Set<MapTokenId> keySet() {
 		return tokens.keySet();
 	}
 
-	public void put(UUID key, MapToken mapToken) {
+	public void put(MapTokenId key, MapToken mapToken) {
 		ensure(key != null, "key cannot be null!");
 		ensure(mapToken != null, "mapToken cannot be null!");
 		tokens.put(key, mapToken);
 	}
 
-	public void putCoordinates(UUID key, CoordinatesInfoProvider coordinates) {
+	public void putCoordinates(MapTokenId key, CoordinatesInfoProvider coordinates) {
 		ensure(key != null, "key cannot be null!");
 		ensure(coordinates != null, "coordinates cannot be null!");
 		MapToken mapToken = get(key);

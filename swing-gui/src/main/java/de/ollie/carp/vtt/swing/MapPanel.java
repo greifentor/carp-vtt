@@ -5,6 +5,7 @@ import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,7 +16,6 @@ import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -83,7 +83,7 @@ public class MapPanel extends JPanel {
 	}
 
 	public MapToken getTokenAt(int x, int y) {
-		for (UUID id : tokenMap.keySet()) {
+		for (MapTokenId id : tokenMap.keySet()) {
 			MapToken mapToken = tokenMap.get(id);
 			TokenInfoProvider token = mapToken.getToken();
 			int tokenX = (mapToken.getCoordinates().getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;

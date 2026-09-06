@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.restserver.rest;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import de.ollie.carp.vtt.restserver.core.service.BattleMapService;
 import de.ollie.carp.vtt.restserver.core.service.TokenDataService;
 import de.ollie.carp.vtt.restserver.core.service.model.BattleMap;
@@ -39,7 +40,12 @@ public class ImageRestController implements ImageApi {
 			.orElseThrow(() -> new NoSuchElementException("No battle map with id found: " + battleMapId));
 		TokenData selected = tokenDataService.getSelectedToken(battleMapId, partyId, scenarioId);
 		MapToken selectedToken = selected != null
-			? new MapToken(selected, tokenMap.getNextCounterFor(selected), selected.getId(), selected.isSelected())
+			? new MapToken(
+				selected,
+				tokenMap.getNextCounterFor(selected),
+				new MapTokenId(selected.getId()),
+				selected.isSelected()
+			)
 			: null;
 		try {
 			BufferedImage imageIconBattleMap = ImageIO.read(new ByteArrayInputStream(battleMap.getImage()));
@@ -71,12 +77,10 @@ public class ImageRestController implements ImageApi {
 		TokenMap tokenMap = new TokenMap();
 		tokenDataService
 			.findAllBy(battleMapId, partyId, scenarioId)
-			.forEach(td ->
-				tokenMap.put(
-					td.getId(),
-					new MapToken(td, td.getCounter(), td.getTokenId(), td.isSelected(), td.getCoordinates())
-				)
-			);
+			.forEach(td -> {
+				MapTokenId id = new MapTokenId(td.getMapTokenId());
+				tokenMap.put(id, new MapToken(td, td.getCounter(), id, td.isSelected(), td.getCoordinates()));
+			});
 		return tokenMap;
 	}
 }

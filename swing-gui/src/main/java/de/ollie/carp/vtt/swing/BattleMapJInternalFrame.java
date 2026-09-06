@@ -18,6 +18,7 @@ import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
+import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import de.ollie.carp.vtt.swing.component.TokenSelectionDialog;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -60,6 +61,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private JComboBox<BattleMap> comboBoxBattleMaps;
 	private JPanel panelImage;
 	private MapPanel battleMapPanel;
+	private MapToken selectedMapToken;
 	private Token selectedToken;
 	private TokenMap tokenMap = new TokenMap();
 
@@ -115,11 +117,12 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 								MapToken newMapToken = new MapToken(
 									selectedToken,
 									tokenMap.getNextCounterFor(selectedToken),
-									uuidService.create(),
+									new MapTokenId(uuidService.create()),
 									true
 								);
 								battleMapPanel.setSelectedToken(newMapToken);
-								updatePosition(getFieldCoordinates(e.getX(), e.getY()), true);
+								tokenMap.put(newMapToken.getId(), newMapToken);
+								updatePosition(newMapToken, getFieldCoordinates(e.getX(), e.getY()), true);
 								selectedToken = null;
 							}
 						}
@@ -143,20 +146,18 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		tokenMap.clear();
 		tokenData.forEach(td -> {
 			System.out.println(td.getId() + " - " + td.getToken());
-			tokenMap.put(
-				td.getId(),
-				new MapToken(td.getToken(), td.getCounter(), td.getId(), td.isSelected(), td.getCoordinates())
-			);
+			MapTokenId id = new MapTokenId(td.getId());
+			tokenMap.put(id, new MapToken(td.getToken(), td.getCounter(), id, td.isSelected(), td.getCoordinates()));
 		});
 		return tokenMap;
 	}
 
-	private void updatePosition(Coordinates coordinates, boolean selected) {
+	private void updatePosition(MapToken mapToken, Coordinates coordinates, boolean selected) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
-			battleMapPanel.getSelectedToken().getId(),
+			mapToken.getId().getUuid(),
 			(Token) battleMapPanel.getSelectedToken().getToken(),
 			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
-			tokenMap.getNextCounterFor(selectedToken),
+			mapToken.getCounter(),
 			coordinates,
 			DUMMY_PARTY,
 			DUMMY_SCENARIO,
@@ -189,10 +190,10 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 				);
 			} else {
 				battleMapPanel.setSelectedToken(mapToken);
-				updatePosition(coordinates, true);
+				updatePosition(mapToken, coordinates, true);
 			}
 		} else if (battleMapPanel.getSelectedToken() != null) {
-			updatePosition(coordinates, true);
+			updatePosition(battleMapPanel.getSelectedToken(), coordinates, true);
 		}
 	}
 }
