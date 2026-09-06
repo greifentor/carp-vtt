@@ -7,8 +7,11 @@ import de.ollie.carp.vtt.core.service.model.TokenData;
 import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import java.util.List;
+import java.util.UUID;
 
 public interface TokenPositionService {
+	void delete(UUID tokenPositionId);
+
 	List<TokenMapPartyScenario> findAll();
 
 	List<TokenData> findAllBy(BattleMap battleMap, Party party, Scenario scenario);

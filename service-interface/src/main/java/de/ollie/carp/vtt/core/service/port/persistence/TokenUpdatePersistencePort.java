@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TokenUpdatePersistencePort {
+	void deleteTokenPosition(UUID id);
+
 	List<TokenMapPartyScenario> findAll();
 
 	List<TokenData> findAllByMapPartyScenario(UUID mapId, UUID partyId, UUID scenarioId);

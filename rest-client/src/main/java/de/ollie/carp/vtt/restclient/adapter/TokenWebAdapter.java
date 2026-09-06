@@ -5,6 +5,7 @@ import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
@@ -25,6 +26,11 @@ public class TokenWebAdapter implements TokenWebPort {
 	private final TokenPositionService tokenPositionService;
 	private final TokenService tokenService;
 	private final UnselectClient unselectClient;
+
+	@Override
+	public void pushTokenPositionRemove(TokenPositionRemoveEvent tokenPositionRemoveEvent) {
+		tokenPositionClient.removeTokenPosition(tokenPositionRemoveEvent);
+	}
 
 	@Override
 	public void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent) {

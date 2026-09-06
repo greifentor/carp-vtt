@@ -1,7 +1,10 @@
 package de.ollie.carp.vtt.graphics.manager.model;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -89,12 +92,13 @@ class TokenMapTest {
 		void returns2_whenTheTokenIsInTheTokenMap() {
 			// Prepare
 			TokenInfoProvider token2 = mock(TokenInfoProvider.class);
+			when(mapToken.getCounter()).thenReturn(4710);
 			when(mapToken.getToken()).thenReturn(token);
 			when(token.getId()).thenReturn(TOKEN_ID);
 			when(token2.getId()).thenReturn(TOKEN_ID);
 			unitUnderTest.put(ID, mapToken);
 			// Run & Check
-			assertEquals(2, unitUnderTest.getNextCounterFor(token2));
+			assertEquals(4711, unitUnderTest.getNextCounterFor(token2));
 		}
 	}
 
@@ -145,7 +149,7 @@ class TokenMapTest {
 	}
 
 	@Nested
-	class put_UUID_MapToken {
+	class put_MapTokenId_MapToken {
 
 		@Test
 		void throwsAmException_passingANullValueAsKey() {
@@ -175,7 +179,7 @@ class TokenMapTest {
 	}
 
 	@Nested
-	class putCoordinates_UUID_CoordinatesInfoProvider {
+	class putCoordinates_MapTokenId_CoordinatesInfoProvider {
 
 		@Test
 		void throwsAnException_passingANullValueAsKey() {
@@ -200,6 +204,47 @@ class TokenMapTest {
 			unitUnderTest.putCoordinates(ID, coordinates);
 			// Check
 			verify(mapToken, times(1)).setCoordinates(coordinates);
+		}
+	}
+
+	@Nested
+	class remove_MapTokenId {
+
+		private static final MapTokenId ANOTHER_ID = new MapTokenId(UUID.randomUUID());
+
+		@Mock
+		private MapToken anotherMapToken;
+
+		@Test
+		void thrownsAnException_passingANullValueAsKey() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.remove(null));
+		}
+
+		@Test
+		void doesNothing_calledForAnEmptyTokenMap() {
+			assertDoesNotThrow(() -> unitUnderTest.remove(ID));
+		}
+
+		@Test
+		void removesNothing_whenIdNotMatchesAnything() {
+			// Prepare
+			unitUnderTest.put(ANOTHER_ID, mapToken);
+			// Run
+			unitUnderTest.remove(ID);
+			// Check
+			assertNotNull(unitUnderTest.get(ANOTHER_ID));
+		}
+
+		@Test
+		void removesTheRecordWithTheMatchingIdCorrectly_letNotMatchingIdsInTokenMap() {
+			// Prepare
+			unitUnderTest.put(ANOTHER_ID, anotherMapToken);
+			unitUnderTest.put(ID, mapToken);
+			// Run
+			unitUnderTest.remove(ID);
+			// Check
+			assertNull(unitUnderTest.get(ID));
+			assertNotNull(unitUnderTest.get(ANOTHER_ID));
 		}
 	}
 }

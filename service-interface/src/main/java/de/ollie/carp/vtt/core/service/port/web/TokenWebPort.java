@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.core.service.port.web;
 
+import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import java.util.UUID;
@@ -8,6 +9,8 @@ public interface TokenWebPort {
 	interface SynchronizationObserver {
 		void progress(int synced, int total);
 	}
+
+	void pushTokenPositionRemove(TokenPositionRemoveEvent tokenPositionRemoveEvent);
 
 	void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent);
 

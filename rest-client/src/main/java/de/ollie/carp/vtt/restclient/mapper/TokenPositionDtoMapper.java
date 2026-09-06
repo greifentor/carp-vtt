@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.restclient.mapper;
 
+import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.restclient.model.TokenPositionDto;
 import jakarta.inject.Named;
@@ -18,6 +19,12 @@ public class TokenPositionDtoMapper {
 		dto.setScenarioId(tokenPositionUpdateEvent.getScenarioId());
 		dto.setSelected(tokenPositionUpdateEvent.isSelected());
 		dto.setTokenId(tokenPositionUpdateEvent.getTokenId());
+		return dto;
+	}
+
+	public TokenPositionDto map(TokenPositionRemoveEvent tokenPositionRemoveEvent) {
+		TokenPositionDto dto = new TokenPositionDto();
+		dto.setId(tokenPositionRemoveEvent.getId());
 		return dto;
 	}
 }

@@ -158,6 +158,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
+  /api/v1/tokens/positions/{id}:
+    delete:
+      tags:
+        - Token-Position
+      summary: Delete a tokens position
+      operationId: deleteTokenPosition
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Removes a token position with the passed id.
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
   /api/v1/tokens/positions:
     put:
       tags:
@@ -294,6 +322,15 @@ components:
         selected:
           type: boolean
           example: false
+    TokenPositionIdDto:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
     ErrorDto:
       type: object
       required:

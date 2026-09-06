@@ -13,6 +13,7 @@ import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
@@ -58,10 +59,10 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private final transient UuidService uuidService;
 
 	private JButton buttonAddIcon = new JButton("+");
+	private JButton buttonRemoveIcon = new JButton("-");
 	private JComboBox<BattleMap> comboBoxBattleMaps;
 	private JPanel panelImage;
 	private MapPanel battleMapPanel;
-	private MapToken selectedMapToken;
 	private Token selectedToken;
 	private TokenMap tokenMap = new TokenMap();
 
@@ -86,7 +87,9 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		JToolBar toolbar = new JToolBar(JToolBar.VERTICAL);
 		toolbar.setFloatable(false);
 		toolbar.add(buttonAddIcon);
+		toolbar.add(buttonRemoveIcon);
 		buttonAddIcon.addActionListener(this);
+		buttonRemoveIcon.addActionListener(this);
 		p.add(toolbar, BorderLayout.WEST);
 		p.add(comboBoxBattleMaps, BorderLayout.NORTH);
 		p.add(panelImage, BorderLayout.CENTER);
@@ -101,6 +104,14 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonAddIcon) {
 			selectedToken = new TokenSelectionDialog(null, tokenService.findAll()).getSelectedToken();
+			battleMapPanel.setSelectedToken(null);
+		} else if ((e.getSource() == buttonRemoveIcon) && (battleMapPanel.getSelectedToken() != null)) {
+			MapTokenId toDelete = battleMapPanel.getSelectedToken().getId();
+			tokenMap.remove(toDelete);
+			tokenPositionService.delete(toDelete.getUuid());
+			tokenWebPort.pushTokenPositionRemove(new TokenPositionRemoveEvent(toDelete.getUuid()));
+			battleMapPanel.updateTokens(tokenMap);
+			battleMapPanel.setSelectedToken(null);
 		} else if (e.getSource() == comboBoxBattleMaps) {
 			panelImage.removeAll();
 			try {

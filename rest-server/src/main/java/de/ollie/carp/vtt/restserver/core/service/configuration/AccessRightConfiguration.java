@@ -1,5 +1,7 @@
 package de.ollie.carp.vtt.restserver.core.service.configuration;
 
+import static de.ollie.baselib.util.Check.ensure;
+
 import de.ollie.carp.vtt.restserver.core.service.model.AccessRight;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,16 @@ public class AccessRightConfiguration {
 	}
 
 	public boolean hasAccess(UUID userId, AccessRight right) {
+		ensure(right != null, "right cannot be null!");
+		ensure(userId != null, "user id cannot be null!");
 		return rights.getOrDefault(userId, List.of()).contains(right);
+	}
+
+	public boolean hasAccessToAtLeastOneRight(UUID userId, AccessRight... rights) {
+		boolean result = false;
+		for (AccessRight right : rights) {
+			result = result || hasAccess(userId, right);
+		}
+		return result;
 	}
 }

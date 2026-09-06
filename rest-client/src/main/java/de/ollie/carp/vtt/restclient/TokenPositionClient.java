@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.restclient;
 
 import de.ollie.carp.vtt.core.service.exception.UploadException;
+import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.restclient.api.TokenPositionApi;
 import de.ollie.carp.vtt.restclient.config.RestClientConfiguration;
@@ -16,6 +17,18 @@ public class TokenPositionClient {
 	private final BearerTokenGenerator bearerTokenGenerator;
 	private final RestClientConfiguration restClientConfiguration;
 	private final TokenPositionDtoMapper tokenPositionDtoMapper;
+
+	public void removeTokenPosition(TokenPositionRemoveEvent tokenPositionRemoveEvent) {
+		ApiClient client = new ApiClient();
+		client.setBasePath(restClientConfiguration.getBaseUrl());
+		client.setBearerToken(bearerTokenGenerator.create());
+		TokenPositionApi api = new TokenPositionApi(client);
+		try {
+			api.deleteTokenPosition(tokenPositionRemoveEvent.getId());
+		} catch (ApiException ae) {
+			throw new UploadException("token position upload error: " + ae.getMessage());
+		}
+	}
 
 	public void updateTokenPosition(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
 		ApiClient client = new ApiClient();

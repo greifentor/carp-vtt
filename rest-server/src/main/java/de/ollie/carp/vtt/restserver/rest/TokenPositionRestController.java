@@ -8,6 +8,7 @@ import de.ollie.carp.vtt.restserver.rest.api.TokenPositionApi;
 import de.ollie.carp.vtt.restserver.rest.mapper.TokenPositionDtoMapper;
 import de.ollie.carp.vtt.restserver.rest.model.TokenPositionDto;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,20 @@ public class TokenPositionRestController implements TokenPositionApi {
 	private final AccessRightConfiguration accessRightConfiguration;
 	private final TokenPositionDtoMapper tokenPositionDtoMapper;
 	private final TokenPositionService tokenPositionService;
+
+	@Override
+	public ResponseEntity<Void> deleteTokenPosition(UUID id) {
+		if (
+			!accessRightConfiguration.hasAccessToAtLeastOneRight(
+				UserContextProvider.getUserId().userId(),
+				AccessRight.UPDATE_POSITION
+			)
+		) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
+		}
+		tokenPositionService.deleteTokenPosition(id);
+		return ResponseEntity.ok().build();
+	}
 
 	@Override
 	public ResponseEntity<TokenPositionDto> updateTokenPosition(@Valid TokenPositionDto tokenPositionDto) {

@@ -40,6 +40,11 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	private final UuidService uuidService;
 
 	@Override
+	public void deleteTokenPosition(UUID id) {
+		tokenMapPartyScenarioDboRepository.deleteById(id);
+	}
+
+	@Override
 	public List<TokenMapPartyScenario> findAll() {
 		return tokenMapPartyScenarioDboMapper.toModels(tokenMapPartyScenarioDboRepository.findAll());
 	}

@@ -62,15 +62,20 @@ public class TokenMap {
 		return tokens.get(key);
 	}
 
+	public String getIds() {
+		return tokens.keySet().stream().map(k -> k.toString()).reduce((k0, k1) -> k0 + "," + k1).orElse("");
+	}
+
 	public int getNextCounterFor(TokenInfoProvider token) {
-		return (int) (
+		return (
 			tokens
 				.entrySet()
 				.stream()
 				.map(Entry::getValue)
 				.filter(mt -> mt.getToken().getId().equals(token != null ? token.getId() : null))
-				.map(mt -> 1)
-				.count() +
+				.map(mt -> mt.getCounter())
+				.max((i0, i1) -> i0.compareTo(i1))
+				.orElse(0) +
 			1
 		);
 	}
@@ -106,7 +111,8 @@ public class TokenMap {
 		mapToken.setCoordinates(coordinates);
 	}
 
-	public String getIds() {
-		return tokens.keySet().stream().map(k -> k.toString()).reduce((k0, k1) -> k0 + "," + k1).orElse("");
+	public void remove(MapTokenId key) {
+		ensure(key != null, "key cannot be null!");
+		tokens.remove(key);
 	}
 }

@@ -12,6 +12,7 @@ import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenUpdatePersistencePort;
 import jakarta.inject.Named;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Named
@@ -19,6 +20,11 @@ import lombok.RequiredArgsConstructor;
 class TokenPositionServiceImpl implements TokenPositionService {
 
 	private final TokenUpdatePersistencePort tokenUpdatePort;
+
+	@Override
+	public void delete(UUID tokenPositionId) {
+		tokenUpdatePort.deleteTokenPosition(tokenPositionId);
+	}
 
 	@Override
 	public List<TokenMapPartyScenario> findAll() {
