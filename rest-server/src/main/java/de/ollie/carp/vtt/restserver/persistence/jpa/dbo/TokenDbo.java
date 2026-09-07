@@ -31,7 +31,7 @@ public class TokenDbo {
 	private String name;
 
 	@Column(name = "IMAGE", nullable = true)
-	private byte[] image;
+	private byte[] imageContent;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_SIZE", nullable = true)

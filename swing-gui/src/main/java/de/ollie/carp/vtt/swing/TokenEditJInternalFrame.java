@@ -113,6 +113,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 	Token copyValueFromField() {
 		objectToEdit.setName(textFieldName.getText());
 		objectToEdit.setTokenSize((TokenSize) comboBoxTokenSize.getSelectedItem());
+		System.out.println("hasContent: " + uploadFieldImage.hasContent());
 		if (uploadFieldImage.hasContent()) {
 			objectToEdit.setImage(uploadFieldImage.getContent());
 		}

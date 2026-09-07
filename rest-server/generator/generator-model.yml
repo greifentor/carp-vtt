@@ -49,10 +49,12 @@ classes:
             value: false
         type:
           name: String
-      - name: image
+      - name: imageContent
         properties:
           - name: suppress-to-string
             value: true
+          - name: alternative-db-field-name
+            value: IMAGE
         type:
           name: byte[]
       - name: tokenSize

@@ -23,6 +23,7 @@ public class TokenClient {
 		client.setBearerToken(bearerTokenGenerator.create());
 		TokenApi api = new TokenApi(client);
 		TokenDto dto = tokenDtoMapper.map(tokenUpdateEvent);
+		System.out.println("Client:" + dto.getImageContent().length);
 		try {
 			api.updateToken(dto);
 		} catch (ApiException ae) {

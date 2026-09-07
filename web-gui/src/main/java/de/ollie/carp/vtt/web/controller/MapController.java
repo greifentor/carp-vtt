@@ -2,6 +2,7 @@ package de.ollie.carp.vtt.web.controller;
 
 import de.ollie.carp.vtt.restclient.BearerTokenGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 @RequiredArgsConstructor
 public class MapController {
+
+	@Value("${battle.map.id:5b92a864-6c2e-4d3b-af13-063ab4264fd5}")
+	private String battleMapId;
 
 	private final BearerTokenGenerator bearerTokenGenerator;
 	private final RestTemplate restTemplate = new RestTemplate();
@@ -37,7 +41,7 @@ public class MapController {
 					"60d8b44d-f60f-4b04-b9bb-133b3335db0f"
 				)
 				.replace("{partyId}", "d95b7312-5669-4ee5-9299-4516034f46d8")
-				.replace("{battleMapId}", "5b92a864-6c2e-4d3b-af13-063ab4264fd5");
+				.replace("{battleMapId}", battleMapId);
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + bearerTokenGenerator.create());
 		HttpEntity<Void> entity = new HttpEntity<>(headers);

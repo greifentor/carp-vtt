@@ -25,3 +25,4 @@ replay_pid*
 /.project
 **/start-local.sh
 /start-local.bat
+/start-local-mem.sh

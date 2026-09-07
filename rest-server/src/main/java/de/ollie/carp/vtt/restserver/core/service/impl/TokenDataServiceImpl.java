@@ -40,7 +40,7 @@ public class TokenDataServiceImpl implements TokenDataService {
 			)
 			.setCounter(tp.getCounter())
 			.setMapTokenId(tp.getId())
-			.setImage(token.getImage())
+			.setImage(token.getImageContent())
 			.setName(token.getName())
 			.setSelected(tp.isSelected())
 			.setId(token.getId())

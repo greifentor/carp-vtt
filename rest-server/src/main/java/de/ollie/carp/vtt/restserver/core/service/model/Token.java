@@ -20,7 +20,7 @@ public class Token {
 	private String name;
 
 	@Exclude
-	private byte[] image;
+	private byte[] imageContent;
 
 	private TokenSize tokenSize;
 }
