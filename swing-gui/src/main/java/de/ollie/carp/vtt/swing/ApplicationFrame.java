@@ -60,6 +60,9 @@ public class ApplicationFrame
 	private SwingComponentFactory swingComponentFactory;
 
 	@Inject
+	private TokenHitManager tokenHitManager;
+
+	@Inject
 	private TokenPositionService tokenPositionService;
 
 	@Inject
@@ -152,6 +155,7 @@ public class ApplicationFrame
 				desktopPane,
 				battleMapService,
 				graphicsManager,
+				tokenHitManager,
 				tokenPositionService,
 				tokenService,
 				tokenWebPort,

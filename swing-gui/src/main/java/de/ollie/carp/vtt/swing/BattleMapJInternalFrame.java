@@ -53,6 +53,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private final JDesktopPane desktopPane;
 	private final transient BattleMapService mapService;
 	private final transient GraphicsManager graphicsManager;
+	private final transient TokenHitManager tokenHitManager;
 	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
 	private final transient TokenWebPort tokenWebPort;
@@ -119,7 +120,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 					new ByteArrayInputStream((((BattleMap) comboBoxBattleMaps.getSelectedItem()).getImageContent()))
 				);
 				ImageIcon imageIcon = new ImageIcon(image);
-				battleMapPanel = new MapPanel(imageIcon, tokenMap, this, graphicsManager);
+				battleMapPanel = new MapPanel(imageIcon, tokenMap, this, graphicsManager, tokenHitManager);
 				battleMapPanel.addMouseListener(
 					new MouseAdapter() {
 						@Override
@@ -156,7 +157,6 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private TokenMap map(List<TokenData> tokenData) {
 		tokenMap.clear();
 		tokenData.forEach(td -> {
-			System.out.println(td.getId() + " - " + td.getToken());
 			MapTokenId id = new MapTokenId(td.getId());
 			tokenMap.put(id, new MapToken(td.getToken(), td.getCounter(), id, td.isSelected(), td.getCoordinates()));
 		});

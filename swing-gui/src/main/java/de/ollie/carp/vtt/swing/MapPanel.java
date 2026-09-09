@@ -1,22 +1,15 @@
 package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
-import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import lombok.Getter;
@@ -32,14 +25,22 @@ public class MapPanel extends JPanel {
 
 	private GraphicsManager graphicsManager;
 	private ImageIcon mapImage;
+	private TokenHitManager tokenHitManager;
 	private TokenMap tokenMap;
 
 	@Getter
 	private MapToken selectedToken;
 
-	public MapPanel(ImageIcon mapImage, TokenMap tokens, Observer observer, GraphicsManager graphicsManager) {
+	public MapPanel(
+		ImageIcon mapImage,
+		TokenMap tokens,
+		Observer observer,
+		GraphicsManager graphicsManager,
+		TokenHitManager tokenHitManager
+	) {
 		this.graphicsManager = graphicsManager;
 		this.mapImage = mapImage;
+		this.tokenHitManager = tokenHitManager;
 		this.tokenMap = tokens;
 		setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
 		// Hit-Detection aktivieren
@@ -47,10 +48,7 @@ public class MapPanel extends JPanel {
 			new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					MapToken mt = getTokenAt(e.getX(), e.getY());
-					if (mt != null) {
-						System.out.println("Token hit: " + mt.getToken().getName() + " - " + mt.getCounter());
-					}
+					MapToken mt = tokenHitManager.getTokenAt(tokenMap, e.getX(), e.getY());
 					if (observer != null) {
 						observer.tokenHit(mt, getFieldCoordinates(e.getX(), e.getY()));
 					}
@@ -80,27 +78,6 @@ public class MapPanel extends JPanel {
 
 	private boolean isSelectedTokenSelected(MapToken mapToken, MapToken selectedToken) {
 		return mapToken.getId().equals(selectedToken != null ? selectedToken.getId() : null);
-	}
-
-	public MapToken getTokenAt(int x, int y) {
-		for (MapTokenId id : tokenMap.keySet()) {
-			MapToken mapToken = tokenMap.get(id);
-			TokenInfoProvider token = mapToken.getToken();
-			int tokenX = (mapToken.getCoordinates().getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			int tokenY = (mapToken.getCoordinates().getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-			try {
-				Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
-				int w = tokenImage.getWidth(null);
-				int h = tokenImage.getHeight(null);
-				Rectangle bounds = new Rectangle(tokenX, tokenY, w, h);
-				if (bounds.contains(x, y)) {
-					return mapToken;
-				}
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
-		return null;
 	}
 
 	public void setSelectedToken(MapToken mapToken) {
