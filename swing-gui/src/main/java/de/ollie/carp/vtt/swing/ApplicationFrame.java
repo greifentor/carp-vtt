@@ -51,6 +51,9 @@ public class ApplicationFrame
 	private BattleMapWebPort battleMapWebPort;
 
 	@Inject
+	private CoordinatesToFieldConverter coordinatesToFieldConverter;
+
+	@Inject
 	private GraphicsManager graphicsManager;
 
 	@Inject
@@ -154,6 +157,7 @@ public class ApplicationFrame
 			new BattleMapJInternalFrame(
 				desktopPane,
 				battleMapService,
+				coordinatesToFieldConverter,
 				graphicsManager,
 				tokenHitManager,
 				tokenPositionService,

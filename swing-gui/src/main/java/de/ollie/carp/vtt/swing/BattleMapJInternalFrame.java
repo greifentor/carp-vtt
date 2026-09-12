@@ -29,7 +29,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import javax.imageio.ImageIO;
@@ -52,6 +51,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 
 	private final JDesktopPane desktopPane;
 	private final transient BattleMapService mapService;
+	private final transient CoordinatesToFieldConverter coordinatesToFieldConverter;
 	private final transient GraphicsManager graphicsManager;
 	private final transient TokenHitManager tokenHitManager;
 	private final transient TokenPositionService tokenPositionService;
@@ -134,7 +134,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 								);
 								battleMapPanel.setSelectedToken(newMapToken);
 								tokenMap.put(newMapToken.getId(), newMapToken);
-								updatePosition(newMapToken, getFieldCoordinates(e.getX(), e.getY()), true);
+								updatePosition(newMapToken, coordinatesToFieldConverter.getFieldCoordinates(e.getX(), e.getY()), true);
 								selectedToken = null;
 							}
 						}
@@ -178,15 +178,6 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		tokenWebPort.pushTokenPositionUpdate(event);
 		tokenMap.putCoordinates(battleMapPanel.getSelectedToken().getId(), coordinates);
 		battleMapPanel.updateTokens(tokenMap);
-	}
-
-	private static final int OFFSET_IN_PIXELS = 25;
-	private static final int FIELD_SIZE_IN_PIXELS = 50;
-
-	public Coordinates getFieldCoordinates(int x, int y) {
-		String fieldX = ((x - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		String fieldY = ((y - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		return new Coordinates().setFieldX(new BigDecimal(fieldX)).setFieldY(new BigDecimal(fieldY));
 	}
 
 	@Override

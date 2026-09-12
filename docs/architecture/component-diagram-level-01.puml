@@ -6,7 +6,7 @@ actor PLAYER as "User\n(Player)"
 
 component DesktopGM as "Gamemaster Application" {
 
-    component DTGM as "CARP-VTT\n(Desktop)"
+    component DTGM as "CARP-VTT-SWING\n(Desktop)"
 
     database DBLC as "Database\n(Local)"
 
@@ -16,32 +16,29 @@ component DesktopGM as "Gamemaster Application" {
 
 interface WSREST as "REST"
 
-component Web as "Web Application" {
+component Rest as "Rest-Server" {
 
-    component WGUI as "CARP-VTT\n(Web-GUI)"
-    component WS as "CARP-VTT\n(Web-Service)"
+    component WS as "CARP-VTT-REST-SERVER"
 
     database DBWB as "Database\n(Web)"
 
     WS -D-> DBWB : "JDBC\n(r/w)"
-    WGUI -U-> DBWB : "JDBC\n(r)"
 
     WS -U- WSREST
 
 }
 
-component DesktopPlayer as "Player Application" {
+component DesktopPlayer as "Web Application" {
 
-    component DTP as "CARP-VTT\n(Desktop)"
+    component CVW as "CARP-VTT-WEB"
 
 }
 
 GAMEMASTER --> DTGM : "GUI\n(Richt Client)"
 
-PLAYER -L-> WGUI : "GUI\n(Browser)"
-PLAYER -U-> DTP : "GUI\n(Richt Client)"
+PLAYER -U-> CVW : "GUI\n(Browser)"
 
-DTP -L-( WSREST : "HTTP                "
+CVW -L-( WSREST : "HTTP                "
 
 DTGM -D-( WSREST : "HTTP"
 
