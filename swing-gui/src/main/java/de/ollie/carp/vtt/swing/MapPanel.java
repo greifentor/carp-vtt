@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.math.BigDecimal;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import lombok.Getter;
@@ -23,9 +22,9 @@ public class MapPanel extends JPanel {
 		void tokenHit(MapToken mapToken, Coordinates coordinates);
 	}
 
+	private CoordinatesToFieldConverter coordinatesToFieldConverter;
 	private GraphicsManager graphicsManager;
 	private ImageIcon mapImage;
-	private TokenHitManager tokenHitManager;
 	private TokenMap tokenMap;
 
 	@Getter
@@ -36,11 +35,12 @@ public class MapPanel extends JPanel {
 		TokenMap tokens,
 		Observer observer,
 		GraphicsManager graphicsManager,
-		TokenHitManager tokenHitManager
+		TokenHitManager tokenHitManager,
+		CoordinatesToFieldConverter coordinatesToFieldConverter
 	) {
+		this.coordinatesToFieldConverter = coordinatesToFieldConverter;
 		this.graphicsManager = graphicsManager;
 		this.mapImage = mapImage;
-		this.tokenHitManager = tokenHitManager;
 		this.tokenMap = tokens;
 		setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
 		// Hit-Detection aktivieren
@@ -50,17 +50,11 @@ public class MapPanel extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					MapToken mt = tokenHitManager.getTokenAt(tokenMap, e.getX(), e.getY());
 					if (observer != null) {
-						observer.tokenHit(mt, getFieldCoordinates(e.getX(), e.getY()));
+						observer.tokenHit(mt, coordinatesToFieldConverter.getFieldCoordinates(e.getX(), e.getY()));
 					}
 				}
 			}
 		);
-	}
-
-	private Coordinates getFieldCoordinates(int x, int y) {
-		String fieldX = ((x - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		String fieldY = ((y - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		return new Coordinates().setFieldX(new BigDecimal(fieldX)).setFieldY(new BigDecimal(fieldY));
 	}
 
 	@Override

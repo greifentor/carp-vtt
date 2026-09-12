@@ -120,7 +120,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 					new ByteArrayInputStream((((BattleMap) comboBoxBattleMaps.getSelectedItem()).getImageContent()))
 				);
 				ImageIcon imageIcon = new ImageIcon(image);
-				battleMapPanel = new MapPanel(imageIcon, tokenMap, this, graphicsManager, tokenHitManager);
+				battleMapPanel =
+					new MapPanel(imageIcon, tokenMap, this, graphicsManager, tokenHitManager, coordinatesToFieldConverter);
 				battleMapPanel.addMouseListener(
 					new MouseAdapter() {
 						@Override
