@@ -179,7 +179,7 @@
             <column name="HIT_POINTS" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="ID" type="BIGINT">
+            <column name="ID" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>
