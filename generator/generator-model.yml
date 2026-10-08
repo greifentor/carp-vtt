@@ -1,4 +1,32 @@
 classes:
+  - name: BattleMap
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
+      - name: imageContent
+        properties:
+          - name: suppress-to-string
+            value: true
+        type:
+          name: byte[]
   - name: Coordinates
     properties:
       - name: implements
@@ -28,10 +56,7 @@ classes:
           properties:
             - name: import
               value: java.math.BigDecimal
-  - name: BattleMap
-    properties:
-      - name: order
-        value: name
+  - name: DndTokenData
     attributes:
       - name: id
         properties:
@@ -44,18 +69,12 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
-      - name: name
+      - name: hitPoints
         properties:
           - name: nullable
             value: false
         type:
-          name: String
-      - name: imageContent
-        properties:
-          - name: suppress-to-string
-            value: true
-        type:
-          name: byte[]
+          name: int
   - name: Party
     properties:
       - name: order
@@ -172,6 +191,12 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
+      - name: selected
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: boolean
       - name: token
         properties:
           - name: nullable

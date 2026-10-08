@@ -131,7 +131,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 									selectedToken,
 									tokenMap.getNextCounterFor(selectedToken),
 									new MapTokenId(uuidService.create()),
-									true
+									true,
+									null
 								);
 								battleMapPanel.setSelectedToken(newMapToken);
 								tokenMap.put(newMapToken.getId(), newMapToken);
@@ -159,7 +160,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		tokenMap.clear();
 		tokenData.forEach(td -> {
 			MapTokenId id = new MapTokenId(td.getId());
-			tokenMap.put(id, new MapToken(td.getToken(), td.getCounter(), id, td.isSelected(), td.getCoordinates()));
+			tokenMap.put(id, new MapToken(td.getToken(), td.getCounter(), id, td.isSelected(), td.getCoordinates(), null));
 		});
 		return tokenMap;
 	}

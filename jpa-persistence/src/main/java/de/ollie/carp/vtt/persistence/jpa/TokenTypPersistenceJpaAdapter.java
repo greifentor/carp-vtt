@@ -32,7 +32,7 @@ public class TokenTypPersistenceJpaAdapter implements TokenTypPersistencePort {
 
 	@Override
 	public void deleteById(UUID id) {
-		// TODO Auto-generated method stub
+		repository.deleteById(id);
 	}
 
 	@Override

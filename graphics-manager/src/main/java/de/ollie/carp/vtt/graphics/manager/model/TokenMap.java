@@ -28,15 +28,23 @@ public class TokenMap {
 		private int counter;
 		private MapTokenId id;
 		private TokenInfoProvider token;
+		private TokenPaintManager tokenPaintManager;
 		private boolean selected;
 
-		public MapToken(TokenInfoProvider token, int counter, MapTokenId id, boolean selected) {
+		public MapToken(
+			TokenInfoProvider token,
+			int counter,
+			MapTokenId id,
+			boolean selected,
+			TokenPaintManager tokenPaintManager
+		) {
 			ensure(counter > 0, "counter cannot be lesser than one!");
 			ensure(id != null, "id cannot be null!");
 			ensure(token != null, "token cannot be null!");
 			this.counter = counter;
 			this.id = id;
 			this.token = token;
+			this.tokenPaintManager = (tokenPaintManager != null ? tokenPaintManager : new TokenPaintManager() {});
 			this.selected = selected;
 		}
 
@@ -45,9 +53,10 @@ public class TokenMap {
 			int counter,
 			MapTokenId id,
 			boolean selected,
-			CoordinatesInfoProvider coordinates
+			CoordinatesInfoProvider coordinates,
+			TokenPaintManager tokenPaintManager
 		) {
-			this(token, counter, id, selected);
+			this(token, counter, id, selected, tokenPaintManager);
 			this.coordinates = coordinates;
 		}
 	}
@@ -63,7 +72,7 @@ public class TokenMap {
 	}
 
 	public String getIds() {
-		return tokens.keySet().stream().map(k -> k.toString()).reduce((k0, k1) -> k0 + "," + k1).orElse("");
+		return tokens.keySet().stream().map(MapTokenId::toString).reduce((k0, k1) -> k0 + "," + k1).orElse("");
 	}
 
 	public int getNextCounterFor(TokenInfoProvider token) {

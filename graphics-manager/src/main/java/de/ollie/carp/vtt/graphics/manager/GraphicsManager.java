@@ -39,12 +39,18 @@ public class GraphicsManager {
 			TokenInfoProvider token = mapToken.getToken();
 			TokenInfo ti = tokenInfoMapper.toTokenInfo(token, mapToken.getCoordinates(), mapToken.getCounter());
 			try {
+				if (mapToken.getTokenPaintManager() != null) {
+					mapToken.getTokenPaintManager().prePaint();
+				}
 				tokenDrawer.drawToken(g, ti, imageObserver);
 				if (Boolean.TRUE.equals(isSelected.test(mapToken, selectedToken))) {
 					selectedTokenMarker.renderSelectedMarker(g, ti);
 				}
 				if (tokens.hasTokenMoreThanOneTimes(token)) {
 					counterMarker.renderCounterMarker(g, ti);
+				}
+				if (mapToken.getTokenPaintManager() != null) {
+					mapToken.getTokenPaintManager().postPaint();
 				}
 			} catch (IOException ioe) {
 				ioe.printStackTrace();

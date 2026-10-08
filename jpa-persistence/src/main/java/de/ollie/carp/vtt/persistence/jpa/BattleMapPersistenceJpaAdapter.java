@@ -32,7 +32,7 @@ public class BattleMapPersistenceJpaAdapter implements BattleMapPersistencePort 
 
 	@Override
 	public void deleteById(UUID id) {
-		// TODO Auto-generated method stub
+		repository.deleteById(id);
 	}
 
 	@Override

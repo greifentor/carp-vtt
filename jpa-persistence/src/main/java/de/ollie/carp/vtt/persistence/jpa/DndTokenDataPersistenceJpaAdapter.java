@@ -1,9 +1,9 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
-import de.ollie.carp.vtt.core.service.model.Scenario;
-import de.ollie.carp.vtt.core.service.port.persistence.ScenarioPersistencePort;
-import de.ollie.carp.vtt.persistence.jpa.mapper.ScenarioDboMapper;
-import de.ollie.carp.vtt.persistence.jpa.repository.ScenarioDboRepository;
+import de.ollie.carp.vtt.core.service.model.DndTokenData;
+import de.ollie.carp.vtt.core.service.port.persistence.DndTokenDataPersistencePort;
+import de.ollie.carp.vtt.persistence.jpa.mapper.DndTokenDataDboMapper;
+import de.ollie.carp.vtt.persistence.jpa.repository.DndTokenDataDboRepository;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +19,13 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-public class ScenarioPersistenceJpaAdapter implements ScenarioPersistencePort {
+public class DndTokenDataPersistenceJpaAdapter implements DndTokenDataPersistencePort {
 
-	private final ScenarioDboMapper mapper;
-	private final ScenarioDboRepository repository;
+	private final DndTokenDataDboMapper mapper;
+	private final DndTokenDataDboRepository repository;
 
 	@Override
-	public Scenario create(String name) {
+	public DndTokenData create(int hitPoints) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -36,17 +36,17 @@ public class ScenarioPersistenceJpaAdapter implements ScenarioPersistencePort {
 	}
 
 	@Override
-	public Optional<Scenario> findById(UUID id) {
+	public Optional<DndTokenData> findById(UUID id) {
 		return repository.findById(id).map(mapper::toModel);
 	}
 
 	@Override
-	public List<Scenario> list() {
+	public List<DndTokenData> list() {
 		return mapper.toModels(repository.findAll());
 	}
 
 	@Override
-	public Scenario update(Scenario toSave) {
+	public DndTokenData update(DndTokenData toSave) {
 		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
 	}
 }

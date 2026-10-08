@@ -174,4 +174,16 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="dm-comp" id="Added-Table-DND_TOKEN_DATA" runInTransaction="true" runOnChange="true">
+        <createTable tableName="DND_TOKEN_DATA">
+            <column name="HIT_POINTS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="DND_TOKEN_DATA"/>
+        <addForeignKeyConstraint baseColumnNames="ID" baseTableName="DND_TOKEN_DATA" constraintName="FK_DND_TOKEN_DATA_ID_TO_TOKEN" referencedColumnNames="ID" referencedTableName="TOKEN"/>
+    </changeSet>
 </databaseChangeLog>

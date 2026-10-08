@@ -44,7 +44,8 @@ public class ImageRestController implements ImageApi {
 				selected,
 				tokenMap.getNextCounterFor(selected),
 				new MapTokenId(selected.getId()),
-				selected.isSelected()
+				selected.isSelected(),
+				null
 			)
 			: null;
 		try {
@@ -79,7 +80,7 @@ public class ImageRestController implements ImageApi {
 			.findAllBy(battleMapId, partyId, scenarioId)
 			.forEach(td -> {
 				MapTokenId id = new MapTokenId(td.getMapTokenId());
-				tokenMap.put(id, new MapToken(td, td.getCounter(), id, td.isSelected(), td.getCoordinates()));
+				tokenMap.put(id, new MapToken(td, td.getCounter(), id, td.isSelected(), td.getCoordinates(), null));
 			});
 		return tokenMap;
 	}
