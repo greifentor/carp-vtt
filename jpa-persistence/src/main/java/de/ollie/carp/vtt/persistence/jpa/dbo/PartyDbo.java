@@ -2,6 +2,8 @@ package de.ollie.carp.vtt.persistence.jpa.dbo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
@@ -27,4 +29,8 @@ public class PartyDbo {
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "RULE_SYSTEM", nullable = true)
+	private RuleSystemDbo ruleSystem;
 }

@@ -1,23 +1,32 @@
 package de.ollie.carp.vtt.core.service.model;
 
 import java.util.UUID;
-import lombok.Data;
 import lombok.Generated;
-import lombok.experimental.Accessors;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
  *
  * Remove this comment to suspend class from generation process.
  */
-@Accessors(chain = true)
-@Data
 @Generated
-public class TokenData implements TokenDataInfoProvider {
+public interface TokenData<T> extends TokenDataInfoProvider {
+	public Coordinates getCoordinates();
 
-	private Coordinates coordinates;
-	private int counter;
-	private UUID id;
-	private boolean selected;
-	private Token token;
+	public int getCounter();
+
+	public UUID getId();
+
+	public boolean isSelected();
+
+	public Token getToken();
+
+	public T setCoordinates(Coordinates coordinates);
+
+	public T setCounter(int counter);
+
+	public T setId(UUID id);
+
+	public T setSelected(boolean selected);
+
+	public T setToken(Token token);
 }

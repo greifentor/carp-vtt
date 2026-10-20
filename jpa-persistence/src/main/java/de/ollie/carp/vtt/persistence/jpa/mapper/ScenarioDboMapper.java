@@ -1,9 +1,11 @@
 package de.ollie.carp.vtt.persistence.jpa.mapper;
 
 import de.ollie.carp.vtt.core.service.model.Scenario;
+import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -19,4 +21,9 @@ public interface ScenarioDboMapper {
 	ScenarioDbo toDbo(Scenario model);
 
 	List<ScenarioDbo> toDbos(List<Scenario> models);
+
+	@ObjectFactory
+	default Scenario createScenario() {
+		return new ScenarioImpl();
+	}
 }

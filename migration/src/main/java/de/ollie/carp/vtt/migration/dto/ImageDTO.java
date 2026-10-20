@@ -1,19 +1,10 @@
 package de.ollie.carp.vtt.migration.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.Generated;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
 @Data
-@Generated
-@Entity(name = "Image")
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "IMAGE")
 public class ImageDTO {
 
 	private long id;
@@ -27,4 +18,6 @@ public class ImageDTO {
 
 	private PlaceModeDTO placeMode;
 	private TokenTypDTO tokenTyp;
+
+	private DndDataDTO dndDataDto;
 }

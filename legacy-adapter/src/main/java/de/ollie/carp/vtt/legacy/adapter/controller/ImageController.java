@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.legacy.adapter.controller;
 
+import de.ollie.carp.vtt.legacy.adapter.dbo.DndImageTokenDBO;
 import de.ollie.carp.vtt.legacy.adapter.dbo.ImageDBO;
 import de.ollie.carp.vtt.legacy.adapter.dbo.ImageTokenDBO;
 import de.ollie.carp.vtt.legacy.adapter.repository.ImageDBORepository;
@@ -42,6 +43,10 @@ class ImageController {
 			.setWidth(dbo.getWidth());
 		if (dbo instanceof ImageTokenDBO it) {
 			dto.setPlaceMode(it.getPlaceMode()).setTokenTyp(it.getTokenTyp());
+		}
+		if (dbo instanceof DndImageTokenDBO dit) {
+			DndDataDTO dndDto = new DndDataDTO().setMaxHitpoints(dit.getMaxTp());
+			dto.setDndDataDto(dndDto);
 		}
 		return dto;
 	}

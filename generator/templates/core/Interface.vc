@@ -1,0 +1,24 @@
+package ${PackageName};
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+import lombok.Generated;
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+public interface ${ClassName}<T> #if(${Class.getPropertiesWithName("implements")}) extends #foreach($Property in ${Class.getPropertiesWithName("implements")})${Property.getValue()}#if($foreach.hasNext), #end#end#end {
+
+#foreach($Attribute in $Attributes)
+	public ${Attribute.getTypeName()}#if (${Attribute.getTypeName()} == "boolean") is#else get#end${Attribute.getNameCamelCase()}();
+#end
+
+#foreach($Attribute in $Attributes)
+	public T set${Attribute.getNameCamelCase()}(${Attribute.getTypeName()} ${Attribute.getName()});
+#end
+
+}

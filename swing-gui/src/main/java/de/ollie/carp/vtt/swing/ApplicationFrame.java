@@ -1,11 +1,15 @@
 package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.BattleMapService;
+import de.ollie.carp.vtt.core.service.DndTokenDataService;
+import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.model.BattleMapImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenImpl;
 import de.ollie.carp.vtt.core.service.model.event.BattleMapUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
@@ -54,7 +58,13 @@ public class ApplicationFrame
 	private CoordinatesToFieldConverter coordinatesToFieldConverter;
 
 	@Inject
+	private DndTokenDataService dndTokenDataService;
+
+	@Inject
 	private GraphicsManager graphicsManager;
+
+	@Inject
+	private PartyService partyService;
 
 	@Inject
 	private ResourceManager resourceManager;
@@ -113,7 +123,7 @@ public class ApplicationFrame
 	public void menuItemSelected(MenuItemIdentifier selectedMenuItem) {
 		if (selectedMenuItem == MenuItemIdentifier.EDIT_BATTLE_MAP) {
 			new BattleMapEditJInternalFrame(
-				new BattleMap().setId(UUID.randomUUID()),
+				new BattleMapImpl().setId(UUID.randomUUID()),
 				swingComponentFactory,
 				desktopPane,
 				new BattleMapEditJInternalFrame.Observer() {
@@ -133,7 +143,7 @@ public class ApplicationFrame
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
 			new TokenEditJInternalFrame(
-				new Token().setId(UUID.randomUUID()),
+				new TokenImpl().setId(UUID.randomUUID()),
 				swingComponentFactory,
 				desktopPane,
 				new TokenEditJInternalFrame.Observer() {
@@ -158,7 +168,9 @@ public class ApplicationFrame
 				desktopPane,
 				battleMapService,
 				coordinatesToFieldConverter,
+				dndTokenDataService,
 				graphicsManager,
+				partyService,
 				tokenHitManager,
 				tokenPositionService,
 				tokenService,

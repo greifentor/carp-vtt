@@ -70,4 +70,32 @@
             </column>
         </addColumn>
     </changeSet>
-</databaseChangeLog>
+    <changeSet author="dm-comp" id="Add-Tables-PARTY-and-DND_DATA" runOnChange="true">
+        <createTable tableName="PARTY">
+            <column name="RULE_SYSTEM" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="PARTY"/>
+        <createTable tableName="DND_DATA">
+            <column name="CURRENT_HIT_POINTS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MAX_HIT_POINTS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="DND_DATA"/>
+        <addColumn tableName="TOKEN_POSITION">
+            <column name="DND_DATA_ID" type="BIGINT"/>
+        </addColumn>
+    </changeSet></databaseChangeLog>

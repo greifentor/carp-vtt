@@ -1,9 +1,11 @@
 package ${PackageName};
 
 import ${Properties.get("core-model-package")}.${ClassName};
+import ${Properties.get("core-model-package")}.${ClassName}Impl;
 import ${Properties.get("jpa-entity-package")}.${ClassName}Dbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * ${GeneratedCodeMarker}
@@ -19,4 +21,10 @@ public interface ${ClassName}DboMapper {
 	${ClassName}Dbo toDbo(${ClassName} model);
 
 	List<${ClassName}Dbo> toDbos(List<${ClassName}> models);
+
+	@ObjectFactory
+    default ${ClassName} create${ClassName}() {
+        return new ${ClassName}Impl();
+    }
+
 }

@@ -1,26 +1,28 @@
 package de.ollie.carp.vtt.core.service.model;
 
 import java.util.UUID;
-import lombok.Data;
 import lombok.Generated;
-import lombok.ToString.Exclude;
-import lombok.experimental.Accessors;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
  *
  * Remove this comment to suspend class from generation process.
  */
-@Accessors(chain = true)
-@Data
 @Generated
-public class Token implements TokenInfoProvider {
+public interface Token<T> extends TokenInfoProvider {
+	public UUID getId();
 
-	private UUID id;
-	private String name;
+	public String getName();
 
-	@Exclude
-	private byte[] image;
+	public byte[] getImage();
 
-	private TokenSize tokenSize;
+	public TokenSize getTokenSize();
+
+	public T setId(UUID id);
+
+	public T setName(String name);
+
+	public T setImage(byte[] image);
+
+	public T setTokenSize(TokenSize tokenSize);
 }

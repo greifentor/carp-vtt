@@ -40,7 +40,7 @@ public class GraphicsManager {
 			TokenInfo ti = tokenInfoMapper.toTokenInfo(token, mapToken.getCoordinates(), mapToken.getCounter());
 			try {
 				if (mapToken.getTokenPaintManager() != null) {
-					mapToken.getTokenPaintManager().prePaint();
+					mapToken.getTokenPaintManager().prePaint(g, ti.x(), ti.y());
 				}
 				tokenDrawer.drawToken(g, ti, imageObserver);
 				if (Boolean.TRUE.equals(isSelected.test(mapToken, selectedToken))) {
@@ -50,7 +50,7 @@ public class GraphicsManager {
 					counterMarker.renderCounterMarker(g, ti);
 				}
 				if (mapToken.getTokenPaintManager() != null) {
-					mapToken.getTokenPaintManager().postPaint();
+					mapToken.getTokenPaintManager().postPaint(g, ti.x(), ti.y());
 				}
 			} catch (IOException ioe) {
 				ioe.printStackTrace();

@@ -243,6 +243,37 @@ components:
           format: byte
           description: Base64-encoded image content
           example: "iVBORw0KGgoAAAANSUhEUgAA..."
+    DndDataDto:
+      type: object
+      required:
+        - currentHitPoints
+        - maxHitPoints
+      properties:
+        currentHitPoints:
+          type: integer
+          format: int32
+          example: 4711
+        maxHitPoints:
+          type: integer
+          format: int32
+          example: 4711
+    PartyDto:
+      type: object
+      required:
+        - id
+        - name 
+        - ruleSystem
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "orc-ambush-map"
+        ruleSystem:
+          type: string
+          example: "orc-ambush-map"
     TokenDto:
       type: object
       required:
@@ -322,6 +353,8 @@ components:
         selected:
           type: boolean
           example: false
+        dndData:
+          $ref: '#/components/schemas/DndDataDto'
     TokenPositionIdDto:
       type: object
       required:

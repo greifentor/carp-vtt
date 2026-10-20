@@ -9,8 +9,10 @@ import static org.mockito.Mockito.when;
 
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.TokenDataImpl;
 import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
@@ -123,8 +125,8 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
-			TokenData data = new TokenData()
-				.setCoordinates(new Coordinates().setFieldX(FIELD_X).setFieldY(FIELD_Y))
+			TokenData data = new TokenDataImpl()
+				.setCoordinates(new CoordinatesImpl().setFieldX(FIELD_X).setFieldY(FIELD_Y))
 				.setId(ID)
 				.setToken(token);
 			List<TokenData> expected = List.of(data);

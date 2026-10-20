@@ -2,7 +2,7 @@ package de.ollie.carp.vtt.restclient.adapter;
 
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
-import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
@@ -64,7 +64,7 @@ public class TokenWebAdapter implements TokenWebPort {
 					tokenPosition.getToken(),
 					tokenPosition.getBattleMap(),
 					tokenPosition.getCounter(),
-					new Coordinates().setFieldX(tokenPosition.getFieldX()).setFieldY(tokenPosition.getFieldY()),
+					new CoordinatesImpl().setFieldX(tokenPosition.getFieldX()).setFieldY(tokenPosition.getFieldY()),
 					tokenPosition.getParty(),
 					tokenPosition.getScenario(),
 					false

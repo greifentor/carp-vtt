@@ -1,10 +1,16 @@
 package de.ollie.carp.vtt.migration;
 
 import de.ollie.carp.vtt.core.service.BattleMapService;
+import de.ollie.carp.vtt.core.service.DndTokenDataService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.model.BattleMapImpl;
+import de.ollie.carp.vtt.core.service.model.DndTokenData;
+import de.ollie.carp.vtt.core.service.model.DndTokenDataImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenImpl;
 import de.ollie.carp.vtt.core.service.model.TokenSize;
+import de.ollie.carp.vtt.migration.dto.DndDataDTO;
 import de.ollie.carp.vtt.migration.dto.ImageDTO;
 import de.ollie.carp.vtt.migration.dto.ImageTypeDTO;
 import de.ollie.carp.vtt.migration.dto.TokenTypDTO;
@@ -18,8 +24,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class Migrator {
 
-	private final ImageRestClient imageRestClient;
 	private final BattleMapService mapService;
+	private final DndTokenDataService dndTokenDataService;
+	private final ImageRestClient imageRestClient;
 	private final TokenService tokenService;
 
 	@PostConstruct
@@ -52,21 +59,28 @@ class Migrator {
 	private void saveImage(ImageDTO image) {
 		if (isToken(image)) {
 			tokenService.save(toToken(image));
+			if (image.getDndDataDto() != null) {
+				dndTokenDataService.save(toDndTokenData(image.getDndDataDto(), UUID.fromString(image.getGlobalId())));
+			}
 		} else if (isMap(image)) {
 			mapService.save(toBattleMap(image));
 		}
 	}
 
 	private Token toToken(ImageDTO image) {
-		return new Token()
+		return new TokenImpl()
 			.setId(UUID.fromString(image.getGlobalId()))
 			.setImage(image.getImage())
 			.setName(image.getName())
 			.setTokenSize(mapToTokenSize(image.getWidth()));
 	}
 
+	private DndTokenData toDndTokenData(DndDataDTO dndDataDto, UUID id) {
+		return new DndTokenDataImpl().setHitPoints(dndDataDto.getMaxHitpoints()).setId(id);
+	}
+
 	private BattleMap toBattleMap(ImageDTO image) {
-		return new BattleMap()
+		return new BattleMapImpl()
 			.setId(UUID.fromString(image.getGlobalId()))
 			.setImageContent(image.getImage())
 			.setName(image.getName());

@@ -75,6 +75,43 @@ classes:
             value: false
         type:
           name: int
+  - name: DndTokenBattleMapPartyScenarioData
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: currentHitPoints
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: deathSavingThrowsFail
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: deathSavingThrowsSuccess
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: temporaryHitPoints
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
   - name: Party
     properties:
       - name: order
@@ -97,6 +134,13 @@ classes:
             value: false
         type:
           name: String
+      - name: ruleSystem
+        enum: true
+        type:
+          name: RuleSystem
+          properties:
+            - name: project-type
+              value: true
   - name: Scenario
     properties:
       - name: order
@@ -251,3 +295,7 @@ enums:
       - LARGE
       - HUGE
       - GARGANTUAN
+  - name: RuleSystem
+    identifiers:
+      - DND
+      - NONE

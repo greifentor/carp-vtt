@@ -1,6 +1,6 @@
 package de.ollie.carp.vtt.restserver.core.service.impl;
 
-import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.restserver.core.service.TokenDataService;
 import de.ollie.carp.vtt.restserver.core.service.TokenService;
 import de.ollie.carp.vtt.restserver.core.service.model.Token;
@@ -36,7 +36,9 @@ public class TokenDataServiceImpl implements TokenDataService {
 			.orElseThrow(() -> new NoSuchElementException("no token found with id: " + tp.getTokenId()));
 		return new TokenData()
 			.setCoordinates(
-				new Coordinates().setFieldX(new BigDecimal(tp.getCoordinateX())).setFieldY(new BigDecimal(tp.getCoordinateY()))
+				new CoordinatesImpl()
+					.setFieldX(new BigDecimal(tp.getCoordinateX()))
+					.setFieldY(new BigDecimal(tp.getCoordinateY()))
 			)
 			.setCounter(tp.getCounter())
 			.setMapTokenId(tp.getId())

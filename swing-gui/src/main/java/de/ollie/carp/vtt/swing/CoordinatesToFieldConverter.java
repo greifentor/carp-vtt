@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import jakarta.inject.Named;
 import java.math.BigDecimal;
 
@@ -13,6 +14,6 @@ class CoordinatesToFieldConverter {
 	Coordinates getFieldCoordinates(int x, int y) {
 		String fieldX = ((x - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
 		String fieldY = ((y - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		return new Coordinates().setFieldX(new BigDecimal(fieldX)).setFieldY(new BigDecimal(fieldY));
+		return new CoordinatesImpl().setFieldX(new BigDecimal(fieldX)).setFieldY(new BigDecimal(fieldY));
 	}
 }

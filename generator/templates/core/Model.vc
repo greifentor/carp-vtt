@@ -1,0 +1,32 @@
+package ${PackageName};
+
+import lombok.Data;
+import lombok.Generated;
+#if (${Class.hasAnAttributeWithPropertyAndValue("suppress-to-string", "true")})
+import lombok.ToString.Exclude;
+#end
+import lombok.experimental.Accessors;
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Accessors(chain = true)
+@Data
+@Generated
+public class ${ClassName}Impl implements ${ClassName}<${ClassName}Impl> {
+
+#foreach($Attribute in $Attributes)
+	#if (${Attribute.hasPropertyWithValue("suppress-to-string", "true")})
+
+	@Exclude
+	#end
+	private ${Attribute.getTypeName()} ${Attribute.getName()}#if(${Attribute.getDefaultValue()}) = ${Attribute.getDefaultValue()}#end;
+#end
+
+}

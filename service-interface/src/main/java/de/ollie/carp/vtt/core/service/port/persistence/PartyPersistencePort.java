@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.core.service.port.persistence;
 
 import de.ollie.carp.vtt.core.service.model.Party;
+import de.ollie.carp.vtt.core.service.model.RuleSystem;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import lombok.Generated;
 @Generated
 @Named
 public interface PartyPersistencePort {
-	Party create(String name);
+	Party create(String name, RuleSystem ruleSystem);
 
 	void deleteById(UUID id);
 

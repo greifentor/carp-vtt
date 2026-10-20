@@ -186,4 +186,32 @@
         <addPrimaryKey columnNames="ID" tableName="DND_TOKEN_DATA"/>
         <addForeignKeyConstraint baseColumnNames="ID" baseTableName="DND_TOKEN_DATA" constraintName="FK_DND_TOKEN_DATA_ID_TO_TOKEN" referencedColumnNames="ID" referencedTableName="TOKEN"/>
     </changeSet>
+    <changeSet author="dm-comp" id="Add-Tabelle-DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA" runInTransaction="true" runOnChange="true">
+        <createTable tableName="DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA">
+            <column name="TEMPORARY_HIT_POINTS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEATH_SAVING_THROWS_SUCCESS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CURRENT_HIT_POINTS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEATH_SAVING_THROWS_FAIL" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA"/>
+        <addForeignKeyConstraint baseColumnNames="ID" baseTableName="DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA" constraintName="FK_DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA_ID_TO_TOKEN_BATTLE_M" referencedColumnNames="ID" referencedTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"/>
+    </changeSet>
+    <changeSet author="dm-comp" id="Add-Field-RULE_SYSTEM-to-Table-PARTY" runInTransaction="true" runOnChange="true">
+        <addColumn schemaName="carpvtttest" tableName="PARTY">
+            <column name="RULE_SYSTEM" type="VARCHAR(30)" defaultValue="DND">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

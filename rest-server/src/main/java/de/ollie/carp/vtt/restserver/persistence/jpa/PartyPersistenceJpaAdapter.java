@@ -1,0 +1,53 @@
+package de.ollie.carp.vtt.restserver.persistence.jpa;
+
+import de.ollie.carp.vtt.restserver.core.service.model.Party;
+import de.ollie.carp.vtt.restserver.core.service.model.RuleSystem;
+import de.ollie.carp.vtt.restserver.core.service.port.persistence.PartyPersistencePort;
+import de.ollie.carp.vtt.restserver.persistence.jpa.mapper.PartyDboMapper;
+import de.ollie.carp.vtt.restserver.persistence.jpa.repository.PartyDboRepository;
+import jakarta.inject.Named;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import lombok.Generated;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+@RequiredArgsConstructor
+public class PartyPersistenceJpaAdapter implements PartyPersistencePort {
+
+	private final PartyDboMapper mapper;
+	private final PartyDboRepository repository;
+
+	@Override
+	public Party create(String name, RuleSystem ruleSystem) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteById(UUID id) {
+		repository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Party> findById(UUID id) {
+		return repository.findById(id).map(mapper::toModel);
+	}
+
+	@Override
+	public List<Party> list() {
+		return mapper.toModels(repository.findAll());
+	}
+
+	@Override
+	public Party update(Party toSave) {
+		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
+	}
+}

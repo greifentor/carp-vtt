@@ -1,9 +1,11 @@
 package de.ollie.carp.vtt.persistence.jpa.mapper;
 
 import de.ollie.carp.vtt.core.service.model.DndTokenData;
+import de.ollie.carp.vtt.core.service.model.DndTokenDataImpl;
 import de.ollie.carp.vtt.persistence.jpa.dbo.DndTokenDataDbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -19,4 +21,9 @@ public interface DndTokenDataDboMapper {
 	DndTokenDataDbo toDbo(DndTokenData model);
 
 	List<DndTokenDataDbo> toDbos(List<DndTokenData> models);
+
+	@ObjectFactory
+	default DndTokenData createDndTokenData() {
+		return new DndTokenDataImpl();
+	}
 }

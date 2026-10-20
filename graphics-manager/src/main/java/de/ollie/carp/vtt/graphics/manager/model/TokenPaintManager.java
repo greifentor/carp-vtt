@@ -1,7 +1,9 @@
 package de.ollie.carp.vtt.graphics.manager.model;
 
-public interface TokenPaintManager {
-	default void postPaint() {}
+import java.awt.Graphics2D;
 
-	default void prePaint() {}
+public interface TokenPaintManager {
+	default void postPaint(Graphics2D graphics, int x, int y) {}
+
+	default void prePaint(Graphics2D graphics, int x, int y) {}
 }

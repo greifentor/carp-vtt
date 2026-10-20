@@ -1,9 +1,11 @@
 package de.ollie.carp.vtt.persistence.jpa.mapper;
 
 import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.model.BattleMapImpl;
 import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -19,4 +21,9 @@ public interface BattleMapDboMapper {
 	BattleMapDbo toDbo(BattleMap model);
 
 	List<BattleMapDbo> toDbos(List<BattleMap> models);
+
+	@ObjectFactory
+	default BattleMap createBattleMap() {
+		return new BattleMapImpl();
+	}
 }

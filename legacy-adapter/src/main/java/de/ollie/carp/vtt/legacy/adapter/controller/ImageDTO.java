@@ -22,4 +22,6 @@ public class ImageDTO {
 
 	private PlaceModeDBO placeMode;
 	private TokenTypDBO tokenTyp;
+
+	private DndDataDTO dndDataDto;
 }

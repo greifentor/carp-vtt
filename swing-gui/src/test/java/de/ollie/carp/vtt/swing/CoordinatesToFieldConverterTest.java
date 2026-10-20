@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.swing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ class CoordinatesToFieldConverterTest {
 			// Prepare
 			int x = 150;
 			int y = 250;
-			Coordinates expected = new Coordinates().setFieldX(new BigDecimal("2.0")).setFieldY(new BigDecimal("4.0"));
+			Coordinates expected = new CoordinatesImpl().setFieldX(new BigDecimal("2.0")).setFieldY(new BigDecimal("4.0"));
 			// Run & Check
 			assertEquals(expected, unitUnderTest.getFieldCoordinates(x, y));
 		}

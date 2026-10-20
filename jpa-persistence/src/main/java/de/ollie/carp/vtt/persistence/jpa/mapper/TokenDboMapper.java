@@ -1,9 +1,11 @@
 package de.ollie.carp.vtt.persistence.jpa.mapper;
 
 import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenImpl;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenDbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -19,4 +21,9 @@ public interface TokenDboMapper {
 	TokenDbo toDbo(Token model);
 
 	List<TokenDbo> toDbos(List<Token> models);
+
+	@ObjectFactory
+	default Token createToken() {
+		return new TokenImpl();
+	}
 }

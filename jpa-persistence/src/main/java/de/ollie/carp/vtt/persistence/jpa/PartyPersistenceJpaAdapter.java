@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
 import de.ollie.carp.vtt.core.service.model.Party;
+import de.ollie.carp.vtt.core.service.model.RuleSystem;
 import de.ollie.carp.vtt.core.service.port.persistence.PartyPersistencePort;
 import de.ollie.carp.vtt.persistence.jpa.mapper.PartyDboMapper;
 import de.ollie.carp.vtt.persistence.jpa.repository.PartyDboRepository;
@@ -25,7 +26,7 @@ public class PartyPersistenceJpaAdapter implements PartyPersistencePort {
 	private final PartyDboRepository repository;
 
 	@Override
-	public Party create(String name) {
+	public Party create(String name, RuleSystem ruleSystem) {
 		// TODO Auto-generated method stub
 		return null;
 	}

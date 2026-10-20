@@ -1,12 +1,19 @@
 package de.ollie.carp.vtt.restserver.rest;
 
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
+import de.ollie.carp.vtt.graphics.manager.dnd.DndTokenPaintManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
+import de.ollie.carp.vtt.graphics.manager.model.TokenPaintManager;
 import de.ollie.carp.vtt.restserver.core.service.BattleMapService;
+import de.ollie.carp.vtt.restserver.core.service.PartyService;
 import de.ollie.carp.vtt.restserver.core.service.TokenDataService;
+import de.ollie.carp.vtt.restserver.core.service.TokenService;
 import de.ollie.carp.vtt.restserver.core.service.model.BattleMap;
+import de.ollie.carp.vtt.restserver.core.service.model.Party;
+import de.ollie.carp.vtt.restserver.core.service.model.RuleSystem;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenData;
 import de.ollie.carp.vtt.restserver.rest.api.ImageApi;
 import java.awt.Graphics2D;
@@ -30,6 +37,8 @@ public class ImageRestController implements ImageApi {
 
 	private final BattleMapService battleMapService;
 	private final GraphicsManager graphicsManager;
+	private final PartyService partyService;
+	private final TokenService tokenService;
 	private final TokenDataService tokenDataService;
 
 	@Override
@@ -80,7 +89,19 @@ public class ImageRestController implements ImageApi {
 			.findAllBy(battleMapId, partyId, scenarioId)
 			.forEach(td -> {
 				MapTokenId id = new MapTokenId(td.getMapTokenId());
-				tokenMap.put(id, new MapToken(td, td.getCounter(), id, td.isSelected(), td.getCoordinates(), null));
+				System.out.println("Token-Id: " + td.getId());
+				de.ollie.carp.vtt.restserver.core.service.model.Token token = tokenService.findById(td.getId()).get();
+				TokenPaintManager tokenPaintManager = null;
+				Party party = partyService
+					.findById(partyId)
+					.orElseThrow(() -> new NoSuchElementException("No party found with id: " + partyId));
+				if (party.getRuleSystem() == RuleSystem.DND) {
+					tokenPaintManager = new DndTokenPaintManager(25, 75, TokenSize.HUGE);
+				}
+				tokenMap.put(
+					id,
+					new MapToken(td, td.getCounter(), id, td.isSelected(), td.getCoordinates(), tokenPaintManager)
+				);
 			});
 		return tokenMap;
 	}

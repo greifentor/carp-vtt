@@ -27,6 +27,58 @@ classes:
             value: true
         type:
           name: byte[]
+  - name: DndData
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: currentHitPoints
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: maxHitPoints
+        enum: true
+        type:
+          name: int
+  - name: Party
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: name
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
+      - name: ruleSystem
+        enum: true
+        type:
+          name: RuleSystem
+          properties:
+            - name: project-type
+              value: true
   - name: Token
     properties:
       - name: order
@@ -104,6 +156,15 @@ classes:
             value: false
         type:
           name: int
+      - name: dndDataId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
       - name: partyId
         properties:
           - name: nullable
@@ -152,6 +213,10 @@ enums:
     - UPDATE_OWN
     - UPDATE_POSITION
     - UPDATE_PUBLISHED
+  - name: RuleSystem
+    identifiers:
+    - DND
+    - NONE
   - name: TokenSize
     identifiers:
     - TINY

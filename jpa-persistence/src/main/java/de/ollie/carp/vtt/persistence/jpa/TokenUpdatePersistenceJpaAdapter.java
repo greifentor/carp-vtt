@@ -4,7 +4,9 @@ import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.TokenDataImpl;
 import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenUpdatePersistencePort;
 import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
@@ -75,12 +77,13 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 		return dbos
 			.stream()
 			.map(dbo ->
-				new TokenData()
-					.setCoordinates(new Coordinates().setFieldX(dbo.getFieldX()).setFieldY(dbo.getFieldY()))
+				new TokenDataImpl()
+					.setCoordinates(new CoordinatesImpl().setFieldX(dbo.getFieldX()).setFieldY(dbo.getFieldY()))
 					.setCounter(dbo.getCounter())
 					.setId(dbo.getId())
 					.setToken(tokenDboMapper.toModel(dbo.getToken()))
 			)
+			.map(impl -> (TokenData) impl)
 			.toList();
 	}
 
