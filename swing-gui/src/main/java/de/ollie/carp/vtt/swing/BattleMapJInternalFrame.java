@@ -3,7 +3,7 @@ package de.ollie.carp.vtt.swing;
 import static de.ollie.carp.vtt.swing.SwingConstants.HGAP;
 import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
-import de.ollie.carp.vtt.core.service.BattleMapService;
+import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
@@ -11,6 +11,7 @@ import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.DndTokenBattleMapPartyScenarioData;
 import de.ollie.carp.vtt.core.service.model.DndTokenData;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.PartyImpl;
@@ -19,7 +20,6 @@ import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenData;
-import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
@@ -43,7 +43,6 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
@@ -62,9 +61,10 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		.setId(UUID.fromString("60d8b44d-f60f-4b04-b9bb-133b3335db0f"));
 
 	private final JDesktopPane desktopPane;
-	private final transient BattleMapService mapService;
+	private final BattleMap battleMap;
 	private final transient CoordinatesToFieldConverter coordinatesToFieldConverter;
 	private final transient DndTokenDataService dndTokenDataService;
+	private final transient DndTokenBattleMapPartyScenarioService dndTokenBattleMapPartyScenarioService;
 	private final transient GraphicsManager graphicsManager;
 	private final transient PartyService partyService;
 	private final transient TokenHitManager tokenHitManager;
@@ -76,7 +76,6 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private JButton buttonAddIcon = new JButton("+");
 	private JButton buttonDamageIcon = new JButton("Damage");
 	private JButton buttonRemoveIcon = new JButton("-");
-	private JComboBox<BattleMap> comboBoxBattleMaps;
 	private JPanel panelImage;
 	private MapPanel battleMapPanel;
 	private transient Token selectedToken;
@@ -91,14 +90,53 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		setBounds(50, 50, 640, 480);
 		setContentPane(createMainPanel());
 		pack();
+		panelImage.removeAll();
+		try {
+			Image image = ImageIO.read(new ByteArrayInputStream(battleMap.getImageContent()));
+			ImageIcon imageIcon = new ImageIcon(image);
+			battleMapPanel =
+				new MapPanel(imageIcon, tokenMap, this, graphicsManager, tokenHitManager, coordinatesToFieldConverter);
+			battleMapPanel.addMouseListener(
+				new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if (selectedToken != null) {
+							MapToken newMapToken = new MapToken(
+								selectedToken,
+								tokenMap.getNextCounterFor(selectedToken),
+								new MapTokenId(uuidService.create()),
+								true,
+								null
+							);
+							battleMapPanel.setSelectedToken(newMapToken);
+							tokenMap.put(newMapToken.getId(), newMapToken);
+							DndTokenData dtd = dndTokenDataService.findById(newMapToken.getToken().getId()).get();
+							DndTokenBattleMapPartyScenarioData dtbmps = dndTokenBattleMapPartyScenarioService.getByBattleMapPartyScenarioToken(
+								battleMap.getId(),
+								DUMMY_PARTY.getId(),
+								DUMMY_SCENARIO.getId(),
+								newMapToken.getToken().getId()
+							);
+							dtbmps.setCurrentHitPoints(dtd.getHitPoints());
+							updatePosition(newMapToken, coordinatesToFieldConverter.getFieldCoordinates(e.getX(), e.getY()), true);
+							selectedToken = null;
+						}
+					}
+				}
+			);
+			panelImage.add(new JScrollPane(battleMapPanel), BorderLayout.CENTER);
+			setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
+			List<TokenData> storedTokens = tokenPositionService.findAllBy(battleMap, DUMMY_PARTY, DUMMY_SCENARIO);
+			battleMapPanel.updateTokens(map(storedTokens));
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
 		return this;
 	}
 
 	private JPanel createMainPanel() {
 		JPanel p = new JPanel(new BorderLayout(HGAP, VGAP));
-		comboBoxBattleMaps = createMapsComboBox();
-		comboBoxBattleMaps.setRenderer(new BattleMapListCellRenderer());
-		comboBoxBattleMaps.addActionListener(this);
 		panelImage = new JPanel(new BorderLayout(HGAP, VGAP));
 		JToolBar toolbar = new JToolBar(javax.swing.SwingConstants.VERTICAL);
 		toolbar.setFloatable(false);
@@ -110,13 +148,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		buttonDamageIcon.addActionListener(this);
 		buttonRemoveIcon.addActionListener(this);
 		p.add(toolbar, BorderLayout.WEST);
-		p.add(comboBoxBattleMaps, BorderLayout.NORTH);
 		p.add(panelImage, BorderLayout.CENTER);
 		return p;
-	}
-
-	private JComboBox<BattleMap> createMapsComboBox() {
-		return new JComboBox<>(mapService.findAll().toArray(new BattleMap[0]));
 	}
 
 	@Override
@@ -124,55 +157,15 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		if (e.getSource() == buttonAddIcon) {
 			selectedToken = new TokenSelectionDialog(null, tokenService.findAll()).getSelectedToken();
 			battleMapPanel.setSelectedToken(null);
-		} else if ((e.getSource() == buttonDamageIcon) && (battleMapPanel.getSelectedToken() != null)) {} else if (
-			(e.getSource() == buttonRemoveIcon) && (battleMapPanel.getSelectedToken() != null)
-		) {
+		} else if ((e.getSource() == buttonDamageIcon) && (battleMapPanel.getSelectedToken() != null)) {
+			updateHitPoints(battleMapPanel.getSelectedToken());
+		} else if ((e.getSource() == buttonRemoveIcon) && (battleMapPanel.getSelectedToken() != null)) {
 			MapTokenId toDelete = battleMapPanel.getSelectedToken().getId();
 			tokenMap.remove(toDelete);
 			tokenPositionService.delete(toDelete.getUuid());
 			tokenWebPort.pushTokenPositionRemove(new TokenPositionRemoveEvent(toDelete.getUuid()));
 			battleMapPanel.updateTokens(tokenMap);
 			battleMapPanel.setSelectedToken(null);
-		} else if (e.getSource() == comboBoxBattleMaps) {
-			panelImage.removeAll();
-			try {
-				Image image = ImageIO.read(
-					new ByteArrayInputStream((((BattleMap) comboBoxBattleMaps.getSelectedItem()).getImageContent()))
-				);
-				ImageIcon imageIcon = new ImageIcon(image);
-				battleMapPanel =
-					new MapPanel(imageIcon, tokenMap, this, graphicsManager, tokenHitManager, coordinatesToFieldConverter);
-				battleMapPanel.addMouseListener(
-					new MouseAdapter() {
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							if (selectedToken != null) {
-								MapToken newMapToken = new MapToken(
-									selectedToken,
-									tokenMap.getNextCounterFor(selectedToken),
-									new MapTokenId(uuidService.create()),
-									true,
-									null
-								);
-								battleMapPanel.setSelectedToken(newMapToken);
-								tokenMap.put(newMapToken.getId(), newMapToken);
-								updatePosition(newMapToken, coordinatesToFieldConverter.getFieldCoordinates(e.getX(), e.getY()), true);
-								selectedToken = null;
-							}
-						}
-					}
-				);
-				panelImage.add(new JScrollPane(battleMapPanel), BorderLayout.CENTER);
-				setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
-				List<TokenData> storedTokens = tokenPositionService.findAllBy(
-					(BattleMap) comboBoxBattleMaps.getSelectedItem(),
-					DUMMY_PARTY,
-					DUMMY_SCENARIO
-				);
-				battleMapPanel.updateTokens(map(storedTokens));
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
 		}
 	}
 
@@ -182,9 +175,14 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			MapTokenId id = new MapTokenId(td.getId());
 			TokenPaintManager tokenPaintManager = null;
 			if (DUMMY_PARTY.getRuleSystem() == RuleSystem.DND) {
-				BattleMap battleMap = (BattleMap) comboBoxBattleMaps.getSelectedItem();
 				DndTokenData dtd = dndTokenDataService.findById(td.getToken().getId()).get();
-				tokenPaintManager = new DndTokenPaintManager(dtd.getHitPoints(), dtd.getHitPoints(), TokenSize.MEDIUM);
+				DndTokenBattleMapPartyScenarioData dtbmps = dndTokenBattleMapPartyScenarioService.getByBattleMapPartyScenarioToken(
+					battleMap.getId(),
+					DUMMY_PARTY.getId(),
+					DUMMY_SCENARIO.getId(),
+					td.getToken().getId()
+				);
+				tokenPaintManager = new DndTokenPaintManager(dtbmps, dtd.getHitPoints(), td.getToken().getTokenSize());
 			}
 			tokenMap.put(
 				id,
@@ -198,7 +196,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
 			mapToken.getId().getUuid(),
 			(Token) battleMapPanel.getSelectedToken().getToken(),
-			(BattleMap) comboBoxBattleMaps.getSelectedItem(),
+			battleMap,
 			mapToken.getCounter(),
 			coordinates,
 			DUMMY_PARTY,
@@ -223,9 +221,9 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		// selected
 		// );
 		if (DUMMY_PARTY.getRuleSystem() == RuleSystem.DND) {
-			BattleMap battleMap = (BattleMap) comboBoxBattleMaps.getSelectedItem();
 			DndTokenPaintManager dtpm = (DndTokenPaintManager) mapToken.getTokenPaintManager();
-			dtpm.setCurrentHitPoints(dtpm.getCurrentHitPoints() - 10);
+			dtpm.decreaseHitPoints(10);
+			dtpm.setDtbmps(dndTokenBattleMapPartyScenarioService.update(dtpm.getDtbmps()));
 		}
 		// tokenWebPort.pushTokenPositionUpdate(event);
 		battleMapPanel.updateTokens(tokenMap);
@@ -249,10 +247,6 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	}
 
 	private void unselectSelectedToken() {
-		tokenWebPort.unselect(
-			((BattleMap) comboBoxBattleMaps.getSelectedItem()).getId(),
-			DUMMY_PARTY.getId(),
-			DUMMY_SCENARIO.getId()
-		);
+		tokenWebPort.unselect(battleMap.getId(), DUMMY_PARTY.getId(), DUMMY_SCENARIO.getId());
 	}
 }

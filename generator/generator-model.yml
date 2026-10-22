@@ -250,6 +250,73 @@ classes:
           properties:
             - name: project-type
               value: true
+  - name: TokenBattleMapPartyScenario
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: battleMapId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: counter
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: partyId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: fieldX
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: fieldY
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: scenarioId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: tokenId
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
   - name: TokenTyp
     properties:
       - name: order

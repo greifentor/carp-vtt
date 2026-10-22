@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.BattleMapService;
+import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
@@ -16,6 +17,7 @@ import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.core.service.port.web.BattleMapWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
+import de.ollie.carp.vtt.swing.component.BattleMapSelectionDialog;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
@@ -59,6 +61,9 @@ public class ApplicationFrame
 
 	@Inject
 	private DndTokenDataService dndTokenDataService;
+
+	@Inject
+	private DndTokenBattleMapPartyScenarioService dndTokenBattleMapPartyScenarioService;
 
 	@Inject
 	private GraphicsManager graphicsManager;
@@ -164,21 +169,25 @@ public class ApplicationFrame
 		} else if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
-			new BattleMapJInternalFrame(
-				desktopPane,
-				battleMapService,
-				coordinatesToFieldConverter,
-				dndTokenDataService,
-				graphicsManager,
-				partyService,
-				tokenHitManager,
-				tokenPositionService,
-				tokenService,
-				tokenWebPort,
-				uuidService
-			)
-				.prepare()
-				.setVisible(true);
+			BattleMap selectedBattleMap = new BattleMapSelectionDialog(this, battleMapService.findAll()).getSelectedItem();
+			if (selectedBattleMap != null) {
+				new BattleMapJInternalFrame(
+					desktopPane,
+					selectedBattleMap,
+					coordinatesToFieldConverter,
+					dndTokenDataService,
+					dndTokenBattleMapPartyScenarioService,
+					graphicsManager,
+					partyService,
+					tokenHitManager,
+					tokenPositionService,
+					tokenService,
+					tokenWebPort,
+					uuidService
+				)
+					.prepare()
+					.setVisible(true);
+			}
 		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_BATTLE_MAPS) {
 			battleMapWebPort.synchronizeBattleMaps((synced, total) ->
 				System.out.println("Battle Map Synced " + synced + " of " + total)

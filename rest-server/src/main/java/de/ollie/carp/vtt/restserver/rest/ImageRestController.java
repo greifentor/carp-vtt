@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.restserver.rest;
 
-import de.ollie.carp.vtt.core.service.model.TokenSize;
+import de.ollie.carp.vtt.core.service.model.DndTokenBattleMapPartyScenarioData;
+import de.ollie.carp.vtt.core.service.model.DndTokenBattleMapPartyScenarioDataImpl;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.dnd.DndTokenPaintManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
@@ -95,8 +96,10 @@ public class ImageRestController implements ImageApi {
 				Party party = partyService
 					.findById(partyId)
 					.orElseThrow(() -> new NoSuchElementException("No party found with id: " + partyId));
+				DndTokenBattleMapPartyScenarioData dtbmps = new DndTokenBattleMapPartyScenarioDataImpl()
+					.setCurrentHitPoints(75);
 				if (party.getRuleSystem() == RuleSystem.DND) {
-					tokenPaintManager = new DndTokenPaintManager(25, 75, TokenSize.HUGE);
+					tokenPaintManager = new DndTokenPaintManager(dtbmps, 75, td.getTokenSize());
 				}
 				tokenMap.put(
 					id,
