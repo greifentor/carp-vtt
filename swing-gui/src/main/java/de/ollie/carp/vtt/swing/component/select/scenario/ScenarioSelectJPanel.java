@@ -66,10 +66,12 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 	@Override
 	protected void delete(Scenario toDelete) {
 		scenarioService.deleteScenario(toDelete.getId());
+		scenarioService.pushDeleteScenario(toDelete.getId());
 	}
 
 	@Override
 	protected void save(Scenario toSave) {
 		scenarioService.updateScenario(toSave);
+		scenarioService.pushScenario(toSave);
 	}
 }

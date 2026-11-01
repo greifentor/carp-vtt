@@ -11,7 +11,7 @@ public class CarpVttMenuBar extends JMenuBar {
 
 	static final String RES_ID_MENU_EDIT = "MainMenuBar.menu.edit.label";
 	static final String RES_ID_MENU_EDIT_ITEM_BATTLE_MAP = "MainMenuBar.menu.edit.item.battleMaps.label";
-	static final String RES_ID_MENU_EDIT_ITEM_SCENARIO = "MainMenuBar.menu.edit.item.senarios.label";
+	static final String RES_ID_MENU_EDIT_ITEM_SCENARIO = "MainMenuBar.menu.edit.item.scenarios.label";
 	static final String RES_ID_MENU_EDIT_ITEM_TOKEN = "MainMenuBar.menu.edit.item.tokens.label";
 	static final String RES_ID_MENU_FILE = "MainMenuBar.menu.file.label";
 	static final String RES_ID_MENU_FILE_ITEM_QUIT = "MainMenuBar.menu.file.item.quit.label";

@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.core.service.impl;
 import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.port.persistence.ScenarioPersistencePort;
+import de.ollie.carp.vtt.core.service.port.web.ScenarioWebPort;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 class ScenarioServiceImpl implements ScenarioService {
 
 	private final ScenarioPersistencePort scenarioPersistencePort;
+	private final ScenarioWebPort scenarioWebPort;
 
 	@Override
 	public Scenario createScenario(String name) {
@@ -45,5 +47,15 @@ class ScenarioServiceImpl implements ScenarioService {
 	@Override
 	public Scenario updateScenario(Scenario toSave) {
 		return scenarioPersistencePort.update(toSave);
+	}
+
+	@Override
+	public Scenario pushScenario(Scenario toPush) {
+		return scenarioWebPort.pushScenario(toPush);
+	}
+
+	@Override
+	public void pushDeleteScenario(UUID idToDelete) {
+		scenarioWebPort.deleteScenario(idToDelete);
 	}
 }

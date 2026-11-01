@@ -1,13 +1,13 @@
-package de.ollie.carp.vtt.service.impl;
+package de.ollie.carp.vtt.core.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.core.service.impl.TokenServiceImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenPersistencePort;
-import de.ollie.carp.vtt.service.impl.TokenServiceImpl;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

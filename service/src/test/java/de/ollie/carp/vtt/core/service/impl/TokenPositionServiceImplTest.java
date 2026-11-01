@@ -1,4 +1,4 @@
-package de.ollie.carp.vtt.service.impl;
+package de.ollie.carp.vtt.core.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.core.service.impl.TokenPositionServiceImpl;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.Party;

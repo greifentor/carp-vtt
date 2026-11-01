@@ -22,4 +22,8 @@ public interface ScenarioService {
 	List<Scenario> listScenarios();
 
 	Scenario updateScenario(Scenario toSave);
+
+	Scenario pushScenario(Scenario toPush);
+
+	void pushDeleteScenario(UUID idToDelete);
 }

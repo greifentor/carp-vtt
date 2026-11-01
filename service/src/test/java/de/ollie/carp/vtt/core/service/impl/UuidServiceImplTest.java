@@ -1,10 +1,11 @@
-package de.ollie.carp.vtt.service.impl;
+package de.ollie.carp.vtt.core.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
+import de.ollie.carp.vtt.core.service.impl.UuidServiceImpl;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

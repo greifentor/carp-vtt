@@ -6,7 +6,6 @@ import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
-import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
 

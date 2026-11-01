@@ -1,4 +1,4 @@
-package de.ollie.carp.vtt.service.impl;
+package de.ollie.carp.vtt.core.service.impl;
 
 import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.model.DndTokenBattleMapPartyScenarioData;

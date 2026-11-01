@@ -1,4 +1,4 @@
-package de.ollie.carp.vtt.service.impl;
+package de.ollie.carp.vtt.core.service.impl;
 
 import de.ollie.carp.vtt.core.service.UuidService;
 import jakarta.inject.Named;

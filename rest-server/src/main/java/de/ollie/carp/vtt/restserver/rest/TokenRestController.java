@@ -31,4 +31,14 @@ public class TokenRestController implements TokenApi {
 		token = tokenService.updateToken(token);
 		return ResponseEntity.ofNullable(tokenDtoMapper.toDto(token));
 	}
+
+	@Override
+	public ResponseEntity<TokenDto> removeToken(@Valid TokenDto tokenDto) {
+		if (!accessRightConfiguration.hasAccess(UserContextProvider.getUserId().userId(), AccessRight.UPDATE_OWN)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
+		}
+		Token token = tokenDtoMapper.toModel(tokenDto);
+		tokenService.deleteToken(token.getId());
+		return ResponseEntity.ofNullable(tokenDtoMapper.toDto(token));
+	}
 }
