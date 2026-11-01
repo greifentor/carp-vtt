@@ -30,6 +30,7 @@ public class MapController {
 	@GetMapping("/")
 	public String showImage(Model model) {
 		model.addAttribute("imageUrl", "/map");
+		model.addAttribute("backgroundImageUrl", "/background/dnd");
 		return "imageview";
 	}
 

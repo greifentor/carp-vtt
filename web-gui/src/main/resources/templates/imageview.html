@@ -3,12 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Dynamisches Bild</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .content-frame {
+            padding: 30px;
+            border: 4px solid white;
+            border-radius: 15px;
+
+            /* Weißer Schatten */
+            box-shadow:
+                0 0 15px rgba(255,255,255,0.8),
+                0 0 30px rgba(255,255,255,0.5);
+
+            /* Leicht transparente Fläche */
+            background-color: rgba(0, 0, 0, 0.3);
+
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        #dynImage {
+            max-width: 600px;
+            border: 3px solid white;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(255,255,255,0.7);
+        }
+    </style>
 </head>
 
-<body>
-<h1>Dynamisches Bild</h1>
+<body th:style="'background-image: url(' + ${backgroundImageUrl} + ');'">
 
-<img id="dynImage" th:src="${imageUrl}" alt="Dynamic Image" style="max-width: 600px;">
+<div class="content-frame">
+
+    <h1>Dynamisches Bild</h1>
+
+    <img id="dynImage"
+         th:src="${imageUrl}"
+         alt="Dynamic Image">
+
+</div>
 
 <script>
     function reloadImage() {
@@ -18,7 +72,6 @@
         img.src = img.src.split("?")[0] + "?t=" + new Date().getTime();
     }
 
-    // Alle 3 Sekunden nur das Bild neu laden
     setInterval(reloadImage, 3000);
 </script>
 
