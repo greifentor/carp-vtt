@@ -4,6 +4,7 @@ import de.ollie.carp.vtt.core.service.BattleMapService;
 import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
+import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
@@ -20,9 +21,11 @@ import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.swing.component.BattleMapSelectionDialog;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
+import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener.EventType;
 import de.ollie.carp.vtt.swing.component.SimplifiedWindowListener;
+import de.ollie.carp.vtt.swing.component.select.scenario.ScenarioSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
@@ -66,6 +69,9 @@ public class ApplicationFrame
 	private DndTokenBattleMapPartyScenarioService dndTokenBattleMapPartyScenarioService;
 
 	@Inject
+	private EditDialogComponentFactory editDialogComponentFactory;
+
+	@Inject
 	private GraphicsManager graphicsManager;
 
 	@Inject
@@ -76,6 +82,9 @@ public class ApplicationFrame
 
 	@Inject
 	private SwingComponentFactory swingComponentFactory;
+
+	@Inject
+	private ScenarioService scenarioService;
 
 	@Inject
 	private TokenHitManager tokenHitManager;
@@ -166,6 +175,8 @@ public class ApplicationFrame
 			)
 				.prepare()
 				.setVisible(true);
+		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_SCENARIO) {
+			new ScenarioSelectJInternalFrame(scenarioService, desktopPane, editDialogComponentFactory);
 		} else if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {

@@ -56,7 +56,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 
 	private static final Party DUMMY_PARTY = new PartyImpl()
 		.setId(UUID.fromString("d95b7312-5669-4ee5-9299-4516034f46d8"))
-		.setRuleSystem(RuleSystem.DND);
+		.setRuleSystem(RuleSystem.NONE);
 	private static final Scenario DUMMY_SCENARIO = new ScenarioImpl()
 		.setId(UUID.fromString("60d8b44d-f60f-4b04-b9bb-133b3335db0f"));
 

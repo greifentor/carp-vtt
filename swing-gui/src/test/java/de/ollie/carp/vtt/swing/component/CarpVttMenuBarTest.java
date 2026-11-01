@@ -56,6 +56,8 @@ class CarpVttMenuBarTest {
 			when(swingComponentFactory.createMenu(CarpVttMenuBar.RES_ID_MENU_SYNC)).thenReturn(new JMenu(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_EDIT_ITEM_BATTLE_MAP))
 				.thenReturn(new JMenuItem(LABEL));
+			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_EDIT_ITEM_SCENARIO))
+				.thenReturn(new JMenuItem(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_EDIT_ITEM_TOKEN))
 				.thenReturn(new JMenuItem(LABEL));
 			when(swingComponentFactory.createMenuItem(CarpVttMenuBar.RES_ID_MENU_FILE_ITEM_QUIT))

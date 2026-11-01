@@ -18,7 +18,7 @@ properties:
   - name: jpa-repository-package
     value: de.ollie.carp.vtt.persistence.jpa.repository
   - name: swing-gui-package
-    value: de.ollie.carp.vtt.gui.swing
+    value: de.ollie.carp.vtt.swing
 generators:
 # --- Service ---
   - type: CLASS
@@ -54,22 +54,24 @@ generators:
     properties:
       - name: target-path
         value: service-interface/src/main/java
-#  - type: CLASS
-#    package: de.ollie.carp.vtt.core.service
-#    target-file-name: ${UnitName}Service
-#    path: generator
-#    template: templates/core/Service.vc
-#    properties:
-#      - name: target-path
-#        value: service-interface/src/main/java
-#  - type: CLASS
-#    package: de.ollie.carp.vtt.core.service.impl
-#    target-file-name: ${UnitName}ServiceImpl
-#    path: generator
-#    template: templates/core/ServiceImpl.vc
-#    properties:
-#      - name: target-path
-#        value: service/src/main/java
+  - type: CLASS
+    generate-when: classModel Load generate-service HasProperty
+    package: de.ollie.carp.vtt.core.service
+    target-file-name: ${UnitName}Service
+    path: generator
+    template: templates/core/Service.vc
+    properties:
+      - name: target-path
+        value: service-interface/src/main/java
+  - type: CLASS
+    generate-when: classModel Load generate-service HasProperty
+    package: de.ollie.carp.vtt.core.service.impl
+    target-file-name: ${UnitName}ServiceImpl
+    path: generator
+    template: templates/core/ServiceImpl.vc
+    properties:
+      - name: target-path
+        value: service/src/main/java
 # --- JPA ---
   - type: CLASS
     package: de.ollie.carp.vtt.persistence.jpa.dbo
@@ -117,39 +119,39 @@ generators:
       - name: target-path
         value: jpa-persistence/src/main/java
 # --- Swing-GUI ---
-#  - type: CLASS
-#    generate-when: classModel Load gui HasProperty
-#    package: de.ollie.carp.vtt.gui.swing.select.${UnitNameLowerCase}
-#    target-file-name: ${UnitName}SelectJInternalFrame
-#    path: generator
-#    template: templates/swing-gui/SelectJInternalFrame.vc
-#    properties:
-#      - name: target-path
-#        value: swing-gui/src/main/java
-#  - type: CLASS
-#    generate-when: classModel Load gui HasProperty
-#    package: de.ollie.carp.vtt.gui.swing.select.${UnitNameLowerCase}
-#    target-file-name: ${UnitName}SelectJPanel
-#    path: generator
-#    template: templates/swing-gui/SelectJPanel.vc
-#    properties:
-#      - name: target-path
-#        value: swing-gui/src/main/java
-#  - type: CLASS
-#    generate-when: classModel Load gui HasProperty
-#    package: de.ollie.carp.vtt.gui.swing.edit.${UnitNameLowerCase}
-#    target-file-name: ${UnitName}EditJInternalFrame
-#    path: generator
-#    template: templates/swing-gui/EditJInternalFrame.vc
-#    properties:
-#      - name: target-path
-#        value: swing-gui/src/main/java
-#  - type: CLASS
-#    generate-when: classModel Load gui HasProperty
-#    package: de.ollie.carp.vtt.gui.swing.edit.${UnitNameLowerCase}
-#    target-file-name: ${UnitName}EditJPanel
-#    path: generator
-#    template: templates/swing-gui/EditJPanel.vc
-#    properties:
-#      - name: target-path
-#        value: swing-gui/src/main/java
+  - type: CLASS
+    generate-when: classModel Load swing-gui HasProperty
+    package: de.ollie.carp.vtt.swing.component.select.${UnitNameLowerCase}
+    target-file-name: ${UnitName}SelectJInternalFrame
+    path: generator
+    template: templates/swing-gui/SelectJInternalFrame.vc
+    properties:
+      - name: target-path
+        value: swing-gui/src/main/java
+  - type: CLASS
+    generate-when: classModel Load swing-gui HasProperty
+    package: de.ollie.carp.vtt.swing.component.select.${UnitNameLowerCase}
+    target-file-name: ${UnitName}SelectJPanel
+    path: generator
+    template: templates/swing-gui/SelectJPanel.vc
+    properties:
+      - name: target-path
+        value: swing-gui/src/main/java
+  - type: CLASS
+    generate-when: classModel Load swing-gui HasProperty
+    package: de.ollie.carp.vtt.swing.component.edit.${UnitNameLowerCase}
+    target-file-name: ${UnitName}EditJInternalFrame
+    path: generator
+    template: templates/swing-gui/EditJInternalFrame.vc
+    properties:
+      - name: target-path
+        value: swing-gui/src/main/java
+  - type: CLASS
+    generate-when: classModel Load swing-gui HasProperty
+    package: de.ollie.carp.vtt.swing.component.edit.${UnitNameLowerCase}
+    target-file-name: ${UnitName}EditJPanel
+    path: generator
+    template: templates/swing-gui/EditJPanel.vc
+    properties:
+      - name: target-path
+        value: swing-gui/src/main/java

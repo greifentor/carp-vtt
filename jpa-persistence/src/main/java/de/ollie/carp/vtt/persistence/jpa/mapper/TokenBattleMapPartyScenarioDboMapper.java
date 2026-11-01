@@ -23,7 +23,7 @@ public interface TokenBattleMapPartyScenarioDboMapper {
 	List<TokenBattleMapPartyScenarioDbo> toDbos(List<TokenBattleMapPartyScenario> models);
 
 	@ObjectFactory
-	default TokenBattleMapPartyScenario createTokenBattleMapPartyScenarioData() {
+	default TokenBattleMapPartyScenario createTokenBattleMapPartyScenario() {
 		return new TokenBattleMapPartyScenarioImpl();
 	}
 }

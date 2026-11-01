@@ -18,6 +18,7 @@
 
 	<properties>
 		<plugin.prettier.goal>write</plugin.prettier.goal>
+		<okhttp.version>4.12.0</okhttp.version>
 	</properties>
 
 	<dependencies>
@@ -52,14 +53,16 @@
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
+			<version>${okhttp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>logging-interceptor</artifactId>
+			<version>${okhttp.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.gsonfire</groupId>

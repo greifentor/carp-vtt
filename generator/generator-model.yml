@@ -143,8 +143,12 @@ classes:
               value: true
   - name: Scenario
     properties:
+      - name: generate-service
+        value: true
       - name: order
         value: name
+      - name: swing-gui
+        value: true
     attributes:
       - name: id
         properties:
@@ -159,6 +163,8 @@ classes:
               value: java.util.UUID
       - name: name
         properties:
+          - name: editor-position
+            value: 1
           - name: nullable
             value: false
         type:
@@ -251,6 +257,11 @@ classes:
             - name: project-type
               value: true
   - name: TokenBattleMapPartyScenario
+    properties:
+      - name: suppress-persistence
+        value: true
+      - name: suppress-service
+        value: true
     attributes:
       - name: id
         properties:
