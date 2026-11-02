@@ -139,10 +139,16 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 	@Override
 	protected void delete(${ClassName} toDelete) {
 		${ClassNameAsAttribute}Service.delete${ClassName}(toDelete.getId());
+		#if ($Class.hasPropertyWithName("rest-pushes"))
+		${ClassNameAsAttribute}Service.pushDelete${ClassName}(toDelete.getId());
+		#end
 	}
 
 	@Override
 	protected void save(${ClassName} toSave) {
 		${ClassNameAsAttribute}Service.update${ClassName}(toSave);
+		#if ($Class.hasPropertyWithName("rest-pushes"))
+		${ClassNameAsAttribute}Service.push${ClassName}(toSave);
+		#end
 	}
 }

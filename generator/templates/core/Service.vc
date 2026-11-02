@@ -28,7 +28,7 @@ public interface ${ClassName}Service {
 	${ClassName} create${ClassName}(#foreach($Attribute in ${Class.getAttributesWithPropertyNotSet("id")})${Attribute.getTypeName()} ${Attribute.getName()}#if($foreach.hasNext), #end#end);
 
 	void delete${ClassName}(${Class.getAttributeTypeNameByPropertyName("id")} id);
-	
+
 	Optional<${ClassName}> findById(${Class.getAttributeTypeNameByPropertyName("id")} id);
 #foreach($Attribute in ${Class.getAttributesWithPropertySet("findable")})
 
@@ -38,4 +38,11 @@ public interface ${ClassName}Service {
 	List<${ClassName}> list${ClassName}s();
 
 	${ClassName} update${ClassName}(${ClassName} toSave);
+
+	#if ($Class.hasPropertyWithName("rest-pushes"))
+	${ClassName} push${ClassName}(${ClassName} toPush);
+
+	void pushDelete${ClassName}(UUID idToDelete);
+
+	#end
 }

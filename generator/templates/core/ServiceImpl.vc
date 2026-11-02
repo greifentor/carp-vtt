@@ -11,6 +11,9 @@ import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
 #end
 #end
 import ${Properties.get("core-port-persistence-package")}.${ClassName}PersistencePort;
+#if ($Class.hasPropertyWithName("rest-pushes"))
+import ${Properties.get("core-port-web-package")}.${ClassName}WebPort;
+#end
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +35,9 @@ import ${Import};
 class ${ClassName}ServiceImpl implements ${ClassName}Service {
 
 	private final ${ClassName}PersistencePort ${ClassNameAsAttribute}PersistencePort;
+	#if ($Class.hasPropertyWithName("rest-pushes"))
+	private final ${ClassName}WebPort ${ClassNameAsAttribute}WebPort;
+	#end
 
 	@Override
 	public ${ClassName} create${ClassName}(#foreach($Attribute in ${Class.getAttributesWithPropertyNotSet("id")})${Attribute.getTypeName()} ${Attribute.getName()}#if($foreach.hasNext), #end#end) {
@@ -64,4 +70,17 @@ class ${ClassName}ServiceImpl implements ${ClassName}Service {
 	public ${ClassName} update${ClassName}(${ClassName} toSave) {
 		return ${ClassNameAsAttribute}PersistencePort.update(toSave);
 	}
+
+	#if ($Class.hasPropertyWithName("rest-pushes"))
+	@Override
+	public $ClassName push${ClassName}($ClassName toPush) {
+		return ${ClassNameAsAttribute}WebPort.push${ClassName}(toPush);
+	}
+
+	@Override
+	public void pushDelete${ClassName}(UUID idToDelete) {
+		${ClassNameAsAttribute}WebPort.delete${ClassName}(idToDelete);
+	}
+
+	#end
 }

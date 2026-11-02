@@ -1,0 +1,28 @@
+package ${PackageName};
+
+import ${Properties.get("core-model-package")}.${ClassName};
+import ${Properties.get("core-port-web-package")}.${ClassName}WebPort;
+import jakarta.inject.Named;
+import java.util.UUID;
+import lombok.Generated;
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+public class ${ClassName}WebAdapter implements ${ClassName}WebPort {
+
+	@Override
+	public ${ClassName} push${ClassName}(${ClassName} toPush) {
+		System.out.println("rest-push " + toPush);
+		return null;
+	}
+
+	@Override
+	public void delete${ClassName}(UUID idToDelete) {
+		System.out.println("rest-delete " + idToDelete);
+	}
+}
