@@ -37,6 +37,9 @@ public class TokenPositionDbo {
 	@Column(name = "COORDINATE_Y", nullable = false)
 	private int coordinateY;
 
+	@Column(name = "DND_DATA_ID", nullable = false)
+	private UUID dndDataId;
+
 	@Column(name = "PARTY_ID", nullable = false)
 	private UUID partyId;
 

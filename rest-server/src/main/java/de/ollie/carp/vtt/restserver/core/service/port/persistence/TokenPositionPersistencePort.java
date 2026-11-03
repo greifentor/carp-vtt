@@ -20,6 +20,7 @@ public interface TokenPositionPersistencePort {
 		int counter,
 		int coordinateX,
 		int coordinateY,
+		UUID dndDataId,
 		UUID partyId,
 		UUID scenarioId,
 		UUID tokenId,

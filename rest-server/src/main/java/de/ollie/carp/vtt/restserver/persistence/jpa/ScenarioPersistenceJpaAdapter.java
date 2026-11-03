@@ -1,0 +1,52 @@
+package de.ollie.carp.vtt.restserver.persistence.jpa;
+
+import de.ollie.carp.vtt.restserver.core.service.model.Scenario;
+import de.ollie.carp.vtt.restserver.core.service.port.persistence.ScenarioPersistencePort;
+import de.ollie.carp.vtt.restserver.persistence.jpa.mapper.ScenarioDboMapper;
+import de.ollie.carp.vtt.restserver.persistence.jpa.repository.ScenarioDboRepository;
+import jakarta.inject.Named;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import lombok.Generated;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+@RequiredArgsConstructor
+public class ScenarioPersistenceJpaAdapter implements ScenarioPersistencePort {
+
+	private final ScenarioDboMapper mapper;
+	private final ScenarioDboRepository repository;
+
+	@Override
+	public Scenario create(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteById(UUID id) {
+		repository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Scenario> findById(UUID id) {
+		return repository.findById(id).map(mapper::toModel);
+	}
+
+	@Override
+	public List<Scenario> list() {
+		return mapper.toModels(repository.findAll());
+	}
+
+	@Override
+	public Scenario update(Scenario toSave) {
+		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
+	}
+}

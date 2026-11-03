@@ -49,7 +49,7 @@ generators:
         value: src/main/java
   - type: CLASS
     package: de.ollie.carp.vtt.restserver.core.service
-    path: ../generator
+    path: ./generator
     target-file-name: ${UnitName}Service
     template: templates/core/Service.vc
     properties:
@@ -58,7 +58,7 @@ generators:
   - type: CLASS
     package: de.ollie.carp.vtt.restserver.core.service.impl
     target-file-name: ${UnitName}ServiceImpl
-    path: ../generator
+    path: ./generator
     template: templates/core/ServiceImpl.vc
     properties:
       - name: target-path
@@ -86,7 +86,7 @@ generators:
     package: de.ollie.carp.vtt.restserver.persistence.jpa.mapper
     suppress-when: classModel Load suppress-persistence HasProperty
     target-file-name: ${UnitName}DboMapper
-    path: ../generator
+    path: ./generator
     template: templates/jpa/DboMapper.vc
     properties:
       - name: target-path

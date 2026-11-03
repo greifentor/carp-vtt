@@ -4,6 +4,7 @@ import de.ollie.carp.vtt.restserver.core.service.model.Token;
 import de.ollie.carp.vtt.restserver.persistence.jpa.dbo.TokenDbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * GENERATED CODE - DO NOT TOUCH

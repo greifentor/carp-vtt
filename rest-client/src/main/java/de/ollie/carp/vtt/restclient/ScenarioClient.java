@@ -7,6 +7,7 @@ import de.ollie.carp.vtt.restclient.config.RestClientConfiguration;
 import de.ollie.carp.vtt.restclient.mapper.ScenarioDtoMapper;
 import de.ollie.carp.vtt.restclient.model.ScenarioDto;
 import jakarta.inject.Named;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
 @Named
@@ -25,6 +26,18 @@ public class ScenarioClient {
 		ScenarioDto dto = scenarioDtoMapper.map(scenario);
 		try {
 			api.updateScenario(dto);
+		} catch (ApiException ae) {
+			throw new UploadException("token upload error: " + ae.getMessage());
+		}
+	}
+
+	public void removeScenario(UUID idToDelete) {
+		ApiClient client = new ApiClient();
+		client.setBasePath(restClientConfiguration.getBaseUrl());
+		client.setBearerToken(bearerTokenGenerator.create());
+		ScenarioApi api = new ScenarioApi(client);
+		try {
+			api.removeScenario(idToDelete);
 		} catch (ApiException ae) {
 			throw new UploadException("token upload error: " + ae.getMessage());
 		}

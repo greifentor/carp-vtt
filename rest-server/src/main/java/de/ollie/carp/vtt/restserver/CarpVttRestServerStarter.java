@@ -2,6 +2,7 @@ package de.ollie.carp.vtt.restserver;
 
 import lombok.Generated;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	}
 )
 @EntityScan("de.ollie.carp.vtt.restserver.persistence.jpa.dbo")
+@EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "de.ollie.carp.vtt.restserver.persistence.jpa.repository")
 public class CarpVttRestServerStarter {
 

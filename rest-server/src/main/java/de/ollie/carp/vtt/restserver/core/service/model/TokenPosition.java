@@ -20,6 +20,7 @@ public class TokenPosition {
 	private int counter;
 	private int coordinateX;
 	private int coordinateY;
+	private UUID dndDataId;
 	private UUID partyId;
 	private UUID scenarioId;
 	private UUID tokenId;

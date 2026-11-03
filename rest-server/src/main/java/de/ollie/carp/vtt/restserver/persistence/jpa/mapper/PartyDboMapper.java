@@ -4,6 +4,7 @@ import de.ollie.carp.vtt.restserver.core.service.model.Party;
 import de.ollie.carp.vtt.restserver.persistence.jpa.dbo.PartyDbo;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.ObjectFactory;
 
 /**
  * GENERATED CODE - DO NOT TOUCH

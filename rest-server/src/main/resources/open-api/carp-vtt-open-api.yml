@@ -87,25 +87,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
-  /api/v1/scenario:
+  /api/v1/scenarios/{id}:
     delete:
       tags:
         - Scenario
       summary: Remove a scenario
       operationId: removeScenario
-      requestBody:
+      parameters:
+      - name: id
+        in: path
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ScenarioDto'
+        schema:
+          type: string
+          format: uuid
       responses:
         '200':
           description: Scenario removed successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ScenarioDto'
         '400':
           description: Invalid request
           content:
@@ -118,6 +115,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
+  /api/v1/scenarios:
     put:
       tags:
         - Scenario
