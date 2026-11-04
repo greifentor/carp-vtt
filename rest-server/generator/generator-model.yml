@@ -219,6 +219,37 @@ classes:
             value: false
         type:
           name: boolean
+  - name: User
+    properties:
+      - name: order
+        value: name
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: key
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: rights
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: String
 enums:
   - name: AccessRight
     properties:

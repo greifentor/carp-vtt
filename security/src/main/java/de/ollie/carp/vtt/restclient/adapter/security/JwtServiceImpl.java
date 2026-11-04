@@ -18,8 +18,8 @@ public class JwtServiceImpl implements JwtService {
 		Instant expires = now.plusSeconds(offsetMinutes * 60);
 		// Header
 		String headerJson = """
-				{"alg":"HS512","typ":"JWT"}
-				""";
+				{"alg":"HS512","typ":"JWT","uid":"%s"}
+				""".formatted(userid);
 		// Payload
 		String payloadJson =
 			"""
