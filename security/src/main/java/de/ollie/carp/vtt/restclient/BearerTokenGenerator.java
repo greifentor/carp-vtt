@@ -14,9 +14,9 @@ public class BearerTokenGenerator {
 
 	public String create() {
 		return jwtService.generateToken(
-			configuration.getUserName(),
+			configuration.getUserId(),
 			configuration.getCommunicationValidityOffset(),
-			configuration.getCommunicationSecret()
+			configuration.getUserSecret()
 		);
 	}
 }

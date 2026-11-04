@@ -1,5 +1,7 @@
 package de.ollie.carp.vtt.restclient.port;
 
+import java.util.UUID;
+
 public interface JwtService {
-	String generateToken(String username, long offsetMinutes, String secretKey);
+	String generateToken(UUID userId, long offsetMinutes, String userSecret);
 }

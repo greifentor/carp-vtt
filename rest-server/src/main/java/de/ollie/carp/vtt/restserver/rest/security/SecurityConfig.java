@@ -1,43 +1,43 @@
 package de.ollie.carp.vtt.restserver.rest.security;
 
-import javax.crypto.spec.SecretKeySpec;
-import org.springframework.beans.factory.annotation.Value;
+import de.ollie.carp.vtt.restserver.core.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Value("${rest.server.communication.secret}")
-	private String secret;
+	@Configuration
+	@EnableWebSecurity
+	public class SecurityConfiguration {
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http
-			.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(auth ->
-				auth
-					// .requestMatchers("/actuator/**").permitAll()
-					.anyRequest()
-					.authenticated()
-			)
-			.oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
-			.build();
-	}
+		private final UserService userService;
 
-	@Bean
-	public JwtDecoder jwtDecoder() {
-		SecretKeySpec key = new SecretKeySpec(secret.getBytes(), "HmacSHA512");
-		return NimbusJwtDecoder
-			.withSecretKey(key)
-			.macAlgorithm(org.springframework.security.oauth2.jose.jws.MacAlgorithm.HS512)
-			.build();
+		public SecurityConfiguration(UserService userService) {
+			this.userService = userService;
+		}
+
+		@Bean
+		SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+			http
+				.csrf(AbstractHttpConfigurer::disable)
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+				.addFilterBefore(new BearerTokenAuthenticationFilter(userService), UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling(ex ->
+					ex.authenticationEntryPoint((request, response, authException) ->
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+					)
+				);
+			return http.build();
+		}
 	}
 }

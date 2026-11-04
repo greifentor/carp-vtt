@@ -5,6 +5,7 @@ import jakarta.inject.Named;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.UUID;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -12,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class JwtServiceImpl implements JwtService {
 
 	@Override
-	public String generateToken(String username, long offsetMinutes, String secretKey) {
+	public String generateToken(UUID userid, long offsetMinutes, String userSecret) {
 		Instant now = Instant.now();
 		Instant expires = now.plusSeconds(offsetMinutes * 60);
 		// Header
@@ -27,11 +28,11 @@ public class JwtServiceImpl implements JwtService {
 				  "iat":%d,
 				  "exp":%d
 				}
-				""".formatted(username, now.getEpochSecond(), expires.getEpochSecond());
+				""".formatted(userid, now.getEpochSecond(), expires.getEpochSecond());
 		String headerB64 = base64UrlEncode(headerJson.getBytes(StandardCharsets.UTF_8));
 		String payloadB64 = base64UrlEncode(payloadJson.getBytes(StandardCharsets.UTF_8));
 		String unsignedToken = headerB64 + "." + payloadB64;
-		String signature = hmacSha512(unsignedToken, secretKey);
+		String signature = hmacSha512(unsignedToken, userSecret);
 		return unsignedToken + "." + signature;
 	}
 

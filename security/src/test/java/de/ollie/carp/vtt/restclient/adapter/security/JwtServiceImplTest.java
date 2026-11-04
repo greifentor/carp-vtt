@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.restclient.adapter.security;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class JwtServiceImplTest {
@@ -12,11 +13,11 @@ class JwtServiceImplTest {
 	@Test
 	void tokenIsGenerated() {
 		// Prepare
-		String username = "oliver";
+		UUID userId = UUID.randomUUID();
 		long offset = 60;
 		String key = "mein-super-geheimer-und-langer-key-der-64-byte-haben-muss";
 		// Run
-		String token = jwtService.generateToken(username, offset, key);
+		String token = jwtService.generateToken(userId, offset, key);
 		// Check
 		assertNotNull(token);
 	}
@@ -24,7 +25,11 @@ class JwtServiceImplTest {
 	@Test
 	void tokenContainsHs512Header() {
 		// Prepare
-		String token = jwtService.generateToken("oliver", 10, "mein-super-geheimer-und-langer-key-der-64-byte-haben-muss");
+		String token = jwtService.generateToken(
+			UUID.randomUUID(),
+			10,
+			"mein-super-geheimer-und-langer-key-der-64-byte-haben-muss"
+		);
 		// Run
 		String headerJson = new String(java.util.Base64.getUrlDecoder().decode(token.split("\\.")[0]));
 		// Check
@@ -34,11 +39,11 @@ class JwtServiceImplTest {
 	@Test
 	void tokenContainsCorrectSubject() {
 		// Prepare
-		String username = "oliver";
-		String token = jwtService.generateToken(username, 10, "mein-super-geheimer-und-langer-key-der-64-byte-haben-muss");
+		UUID userId = UUID.randomUUID();
+		String token = jwtService.generateToken(userId, 10, "mein-super-geheimer-und-langer-key-der-64-byte-haben-muss");
 		// Run
 		String payloadJson = new String(java.util.Base64.getUrlDecoder().decode(token.split("\\.")[1]));
 		// Check
-		assertTrue(payloadJson.contains("\"sub\":\"" + username + "\""));
+		assertTrue(payloadJson.contains("\"sub\":\"" + userId + "\""));
 	}
 }
