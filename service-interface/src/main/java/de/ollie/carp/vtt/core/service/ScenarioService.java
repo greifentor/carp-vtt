@@ -13,7 +13,7 @@ import lombok.Generated;
  */
 @Generated
 public interface ScenarioService {
-	Scenario createScenario(String name);
+	Scenario createScenario(String name, UUID owner);
 
 	void deleteScenario(UUID id);
 

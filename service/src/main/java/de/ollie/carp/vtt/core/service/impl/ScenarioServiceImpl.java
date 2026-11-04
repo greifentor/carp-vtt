@@ -25,8 +25,8 @@ class ScenarioServiceImpl implements ScenarioService {
 	private final ScenarioWebPort scenarioWebPort;
 
 	@Override
-	public Scenario createScenario(String name) {
-		return scenarioPersistencePort.create(name);
+	public Scenario createScenario(String name, UUID owner) {
+		return scenarioPersistencePort.create(name, owner);
 	}
 
 	@Override

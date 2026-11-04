@@ -147,6 +147,8 @@ classes:
         value: true
       - name: order
         value: name
+      - name: owner-logic
+        value: true
       - name: rest-pushes
         value: true
       - name: swing-gui
@@ -171,6 +173,12 @@ classes:
             value: false
         type:
           name: String
+      - name: owner
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
   - name: Token
     properties:
       - name: implements

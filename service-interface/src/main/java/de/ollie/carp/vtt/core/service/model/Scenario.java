@@ -14,7 +14,11 @@ public interface Scenario<T> {
 
 	public String getName();
 
+	public UUID getOwner();
+
 	public T setId(UUID id);
 
 	public T setName(String name);
+
+	public T setOwner(UUID owner);
 }

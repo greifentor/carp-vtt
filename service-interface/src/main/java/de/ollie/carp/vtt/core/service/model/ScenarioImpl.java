@@ -17,4 +17,5 @@ public class ScenarioImpl implements Scenario<ScenarioImpl> {
 
 	private UUID id;
 	private String name;
+	private UUID owner;
 }

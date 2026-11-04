@@ -24,6 +24,7 @@ public class ScenarioRestController implements ScenarioApi {
 	@Override
 	public ResponseEntity<ScenarioDto> updateScenario(ScenarioDto dto) {
 		if (!accessRightConfiguration.hasAccess(UserContextProvider.getUserId().userId(), AccessRight.UPDATE_OWN)) {
+			System.out.println("Access denied: Forbidden");
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
 		}
 		Scenario model = dtoMapper.toModel(dto);

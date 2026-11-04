@@ -110,4 +110,21 @@
         </createTable>
         <addPrimaryKey columnNames="ID" schemaName="carpvttws" tableName="SCENARIO"/>
     </changeSet>
+        <changeSet author="dm-comp" id="Add-Table-USER-Add-Column-OWNER-to-Table-SCENARIO" runInTransaction="true">
+        <createTable tableName="USER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="KEY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RIGHTS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ID" tableName="USER"/>
+        <addColumn tableName="SCENARIO">
+            <column name="OWNER" type="UUID"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

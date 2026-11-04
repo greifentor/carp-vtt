@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.swing.component.select.scenario;
 import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
+import de.ollie.carp.vtt.swing.UserContext;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.edit.scenario.ScenarioEditJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
@@ -42,11 +43,12 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 
 	@Override
 	protected AbstractSelectionTableModel<Scenario> createSelectionModel() {
-		return new AbstractSelectionTableModel<Scenario>(getObjectsToSelect(), "Name") {
+		return new AbstractSelectionTableModel<Scenario>(getObjectsToSelect(), "Name", "Private") {
 			@Override
 			protected Object getColumnValueFor(Scenario t, int columnIndex) {
 				return switch (columnIndex) {
 					case 0 -> t.getName();
+					case 1 -> t.getOwner() != null;
 					default -> null;
 				};
 			}
@@ -60,7 +62,7 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 
 	@Override
 	protected Scenario createNewObject() {
-		return new ScenarioImpl().setId(UUID.randomUUID()).setName("");
+		return new ScenarioImpl().setId(UUID.randomUUID()).setName("").setOwner(UserContext.getUserId());
 	}
 
 	@Override

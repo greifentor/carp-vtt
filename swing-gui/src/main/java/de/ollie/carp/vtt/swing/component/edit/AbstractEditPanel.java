@@ -31,7 +31,7 @@ public abstract class AbstractEditPanel<T> extends JPanel implements Editor<T> {
 		this.toEdit = toEdit;
 		setBorder(new EmptyBorder(VGAP, HGAP, VGAP, HGAP));
 		JPanel psub = new JPanel(new BorderLayout(HGAP, VGAP));
-		psub.add(createLabelPanel(), BorderLayout.WEST);
+		psub.add(createLabelPanel(toEdit), BorderLayout.WEST);
 		psub.add(createComponentPanel(toEdit, itemProviders), BorderLayout.CENTER);
 		JPanel additionalPanel = createAdditionalPanel(toEdit, itemProviders);
 		if (additionalPanel != null) {
@@ -44,7 +44,7 @@ public abstract class AbstractEditPanel<T> extends JPanel implements Editor<T> {
 		return null;
 	}
 
-	protected abstract JPanel createLabelPanel();
+	protected abstract JPanel createLabelPanel(T toEdit);
 
 	protected JPanel createLabelSubPanel(String... labels) {
 		JPanel p = new JPanel(new GridLayout(labels.length, 1, HGAP, VGAP));

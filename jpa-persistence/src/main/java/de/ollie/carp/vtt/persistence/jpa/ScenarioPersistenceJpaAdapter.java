@@ -25,7 +25,7 @@ public class ScenarioPersistenceJpaAdapter implements ScenarioPersistencePort {
 	private final ScenarioDboRepository repository;
 
 	@Override
-	public Scenario create(String name) {
+	public Scenario create(String name, UUID owner) {
 		// TODO Auto-generated method stub
 		return null;
 	}

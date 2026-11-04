@@ -208,10 +208,15 @@
         <addForeignKeyConstraint baseColumnNames="ID" baseTableName="DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA" constraintName="FK_DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA_ID_TO_TOKEN_BATTLE_M" referencedColumnNames="ID" referencedTableName="TOKEN_BATTLE_MAP_PARTY_SCENARIO"/>
     </changeSet>
     <changeSet author="dm-comp" id="Add-Field-RULE_SYSTEM-to-Table-PARTY" runInTransaction="true" runOnChange="true">
-        <addColumn schemaName="carpvtttest" tableName="PARTY">
+        <addColumn tableName="PARTY">
             <column name="RULE_SYSTEM" type="VARCHAR(30)" defaultValue="DND">
                 <constraints nullable="false"/>
             </column>
+        </addColumn>
+    </changeSet>
+        <changeSet author="dm-comp" id="ADD-CHANGE-SET-ID-HERE" objectQuotingStrategy="LEGACY" runOnChange="true">
+        <addColumn tableName="SCENARIO">
+            <column name="OWNER" type="UUID"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>
