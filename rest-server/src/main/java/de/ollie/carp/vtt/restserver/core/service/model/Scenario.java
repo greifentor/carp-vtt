@@ -17,4 +17,5 @@ public class Scenario {
 
 	private UUID id;
 	private String name;
+	private UUID owner;
 }

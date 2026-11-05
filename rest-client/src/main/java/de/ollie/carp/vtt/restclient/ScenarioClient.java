@@ -25,7 +25,10 @@ public class ScenarioClient {
 		ScenarioApi api = new ScenarioApi(client);
 		ScenarioDto dto = scenarioDtoMapper.map(scenario);
 		try {
-			api.updateScenario(dto);
+			ApiResponse<ScenarioDto> response = api.updateScenarioWithHttpInfo(dto);
+			if (response.getStatusCode() / 100 != 2) {
+				throw new UploadException("API access denied with code: " + response.getStatusCode());
+			}
 		} catch (ApiException ae) {
 			throw new UploadException("token upload error: " + ae.getMessage());
 		}

@@ -27,4 +27,7 @@ public class ScenarioDbo {
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
+
+	@Column(name = "OWNER", nullable = true)
+	private UUID owner;
 }

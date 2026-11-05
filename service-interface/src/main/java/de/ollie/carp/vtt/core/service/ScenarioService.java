@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.Generated;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -26,4 +27,7 @@ public interface ScenarioService {
 	Scenario pushScenario(Scenario toPush);
 
 	void pushDeleteScenario(UUID idToDelete);
+
+	@Transactional
+	Scenario updateAndPushScenario(Scenario toSave);
 }

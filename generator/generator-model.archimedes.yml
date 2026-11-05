@@ -1,0 +1,77 @@
+title: DIAGRAMMNAME
+views:
+  - name: Main
+    description: Diese Sicht beinhaltet alle Tabellen des Schemas
+    main-view: true
+    show-referenced-columns: true
+    tables:
+      - name: BattleMap
+        x: 25
+        y: 125
+      - name: Coordinates
+        x: 350
+        y: 125
+      - name: DndTokenData
+        x: 675
+        y: 125
+      - name: DndTokenBattleMapPartyScenarioData
+        x: 25
+        y: 900
+      - name: Party
+        x: 25
+        y: 375
+      - name: Scenario
+        x: 350
+        y: 375
+      - name: Token
+        x: 675
+        y: 375
+      - name: TokenData
+        x: 25
+        y: 625
+      - name: TokenBattleMapPartyScenario
+        x: 350
+        y: 625
+      - name: TokenTyp
+        x: 675
+        y: 625
+tables:
+  - name: BattleMap
+    background-color: weiß
+    font-color: schwarz
+  - name: Coordinates
+    background-color: weiß
+    font-color: schwarz
+  - name: DndTokenBattleMapPartyScenarioData
+    background-color: weiß
+    font-color: schwarz
+  - name: DndTokenData
+    background-color: weiß
+    font-color: schwarz
+  - name: Party
+    background-color: weiß
+    font-color: schwarz
+  - name: Scenario
+    background-color: weiß
+    font-color: schwarz
+  - name: Token
+    background-color: weiß
+    font-color: schwarz
+  - name: TokenBattleMapPartyScenario
+    background-color: weiß
+    font-color: schwarz
+  - name: TokenData
+    background-color: weiß
+    font-color: schwarz
+  - name: TokenTyp
+    background-color: weiß
+    font-color: schwarz
+colors:
+  - name: weiß
+    red: 255
+    green: 255
+    blue: 255
+  - name: schwarz
+    red: 0
+    green: 0
+    blue: 0

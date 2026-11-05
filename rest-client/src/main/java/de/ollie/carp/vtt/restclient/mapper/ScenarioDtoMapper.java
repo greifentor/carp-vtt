@@ -11,6 +11,7 @@ public class ScenarioDtoMapper {
 		ScenarioDto dto = new ScenarioDto();
 		dto.setId(model.getId());
 		dto.setName(model.getName());
+		dto.setOwner(model.getOwner());
 		return dto;
 	}
 }

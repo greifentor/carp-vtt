@@ -73,7 +73,6 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 
 	@Override
 	protected void save(Scenario toSave) {
-		scenarioService.updateScenario(toSave);
-		scenarioService.pushScenario(toSave);
+		scenarioService.updateAndPushScenario(toSave);
 	}
 }

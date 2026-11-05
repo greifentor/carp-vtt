@@ -44,7 +44,7 @@ class UserServiceImpl implements UserService {
 
 	@Override
 	public String loadSecretByUid(UUID id) {
-		return findById(id).map(User::getKey).orElse(null);
+		return findById(id).map(u -> u.getKey().toString()).orElse(null);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import lombok.Generated;
 @Generated
 @Named
 public interface ScenarioPersistencePort {
-	Scenario create(String name);
+	Scenario create(String name, UUID owner);
 
 	void deleteById(UUID id);
 
