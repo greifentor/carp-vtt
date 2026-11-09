@@ -5,7 +5,6 @@ import lombok.Generated;
 #if (${Class.hasAnAttributeWithPropertyAndValue("suppress-to-string", "true")})
 import lombok.ToString.Exclude;
 #end
-import lombok.experimental.Accessors;
 
 #foreach($Import in $Imports)
 import ${Import};
@@ -16,10 +15,9 @@ import ${Import};
  *
  * Remove this comment to suspend class from generation process.
  */
-@Accessors(chain = true)
 @Data
 @Generated
-public class ${ClassName}Impl implements ${ClassName}<${ClassName}Impl> {
+public class ${ClassName}Impl implements ${ClassName} {
 
 #foreach($Attribute in $Attributes)
 	#if (${Attribute.hasPropertyWithValue("suppress-to-string", "true")})

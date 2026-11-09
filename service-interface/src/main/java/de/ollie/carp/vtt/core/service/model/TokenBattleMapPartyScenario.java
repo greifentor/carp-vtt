@@ -9,36 +9,22 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface TokenBattleMapPartyScenario<T> {
-	public UUID getBattleMapId();
+public interface TokenBattleMapPartyScenario {
+	UUID getBattleMapId();
+	int getCounter();
+	int getFieldX();
+	int getFieldY();
+	UUID getId();
+	UUID getPartyId();
+	UUID getScenarioId();
+	UUID getTokenId();
 
-	public int getCounter();
-
-	public int getFieldX();
-
-	public int getFieldY();
-
-	public UUID getId();
-
-	public UUID getPartyId();
-
-	public UUID getScenarioId();
-
-	public UUID getTokenId();
-
-	public T setBattleMapId(UUID battleMapId);
-
-	public T setCounter(int counter);
-
-	public T setFieldX(int fieldX);
-
-	public T setFieldY(int fieldY);
-
-	public T setId(UUID id);
-
-	public T setPartyId(UUID partyId);
-
-	public T setScenarioId(UUID scenarioId);
-
-	public T setTokenId(UUID tokenId);
+	void setBattleMapId(UUID battleMapId);
+	void setCounter(int counter);
+	void setFieldX(int fieldX);
+	void setFieldY(int fieldY);
+	void setId(UUID id);
+	void setPartyId(UUID partyId);
+	void setScenarioId(UUID scenarioId);
+	void setTokenId(UUID tokenId);
 }

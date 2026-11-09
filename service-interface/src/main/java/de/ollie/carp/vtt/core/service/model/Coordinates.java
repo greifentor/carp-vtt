@@ -9,12 +9,10 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface Coordinates<T> extends CoordinatesInfoProvider {
-	public BigDecimal getFieldX();
+public interface Coordinates extends CoordinatesInfoProvider {
+	BigDecimal getFieldX();
+	BigDecimal getFieldY();
 
-	public BigDecimal getFieldY();
-
-	public T setFieldX(BigDecimal fieldX);
-
-	public T setFieldY(BigDecimal fieldY);
+	void setFieldX(BigDecimal fieldX);
+	void setFieldY(BigDecimal fieldY);
 }

@@ -4,19 +4,17 @@ import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
 import lombok.ToString.Exclude;
-import lombok.experimental.Accessors;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
  *
  * Remove this comment to suspend class from generation process.
  */
-@Accessors(chain = true)
 @Data
 @Generated
-public class TokenImpl implements Token<TokenImpl> {
+public class TokenImpl implements Token {
 
-	private UUID id;
+	private UUID id = UUID.randomUUID();
 
 	@Exclude
 	private byte[] image;

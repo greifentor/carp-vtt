@@ -96,8 +96,8 @@ public class ImageRestController implements ImageApi {
 				Party party = partyService
 					.findById(partyId)
 					.orElseThrow(() -> new NoSuchElementException("No party found with id: " + partyId));
-				DndTokenBattleMapPartyScenarioData dtbmps = new DndTokenBattleMapPartyScenarioDataImpl()
-					.setCurrentHitPoints(75);
+				DndTokenBattleMapPartyScenarioData dtbmps = new DndTokenBattleMapPartyScenarioDataImpl();
+				dtbmps.setCurrentHitPoints(75);
 				if (party.getRuleSystem() == RuleSystem.DND) {
 					tokenPaintManager = new DndTokenPaintManager(dtbmps, 75, td.getTokenSize());
 				}

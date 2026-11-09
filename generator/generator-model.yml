@@ -145,10 +145,15 @@ classes:
         enum: true
         type:
           name: RuleSystem
+          properties:
+            - name: project-type
+              value: true
   - name: Scenario
     properties:
       - name: generate-service
         value: true
+      - name: implements
+        value: OwnerProvider
       - name: order
         value: name
       - name: owner-logic
@@ -159,6 +164,7 @@ classes:
         value: true
     attributes:
       - name: id
+        default-value: UUID.randomUUID()
         properties:
           - name: nullable
             value: false
@@ -190,10 +196,15 @@ classes:
     properties:
       - name: implements
         value: TokenInfoProvider
+#      - name: implements
+#        value: OwnerProvider
       - name: order
         value: name
+      - name: owner-logic
+        value: true
     attributes:
       - name: id
+        default-value: UUID.randomUUID()
         properties:
           - name: nullable
             value: false
@@ -223,6 +234,9 @@ classes:
         enum: true
         type:
           name: TokenSize
+          properties:
+            - name: project-type
+              value: true
   - name: TokenBattleMapPartyScenario
     properties:
       - name: suppress-persistence

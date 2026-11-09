@@ -34,12 +34,11 @@ public class TokenDataServiceImpl implements TokenDataService {
 		Token token = tokenService
 			.findById(tp.getTokenId())
 			.orElseThrow(() -> new NoSuchElementException("no token found with id: " + tp.getTokenId()));
+		CoordinatesImpl coordinates = new CoordinatesImpl();
+		coordinates.setFieldX(new BigDecimal(tp.getCoordinateX()));
+		coordinates.setFieldY(new BigDecimal(tp.getCoordinateY()));
 		return new TokenData()
-			.setCoordinates(
-				new CoordinatesImpl()
-					.setFieldX(new BigDecimal(tp.getCoordinateX()))
-					.setFieldY(new BigDecimal(tp.getCoordinateY()))
-			)
+			.setCoordinates(coordinates)
 			.setCounter(tp.getCounter())
 			.setMapTokenId(tp.getId())
 			.setImage(token.getImageContent())

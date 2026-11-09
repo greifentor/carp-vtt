@@ -35,5 +35,5 @@ public class TokenDbo {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_SIZE", nullable = true)
-	private TokenSize tokenSize;
+	private TokenSizeDbo tokenSize;
 }

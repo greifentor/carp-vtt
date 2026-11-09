@@ -33,7 +33,6 @@ import jakarta.inject.Named;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
-import java.util.UUID;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -137,7 +136,7 @@ public class ApplicationFrame
 	public void menuItemSelected(MenuItemIdentifier selectedMenuItem) {
 		if (selectedMenuItem == MenuItemIdentifier.EDIT_BATTLE_MAP) {
 			new BattleMapEditJInternalFrame(
-				new BattleMapImpl().setId(UUID.randomUUID()),
+				new BattleMapImpl(),
 				swingComponentFactory,
 				desktopPane,
 				new BattleMapEditJInternalFrame.Observer() {
@@ -157,7 +156,7 @@ public class ApplicationFrame
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
 			new TokenEditJInternalFrame(
-				new TokenImpl().setId(UUID.randomUUID()),
+				new TokenImpl(),
 				swingComponentFactory,
 				desktopPane,
 				new TokenEditJInternalFrame.Observer() {

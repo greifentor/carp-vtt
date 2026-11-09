@@ -16,7 +16,7 @@ import lombok.Generated;
 @Generated
 @Named
 public interface TokenPersistencePort {
-	Token create(String name, byte[] image, TokenSize tokenSize);
+	Token create(byte[] image, String name, TokenSize tokenSize);
 
 	void deleteById(UUID id);
 

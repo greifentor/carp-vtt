@@ -3,19 +3,17 @@ package de.ollie.carp.vtt.core.service.model;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
-import lombok.experimental.Accessors;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
  *
  * Remove this comment to suspend class from generation process.
  */
-@Accessors(chain = true)
 @Data
 @Generated
-public class ScenarioImpl implements Scenario<ScenarioImpl> {
+public class ScenarioImpl implements Scenario {
 
-	private UUID id;
+	private UUID id = UUID.randomUUID();
 	private String name;
 	private UUID owner;
 }

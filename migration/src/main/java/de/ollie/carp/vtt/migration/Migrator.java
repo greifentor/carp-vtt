@@ -68,22 +68,27 @@ class Migrator {
 	}
 
 	private Token toToken(ImageDTO image) {
-		return new TokenImpl()
-			.setId(UUID.fromString(image.getGlobalId()))
-			.setImage(image.getImage())
-			.setName(image.getName())
-			.setTokenSize(mapToTokenSize(image.getWidth()));
+		Token token = new TokenImpl();
+		token.setId(UUID.fromString(image.getGlobalId()));
+		token.setImage(image.getImage());
+		token.setName(image.getName());
+		token.setTokenSize(mapToTokenSize(image.getWidth()));
+		return token;
 	}
 
 	private DndTokenData toDndTokenData(DndDataDTO dndDataDto, UUID id) {
-		return new DndTokenDataImpl().setHitPoints(dndDataDto.getMaxHitpoints()).setId(id);
+		DndTokenData dndTokenData = new DndTokenDataImpl();
+		dndTokenData.setHitPoints(dndDataDto.getMaxHitpoints());
+		dndTokenData.setId(id);
+		return dndTokenData;
 	}
 
 	private BattleMap toBattleMap(ImageDTO image) {
-		return new BattleMapImpl()
-			.setId(UUID.fromString(image.getGlobalId()))
-			.setImageContent(image.getImage())
-			.setName(image.getName());
+		BattleMap battleMap = new BattleMapImpl();
+		battleMap.setId(UUID.fromString(image.getGlobalId()));
+		battleMap.setImageContent(image.getImage());
+		battleMap.setName(image.getName());
+		return battleMap;
 	}
 
 	private TokenSize mapToTokenSize(int width) {

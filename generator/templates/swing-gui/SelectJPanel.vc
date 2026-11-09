@@ -117,23 +117,24 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 
 	@Override
 	protected ${ClassName} createNewObject() {
-		return new ${ClassName}Impl()
-				.setId(UUID.randomUUID())
+		${ClassName} model = new ${ClassName}Impl();
+		model.setId(UUID.randomUUID());
 		#foreach($Attribute in ${Class.getAttributesWithPropertyNotSet("id")})
-			#if($Attribute.getTypeName() == "LocalDate")
-				.set${Attribute.getNameCamelCase()}(LocalDate.now())
-			#elseif($Attribute.getTypeName() == "LocalTime")
-				.set${Attribute.getNameCamelCase()}(LocalTime.now())
-			#elseif($Attribute.getTypeName() == "String")
-				.set${Attribute.getNameCamelCase()}("")
-			#elseif($Attribute.getTypeName() == "boolean")
-				.set${Attribute.getNameCamelCase()}(#if(${Attribute.getDefaultValue()})${Attribute.getDefaultValue()} #else false#end)
-			#elseif($Attribute.getTypeName() == "int")
-				.set${Attribute.getNameCamelCase()}(#if(${Attribute.getDefaultValue()})${Attribute.getDefaultValue()} #else 0#end)
-			#else
-				.set${Attribute.getNameCamelCase()}(#if(${Attribute.getDefaultValue()})${Attribute.getDefaultValue()} #else null#end)
-			#end
-		#end;
+		#if($Attribute.getTypeName() == "LocalDate")
+		model.set${Attribute.getNameCamelCase()}(LocalDate.now());
+		#elseif($Attribute.getTypeName() == "LocalTime")
+		model.set${Attribute.getNameCamelCase()}(LocalTime.now());
+		#elseif($Attribute.getTypeName() == "String")
+		model.set${Attribute.getNameCamelCase()}("");
+		#elseif($Attribute.getTypeName() == "boolean")
+		model.set${Attribute.getNameCamelCase()}(#if(${Attribute.getDefaultValue()})${Attribute.getDefaultValue()} #else false#end);
+		#elseif($Attribute.getTypeName() == "int")
+		model.set${Attribute.getNameCamelCase()}(#if(${Attribute.getDefaultValue()})${Attribute.getDefaultValue()} #else 0#end);
+		#else
+		model.set${Attribute.getNameCamelCase()}(#if(${Attribute.getDefaultValue()})${Attribute.getDefaultValue()} #else null#end);
+		#end
+		#end
+		return model;
 	}
 
 	@Override

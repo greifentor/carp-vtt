@@ -9,16 +9,12 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface BattleMap<T> {
-	public UUID getId();
+public interface BattleMap {
+	UUID getId();
+	byte[] getImageContent();
+	String getName();
 
-	public byte[] getImageContent();
-
-	public String getName();
-
-	public T setId(UUID id);
-
-	public T setImageContent(byte[] imageContent);
-
-	public T setName(String name);
+	void setId(UUID id);
+	void setImageContent(byte[] imageContent);
+	void setName(String name);
 }

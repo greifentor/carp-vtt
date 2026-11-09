@@ -125,10 +125,13 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
-			TokenData data = new TokenDataImpl()
-				.setCoordinates(new CoordinatesImpl().setFieldX(FIELD_X).setFieldY(FIELD_Y))
-				.setId(ID)
-				.setToken(token);
+			Coordinates coordinates = new CoordinatesImpl();
+			coordinates.setFieldX(FIELD_X);
+			coordinates.setFieldY(FIELD_Y);
+			TokenData data = new TokenDataImpl();
+			data.setCoordinates(coordinates);
+			data.setId(ID);
+			data.setToken(token);
 			List<TokenData> expected = List.of(data);
 			when(battleMapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(battleMapDbo));
 			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));

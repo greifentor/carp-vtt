@@ -37,7 +37,9 @@ class TokenInfoMapperTest {
 		@Test
 		void returnsACorrectTokenInfo() {
 			// Prepare
-			Coordinates coordinates = new CoordinatesImpl().setFieldX(FIELD_X).setFieldY(FIELD_Y);
+			Coordinates coordinates = new CoordinatesImpl();
+			coordinates.setFieldX(FIELD_X);
+			coordinates.setFieldY(FIELD_Y);
 			TokenInfoProvider token = mock(TokenInfoProvider.class);
 			when(token.getImage()).thenReturn(IMAGE);
 			when(token.getTokenSize()).thenReturn(TOKEN_SIZE);

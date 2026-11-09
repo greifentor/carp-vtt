@@ -9,24 +9,16 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface DndTokenBattleMapPartyScenarioData<T> {
-	public int getCurrentHitPoints();
+public interface DndTokenBattleMapPartyScenarioData {
+	int getCurrentHitPoints();
+	int getDeathSavingThrowsFail();
+	int getDeathSavingThrowsSuccess();
+	UUID getId();
+	int getTemporaryHitPoints();
 
-	public int getDeathSavingThrowsFail();
-
-	public int getDeathSavingThrowsSuccess();
-
-	public UUID getId();
-
-	public int getTemporaryHitPoints();
-
-	public T setCurrentHitPoints(int currentHitPoints);
-
-	public T setDeathSavingThrowsFail(int deathSavingThrowsFail);
-
-	public T setDeathSavingThrowsSuccess(int deathSavingThrowsSuccess);
-
-	public T setId(UUID id);
-
-	public T setTemporaryHitPoints(int temporaryHitPoints);
+	void setCurrentHitPoints(int currentHitPoints);
+	void setDeathSavingThrowsFail(int deathSavingThrowsFail);
+	void setDeathSavingThrowsSuccess(int deathSavingThrowsSuccess);
+	void setId(UUID id);
+	void setTemporaryHitPoints(int temporaryHitPoints);
 }

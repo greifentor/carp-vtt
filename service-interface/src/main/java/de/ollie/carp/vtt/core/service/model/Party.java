@@ -9,16 +9,12 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface Party<T> {
-	public UUID getId();
+public interface Party {
+	UUID getId();
+	String getName();
+	RuleSystem getRuleSystem();
 
-	public String getName();
-
-	public RuleSystem getRuleSystem();
-
-	public T setId(UUID id);
-
-	public T setName(String name);
-
-	public T setRuleSystem(RuleSystem ruleSystem);
+	void setId(UUID id);
+	void setName(String name);
+	void setRuleSystem(RuleSystem ruleSystem);
 }

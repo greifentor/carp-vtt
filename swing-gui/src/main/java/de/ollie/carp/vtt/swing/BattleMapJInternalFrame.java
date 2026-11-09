@@ -54,11 +54,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BattleMapJInternalFrame extends JInternalFrame implements ActionListener, MapPanel.Observer {
 
-	private static final Party DUMMY_PARTY = new PartyImpl()
-		.setId(UUID.fromString("d95b7312-5669-4ee5-9299-4516034f46d8"))
-		.setRuleSystem(RuleSystem.NONE);
-	private static final Scenario DUMMY_SCENARIO = new ScenarioImpl()
-		.setId(UUID.fromString("60d8b44d-f60f-4b04-b9bb-133b3335db0f"));
+	private static final Party DUMMY_PARTY = new PartyImpl();
+	private static final Scenario DUMMY_SCENARIO = new ScenarioImpl();
 
 	private final JDesktopPane desktopPane;
 	private final BattleMap battleMap;
@@ -82,6 +79,9 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private transient TokenMap tokenMap = new TokenMap();
 
 	public BattleMapJInternalFrame prepare() {
+		DUMMY_PARTY.setId(UUID.fromString("d95b7312-5669-4ee5-9299-4516034f46d8"));
+		DUMMY_PARTY.setRuleSystem(RuleSystem.NONE);
+		DUMMY_SCENARIO.setId(UUID.fromString("60d8b44d-f60f-4b04-b9bb-133b3335db0f"));
 		desktopPane.add(this);
 		setClosable(true);
 		setIconifiable(true);

@@ -76,14 +76,18 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	private List<TokenData> map(List<TokenMapPartyScenarioDbo> dbos) {
 		return dbos
 			.stream()
-			.map(dbo ->
-				new TokenDataImpl()
-					.setCoordinates(new CoordinatesImpl().setFieldX(dbo.getFieldX()).setFieldY(dbo.getFieldY()))
-					.setCounter(dbo.getCounter())
-					.setId(dbo.getId())
-					.setToken(tokenDboMapper.toModel(dbo.getToken()))
-			)
-			.map(impl -> (TokenData) impl)
+			.map(dbo -> {
+				Coordinates coordinates = new CoordinatesImpl();
+				coordinates.setFieldX(dbo.getFieldX());
+				coordinates.setFieldY(dbo.getFieldY());
+				TokenData tokenData = new TokenDataImpl();
+				tokenData.setCoordinates(coordinates);
+				tokenData.setCounter(dbo.getCounter());
+				tokenData.setId(dbo.getId());
+				tokenData.setToken(tokenDboMapper.toModel(dbo.getToken()));
+				return tokenData;
+			})
+			.map(impl -> impl)
 			.toList();
 	}
 

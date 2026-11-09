@@ -41,7 +41,11 @@ public class DndTokenBattleMapPartyScenarioServiceImpl implements DndTokenBattle
 			);
 		return dndTokenBattleMapPartyScenarioDataPersistencePort
 			.findById(tbmpsd.getId())
-			.orElseGet(() -> new DndTokenBattleMapPartyScenarioDataImpl().setId(tbmpsd.getId()));
+			.orElseGet(() -> {
+				DndTokenBattleMapPartyScenarioDataImpl model = new DndTokenBattleMapPartyScenarioDataImpl();
+				model.setId(tbmpsd.getId());
+				return model;
+			});
 	}
 
 	@Override

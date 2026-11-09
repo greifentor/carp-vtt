@@ -9,16 +9,12 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface Scenario<T> {
-	public UUID getId();
+public interface Scenario extends OwnerProvider {
+	UUID getId();
+	String getName();
+	UUID getOwner();
 
-	public String getName();
-
-	public UUID getOwner();
-
-	public T setId(UUID id);
-
-	public T setName(String name);
-
-	public T setOwner(UUID owner);
+	void setId(UUID id);
+	void setName(String name);
+	void setOwner(UUID owner);
 }

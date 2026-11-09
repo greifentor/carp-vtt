@@ -14,6 +14,9 @@ class CoordinatesToFieldConverter {
 	Coordinates getFieldCoordinates(int x, int y) {
 		String fieldX = ((x - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
 		String fieldY = ((y - OFFSET_IN_PIXELS) / FIELD_SIZE_IN_PIXELS) + ".0";
-		return new CoordinatesImpl().setFieldX(new BigDecimal(fieldX)).setFieldY(new BigDecimal(fieldY));
+		Coordinates coordinates = new CoordinatesImpl();
+		coordinates.setFieldX(new BigDecimal(fieldX));
+		coordinates.setFieldY(new BigDecimal(fieldY));
+		return coordinates;
 	}
 }

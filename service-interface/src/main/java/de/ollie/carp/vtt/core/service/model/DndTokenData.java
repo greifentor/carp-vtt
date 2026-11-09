@@ -9,12 +9,10 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface DndTokenData<T> {
-	public int getHitPoints();
+public interface DndTokenData {
+	int getHitPoints();
+	UUID getId();
 
-	public UUID getId();
-
-	public T setHitPoints(int hitPoints);
-
-	public T setId(UUID id);
+	void setHitPoints(int hitPoints);
+	void setId(UUID id);
 }
