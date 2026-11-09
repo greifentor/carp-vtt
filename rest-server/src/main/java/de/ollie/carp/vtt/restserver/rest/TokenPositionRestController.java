@@ -1,7 +1,6 @@
 package de.ollie.carp.vtt.restserver.rest;
 
 import de.ollie.carp.vtt.restserver.core.service.TokenPositionService;
-import de.ollie.carp.vtt.restserver.core.service.configuration.AccessRightConfiguration;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import de.ollie.carp.vtt.restserver.rest.api.TokenPositionApi;
 import de.ollie.carp.vtt.restserver.rest.mapper.TokenPositionDtoMapper;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TokenPositionRestController implements TokenPositionApi {
 
-	private final AccessRightConfiguration accessRightConfiguration;
 	private final TokenPositionDtoMapper tokenPositionDtoMapper;
 	private final TokenPositionService tokenPositionService;
 

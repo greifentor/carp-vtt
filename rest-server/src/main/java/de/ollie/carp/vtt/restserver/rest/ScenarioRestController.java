@@ -1,6 +1,5 @@
 package de.ollie.carp.vtt.restserver.rest;
 
-import de.ollie.carp.vtt.restserver.core.service.configuration.AccessRightConfiguration;
 import de.ollie.carp.vtt.restserver.core.service.model.Scenario;
 import de.ollie.carp.vtt.restserver.rest.api.ScenarioApi;
 import de.ollie.carp.vtt.restserver.rest.mapper.ScenarioDtoMapper;
@@ -19,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class ScenarioRestController implements ScenarioApi {
 
-	private final AccessRightConfiguration accessRightConfiguration;
 	private final ScenarioDtoMapper dtoMapper;
 	private final de.ollie.carp.vtt.restserver.core.service.ScenarioService service;
 

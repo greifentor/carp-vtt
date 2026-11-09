@@ -41,6 +41,7 @@ class JwtServiceImplTest {
 		// Prepare
 		UUID userId = UUID.randomUUID();
 		String token = jwtService.generateToken(userId, 10, "mein-super-geheimer-und-langer-key-der-64-byte-haben-muss");
+		System.out.println(token);
 		// Run
 		String payloadJson = new String(java.util.Base64.getUrlDecoder().decode(token.split("\\.")[1]));
 		// Check

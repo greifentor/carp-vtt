@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import de.ollie.carp.vtt.restserver.core.service.UserService;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,13 +19,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 
 @ExtendWith(MockitoExtension.class)
-class BearerCheckerTest {
+class BearerTokenManagerTest {
 
 	@Mock
 	private HttpServletRequest request;
 
+	@Mock
+	private UserService userService;
+
 	@InjectMocks
-	private BearerChecker unitUnderTest;
+	private BearerTokenManager unitUnderTest;
 
 	@Nested
 	class hasBearer_HttpServletRequest {
@@ -52,7 +57,7 @@ class BearerCheckerTest {
 		@Test
 		void returnsTrue_whenRequestHasABearerAuthorizationElement() {
 			// Prepare
-			when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BearerChecker.BEARER_PREFIX + ";op");
+			when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BearerTokenManager.BEARER_PREFIX + ";op");
 			// Run & Check
 			assertTrue(unitUnderTest.hasBearer(request));
 		}
@@ -86,9 +91,23 @@ class BearerCheckerTest {
 		void returnsTheToken_whenRequestHasABearerAuthorizationElement() {
 			// Prepare
 			String token = "token";
-			when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BearerChecker.BEARER_PREFIX + token);
+			when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BearerTokenManager.BEARER_PREFIX + token);
 			// Run & Check
 			assertEquals(token, unitUnderTest.getToken(request));
+		}
+	}
+
+	@Nested
+	class getUserId_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asToken() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getUserId(null));
+		}
+
+		@Test
+		void throwsAnException_passingAnInvalidToken() {
+			assertThrows(MalformedJwtException.class, () -> unitUnderTest.getUserId(";op"));
 		}
 	}
 }
