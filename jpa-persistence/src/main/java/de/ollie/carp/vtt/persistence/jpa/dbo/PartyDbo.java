@@ -32,5 +32,5 @@ public class PartyDbo {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "RULE_SYSTEM", nullable = true)
-	private RuleSystemDbo ruleSystem;
+	private RuleSystem ruleSystem;
 }

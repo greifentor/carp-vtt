@@ -17,8 +17,9 @@ import lombok.experimental.Accessors;
 public class BattleMapImpl implements BattleMap<BattleMapImpl> {
 
 	private UUID id;
-	private String name;
 
 	@Exclude
 	private byte[] imageContent;
+
+	private String name;
 }

@@ -21,10 +21,6 @@ import lombok.experimental.Accessors;
 @Table(name = "DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA")
 public class DndTokenBattleMapPartyScenarioDataDbo {
 
-	@Id
-	@Column(name = "ID", nullable = false)
-	private UUID id;
-
 	@Column(name = "CURRENT_HIT_POINTS", nullable = false)
 	private int currentHitPoints;
 
@@ -33,6 +29,10 @@ public class DndTokenBattleMapPartyScenarioDataDbo {
 
 	@Column(name = "DEATH_SAVING_THROWS_SUCCESS", nullable = false)
 	private int deathSavingThrowsSuccess;
+
+	@Id
+	@Column(name = "ID", nullable = false)
+	private UUID id;
 
 	@Column(name = "TEMPORARY_HIT_POINTS", nullable = false)
 	private int temporaryHitPoints;

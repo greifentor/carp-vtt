@@ -16,9 +16,9 @@ import lombok.experimental.Accessors;
 public class DndTokenBattleMapPartyScenarioDataImpl
 	implements DndTokenBattleMapPartyScenarioData<DndTokenBattleMapPartyScenarioDataImpl> {
 
-	private UUID id;
 	private int currentHitPoints;
 	private int deathSavingThrowsFail;
 	private int deathSavingThrowsSuccess;
+	private UUID id;
 	private int temporaryHitPoints;
 }

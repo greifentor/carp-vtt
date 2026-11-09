@@ -25,9 +25,9 @@ public class BattleMapDbo {
 	@Column(name = "ID", nullable = false)
 	private UUID id;
 
-	@Column(name = "NAME", nullable = false)
-	private String name;
-
 	@Column(name = "IMAGE_CONTENT", nullable = true)
 	private byte[] imageContent;
+
+	@Column(name = "NAME", nullable = false)
+	private String name;
 }

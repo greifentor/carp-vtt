@@ -10,23 +10,23 @@ import lombok.Generated;
  */
 @Generated
 public interface DndTokenBattleMapPartyScenarioData<T> {
-	public UUID getId();
-
 	public int getCurrentHitPoints();
 
 	public int getDeathSavingThrowsFail();
 
 	public int getDeathSavingThrowsSuccess();
 
-	public int getTemporaryHitPoints();
+	public UUID getId();
 
-	public T setId(UUID id);
+	public int getTemporaryHitPoints();
 
 	public T setCurrentHitPoints(int currentHitPoints);
 
 	public T setDeathSavingThrowsFail(int deathSavingThrowsFail);
 
 	public T setDeathSavingThrowsSuccess(int deathSavingThrowsSuccess);
+
+	public T setId(UUID id);
 
 	public T setTemporaryHitPoints(int temporaryHitPoints);
 }

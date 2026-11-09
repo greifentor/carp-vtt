@@ -12,13 +12,13 @@ import lombok.Generated;
 public interface BattleMap<T> {
 	public UUID getId();
 
-	public String getName();
-
 	public byte[] getImageContent();
+
+	public String getName();
 
 	public T setId(UUID id);
 
-	public T setName(String name);
-
 	public T setImageContent(byte[] imageContent);
+
+	public T setName(String name);
 }

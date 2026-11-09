@@ -25,7 +25,7 @@ public class BattleMapPersistenceJpaAdapter implements BattleMapPersistencePort 
 	private final BattleMapDboRepository repository;
 
 	@Override
-	public BattleMap create(String name, byte[] imageContent) {
+	public BattleMap create(byte[] imageContent, String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

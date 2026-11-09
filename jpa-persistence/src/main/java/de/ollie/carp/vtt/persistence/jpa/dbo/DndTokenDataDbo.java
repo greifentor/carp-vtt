@@ -21,10 +21,10 @@ import lombok.experimental.Accessors;
 @Table(name = "DND_TOKEN_DATA")
 public class DndTokenDataDbo {
 
+	@Column(name = "HIT_POINTS", nullable = false)
+	private int hitPoints;
+
 	@Id
 	@Column(name = "ID", nullable = false)
 	private UUID id;
-
-	@Column(name = "HIT_POINTS", nullable = false)
-	private int hitPoints;
 }

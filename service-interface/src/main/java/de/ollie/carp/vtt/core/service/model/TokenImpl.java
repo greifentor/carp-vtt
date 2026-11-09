@@ -17,10 +17,10 @@ import lombok.experimental.Accessors;
 public class TokenImpl implements Token<TokenImpl> {
 
 	private UUID id;
-	private String name;
 
 	@Exclude
 	private byte[] image;
 
+	private String name;
 	private TokenSize tokenSize;
 }

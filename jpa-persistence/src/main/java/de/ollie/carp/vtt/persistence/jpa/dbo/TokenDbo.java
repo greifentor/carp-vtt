@@ -27,13 +27,13 @@ public class TokenDbo {
 	@Column(name = "ID", nullable = false)
 	private UUID id;
 
-	@Column(name = "NAME", nullable = false)
-	private String name;
-
 	@Column(name = "IMAGE", nullable = true)
 	private byte[] image;
 
+	@Column(name = "NAME", nullable = false)
+	private String name;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_SIZE", nullable = true)
-	private TokenSizeDbo tokenSize;
+	private TokenSize tokenSize;
 }

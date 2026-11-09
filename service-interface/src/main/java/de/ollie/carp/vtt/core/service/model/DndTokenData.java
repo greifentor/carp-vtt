@@ -10,11 +10,11 @@ import lombok.Generated;
  */
 @Generated
 public interface DndTokenData<T> {
-	public UUID getId();
-
 	public int getHitPoints();
 
-	public T setId(UUID id);
+	public UUID getId();
 
 	public T setHitPoints(int hitPoints);
+
+	public T setId(UUID id);
 }

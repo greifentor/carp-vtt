@@ -12,17 +12,17 @@ import lombok.Generated;
 public interface Token<T> extends TokenInfoProvider {
 	public UUID getId();
 
-	public String getName();
-
 	public byte[] getImage();
+
+	public String getName();
 
 	public TokenSize getTokenSize();
 
 	public T setId(UUID id);
 
-	public T setName(String name);
-
 	public T setImage(byte[] image);
+
+	public T setName(String name);
 
 	public T setTokenSize(TokenSize tokenSize);
 }

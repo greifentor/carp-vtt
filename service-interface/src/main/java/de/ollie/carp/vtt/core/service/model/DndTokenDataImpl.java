@@ -15,6 +15,6 @@ import lombok.experimental.Accessors;
 @Generated
 public class DndTokenDataImpl implements DndTokenData<DndTokenDataImpl> {
 
-	private UUID id;
 	private int hitPoints;
+	private UUID id;
 }
