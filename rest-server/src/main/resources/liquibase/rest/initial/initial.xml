@@ -100,6 +100,11 @@
         </addColumn>
     </changeSet>
     <changeSet author="dm-comp" id="Add-Table-SCENARIO" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SCENARIO"/>
+            </not>
+        </preConditions>
         <createTable tableName="SCENARIO">
             <column name="ID" type="VARCHAR(40)">
                 <constraints nullable="false"/>
@@ -108,7 +113,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addPrimaryKey columnNames="ID" schemaName="carpvttws" tableName="SCENARIO"/>
+        <addPrimaryKey columnNames="ID" tableName="SCENARIO"/>
     </changeSet>
         <changeSet author="dm-comp" id="Add-Table-USER-Add-Column-OWNER-to-Table-SCENARIO" runInTransaction="true">
         <createTable tableName="USER">
@@ -126,5 +131,10 @@
         <addColumn tableName="SCENARIO">
             <column name="OWNER" type="UUID"/>
         </addColumn>
+    </changeSet>
+    <changeSet author="dm-comp" id="Change-Type-of-ID-Columns-to-UUID">
+        <modifyDataType tableName="BATTLE_MAP" columnName="ID" newDataType="UUID"/>
+        <modifyDataType tableName="SCENARIO" columnName="ID" newDataType="UUID"/>
+        <modifyDataType tableName="TOKEN" columnName="ID" newDataType="UUID"/>
     </changeSet>
 </databaseChangeLog>
