@@ -157,7 +157,7 @@ classes:
       - name: order
         value: name
       - name: owner-logic
-        value: true
+        value: private-only
       - name: rest-pushes
         value: true
       - name: swing-gui
