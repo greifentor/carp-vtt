@@ -1,6 +1,9 @@
 package ${PackageName};
 
 import ${Properties.get("core-service-package")}.${ClassName}Service;
+#if ($Class.hasPropertyWithName("owner-logic"))
+import de.ollie.carp.vtt.swing.UserConfiguration;
+#end
 import ${Properties.get("core-model-package")}.${ClassName};
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
 import ${Properties.get("core-model-package")}.$Attribute.getTypeClassType().getName();
@@ -26,6 +29,10 @@ import ${Import};
 @Generated
 public class ${ClassName}EditJInternalFrame extends AbstractEditJInternalFrame<${ClassName}> {
 
+	#if ($Class.hasPropertyWithName("owner-logic"))
+	private final UserConfiguration userConfiguration;
+
+	#end
 	public ${ClassName}EditJInternalFrame(
 		${ClassName} toEdit,
 		#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
@@ -34,18 +41,23 @@ public class ${ClassName}EditJInternalFrame extends AbstractEditJInternalFrame<$
 		#end
 		EditDialogComponentFactory editDialogComponentFactory,
 		Observer<${ClassName}> observer,
-		JDesktopPane desktopPane
+		JDesktopPane desktopPane#if ($Class.hasPropertyWithName("owner-logic")),
+		UserConfiguration userConfiguration#end
 	) {
 		super(desktopPane, "${Class.getNameSeparated(" ")}", toEdit, editDialogComponentFactory, observer, Map.of(
 		#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
 		${ClassName}EditJPanel.${Attribute.getTypeClassType().getNameSeparated("_").toUpperCase()}_ITEM_PROVIDER_ID, ${Attribute.getTypeClassType().getNameAsAttribute()}s#if($foreach.hasNext), #end
 		#end
 		));
+		#if ($Class.hasPropertyWithName("owner-logic"))
+		this.userConfiguration = userConfiguration;
+		#end
+		prepare();
 	}
 
 	@Override
 	protected JPanel createEditorPanel(${ClassName} toEdit, Map<String, ItemProvider<?>> itemProviders) {
-		editPanel = new ${ClassName}EditJPanel(toEdit, itemProviders);
+		editPanel = new ${ClassName}EditJPanel(toEdit, itemProviders#if ($Class.hasPropertyWithName("owner-logic")), userConfiguration#end);
 		return editPanel;
 	}
 }

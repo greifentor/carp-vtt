@@ -6,6 +6,9 @@ import ${Properties.get("core-service-package")}.${ClassName}Service;
 import ${Properties.get("core-service-package")}.${TypeClassName}Service;
 #end
 import ${Properties.get("core-model-package")}.${ClassName};
+#if ($Class.hasPropertyWithName("owner-logic"))
+import de.ollie.carp.vtt.swing.UserConfiguration;
+#end
 import ${Properties.get("swing-gui-package")}.component.EditDialogComponentFactory;
 import ${Properties.get("swing-gui-package")}.component.select.AbstractSelectJInternalFrame;
 import ${Properties.get("swing-gui-package")}.component.select.AbstractSelectJPanel;
@@ -30,6 +33,9 @@ public class ${ClassName}SelectJInternalFrame
 	private static final String CLASS_NAME = "${ClassName}";
 
 	private final ${ClassName}Service ${ClassNameAsAttribute}Service;
+	#if ($Class.hasPropertyWithName("owner-logic"))
+	private final UserConfiguration userConfiguration;
+	#end
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
 #set($TypeClassName = $Attribute.getTypeClassType())
 	private final ${TypeClassName.getName()}Service ${TypeClassName.getNameAsAttribute()}Service;
@@ -42,10 +48,14 @@ public class ${ClassName}SelectJInternalFrame
 		${TypeClassName.getName()}Service ${TypeClassName.getNameAsAttribute()}Service,
 #end
 		JDesktopPane desktopPane,
-		EditDialogComponentFactory editDialogComponentFactory
+		EditDialogComponentFactory editDialogComponentFactory#if ($Class.hasPropertyWithName("owner-logic")),
+		UserConfiguration userConfiguration#end
 	) {
 		super(desktopPane, CLASS_NAME, editDialogComponentFactory);
 		this.${ClassNameAsAttribute}Service = ${ClassNameAsAttribute}Service;
+		#if ($Class.hasPropertyWithName("owner-logic"))
+		this.userConfiguration = userConfiguration;
+		#end
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
 #set($TypeClassName = $Attribute.getTypeClassType())
 		this.${TypeClassName.getNameAsAttribute()}Service = ${TypeClassName.getNameAsAttribute()}Service;
@@ -64,6 +74,7 @@ public class ${ClassName}SelectJInternalFrame
 				CLASS_NAME,
 				desktopPane,
 				editDialogComponentFactory,
-				this);
+				this#if ($Class.hasPropertyWithName("owner-logic")),
+				userConfiguration#end);
 	}
 }

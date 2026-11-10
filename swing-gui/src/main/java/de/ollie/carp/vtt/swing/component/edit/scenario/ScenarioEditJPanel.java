@@ -10,6 +10,7 @@ import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
 import java.awt.GridLayout;
 import java.util.Map;
+import java.util.UUID;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.Generated;

@@ -73,21 +73,17 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 		Scenario model = new ScenarioImpl();
 		model.setId(UUID.randomUUID());
 		model.setName("");
-		System.out.println("################# 3");
-		model.setOwner(userConfiguration.getUserId());
-		System.out.println("################# 4");
+		model.setOwner(null);
 		return model;
 	}
 
 	@Override
 	protected void delete(Scenario toDelete) {
-		scenarioService.deleteScenario(toDelete.getId());
-		scenarioService.pushDeleteScenario(toDelete.getId());
+		scenarioService.deleteAndPushDeleteScenario(toDelete.getId());
 	}
 
 	@Override
 	protected void save(Scenario toSave) {
-		scenarioService.updateScenario(toSave);
-		scenarioService.pushScenario(toSave);
+		scenarioService.updateAndPushScenario(toSave);
 	}
 }

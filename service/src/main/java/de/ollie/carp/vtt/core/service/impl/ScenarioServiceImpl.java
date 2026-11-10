@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -57,5 +58,19 @@ class ScenarioServiceImpl implements ScenarioService {
 	@Override
 	public void pushDeleteScenario(UUID idToDelete) {
 		scenarioWebPort.deleteScenario(idToDelete);
+	}
+
+	@Override
+	@Transactional
+	public void updateAndPushScenario(Scenario toSave) {
+		scenarioWebPort.pushScenario(toSave);
+		scenarioPersistencePort.update(toSave);
+	}
+
+	@Override
+	@Transactional
+	public void deleteAndPushDeleteScenario(UUID idToDelete) {
+		scenarioWebPort.deleteScenario(idToDelete);
+		scenarioPersistencePort.deleteById(idToDelete);
 	}
 }
