@@ -2,11 +2,11 @@ package de.ollie.carp.vtt.swing.component.select.scenario;
 
 import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.model.Scenario;
+import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
-import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
 
@@ -23,19 +23,29 @@ public class ScenarioSelectJInternalFrame
 	private static final String CLASS_NAME = "Scenario";
 
 	private final ScenarioService scenarioService;
+	private final UserConfiguration userConfiguration;
 
 	public ScenarioSelectJInternalFrame(
 		ScenarioService scenarioService,
 		JDesktopPane desktopPane,
-		EditDialogComponentFactory editDialogComponentFactory
+		EditDialogComponentFactory editDialogComponentFactory,
+		UserConfiguration userConfiguration
 	) {
 		super(desktopPane, CLASS_NAME, editDialogComponentFactory);
 		this.scenarioService = scenarioService;
+		this.userConfiguration = userConfiguration;
 		finishConstruct();
 	}
 
 	@Override
 	protected AbstractSelectJPanel<Scenario> createSelectPanel() {
-		return new ScenarioSelectJPanel(scenarioService, CLASS_NAME, desktopPane, editDialogComponentFactory, this);
+		return new ScenarioSelectJPanel(
+			scenarioService,
+			CLASS_NAME,
+			desktopPane,
+			editDialogComponentFactory,
+			this,
+			userConfiguration
+		);
 	}
 }

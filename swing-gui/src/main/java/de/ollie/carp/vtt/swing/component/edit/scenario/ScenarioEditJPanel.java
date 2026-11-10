@@ -5,11 +5,11 @@ import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
+import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
 import java.awt.GridLayout;
 import java.util.Map;
-import java.util.UUID;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.Generated;
@@ -22,10 +22,18 @@ import lombok.Generated;
 @Generated
 public class ScenarioEditJPanel extends AbstractEditPanel<Scenario> {
 
+	private final UserConfiguration userConfiguration;
+
 	private JTextField textFieldName;
 
-	public ScenarioEditJPanel(Scenario toEdit, Map<String, ItemProvider<?>> itemProviders) {
+	public ScenarioEditJPanel(
+		Scenario toEdit,
+		Map<String, ItemProvider<?>> itemProviders,
+		UserConfiguration userConfiguration
+	) {
 		super(toEdit, itemProviders);
+		this.userConfiguration = userConfiguration;
+		prepare();
 	}
 
 	@Override
@@ -46,6 +54,7 @@ public class ScenarioEditJPanel extends AbstractEditPanel<Scenario> {
 		Scenario model = new ScenarioImpl();
 		model.setId(toEdit.getId());
 		model.setName(textFieldName.getText());
+		model.setOwner(userConfiguration.getUserId());
 		return model;
 	}
 }

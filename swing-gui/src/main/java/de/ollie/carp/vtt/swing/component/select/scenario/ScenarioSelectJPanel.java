@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.swing.component.select.scenario;
 import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
+import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.edit.scenario.ScenarioEditJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
@@ -22,16 +23,19 @@ import lombok.Generated;
 public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> implements SelectionPanelObserver {
 
 	private final ScenarioService scenarioService;
+	private final UserConfiguration userConfiguration;
 
 	public ScenarioSelectJPanel(
 		ScenarioService scenarioService,
 		String className,
 		JDesktopPane desktopPane,
 		EditDialogComponentFactory editDialogComponentFactory,
-		SelectionPanelObserver observer
+		SelectionPanelObserver observer,
+		UserConfiguration userConfiguration
 	) {
 		super(desktopPane, className + "s", editDialogComponentFactory, observer);
 		this.scenarioService = scenarioService;
+		this.userConfiguration = userConfiguration;
 		updateTableSelection();
 	}
 
@@ -55,7 +59,13 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 
 	@Override
 	protected void createEditInternalFrame(Scenario selected) {
-		new ScenarioEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane());
+		new ScenarioEditJInternalFrame(
+			selected,
+			getEditDialogComponentFactory(),
+			this,
+			getDesktopPane(),
+			userConfiguration
+		);
 	}
 
 	@Override
@@ -63,7 +73,9 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 		Scenario model = new ScenarioImpl();
 		model.setId(UUID.randomUUID());
 		model.setName("");
-		model.setOwner(null);
+		System.out.println("################# 3");
+		model.setOwner(userConfiguration.getUserId());
+		System.out.println("################# 4");
 		return model;
 	}
 

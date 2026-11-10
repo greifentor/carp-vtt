@@ -100,6 +100,9 @@ public class ApplicationFrame
 	@Inject
 	private UuidService uuidService;
 
+	@Inject
+	private UserConfiguration userConfiguration;
+
 	private JMenuBar menuBar;
 	private JDesktopPane desktopPane;
 
@@ -175,7 +178,8 @@ public class ApplicationFrame
 				.prepare()
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_SCENARIO) {
-			new ScenarioSelectJInternalFrame(scenarioService, desktopPane, editDialogComponentFactory);
+			System.out.println("$$$$$ " + userConfiguration);
+			new ScenarioSelectJInternalFrame(scenarioService, desktopPane, editDialogComponentFactory, userConfiguration);
 		} else if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {

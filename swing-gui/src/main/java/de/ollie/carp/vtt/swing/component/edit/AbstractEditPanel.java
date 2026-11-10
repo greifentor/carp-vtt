@@ -24,11 +24,17 @@ import javax.swing.border.EmptyBorder;
 
 public abstract class AbstractEditPanel<T> extends JPanel implements Editor<T> {
 
-	protected T toEdit;
+	protected final T toEdit;
+
+	protected final Map<String, ItemProvider<?>> itemProviders;
 
 	public AbstractEditPanel(T toEdit, Map<String, ItemProvider<?>> itemProviders) {
 		super(new BorderLayout(HGAP, VGAP));
+		this.itemProviders = itemProviders;
 		this.toEdit = toEdit;
+	}
+
+	protected void prepare() {
 		setBorder(new EmptyBorder(VGAP, HGAP, VGAP, HGAP));
 		JPanel psub = new JPanel(new BorderLayout(HGAP, VGAP));
 		psub.add(createLabelPanel(toEdit), BorderLayout.WEST);

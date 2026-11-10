@@ -31,7 +31,10 @@ public abstract class AbstractEditJInternalFrame<T> extends JInternalFrame {
 	@Getter
 	protected AbstractEditPanel<T> editPanel;
 
-	private EditDialogComponentFactory componentFactory;
+	private final JDesktopPane desktopPane;
+	private final EditDialogComponentFactory componentFactory;
+	private final Observer<T> observer;
+	private final Map<String, ItemProvider<?>> itemProviders;
 
 	public AbstractEditJInternalFrame(
 		JDesktopPane desktopPane,
@@ -43,7 +46,13 @@ public abstract class AbstractEditJInternalFrame<T> extends JInternalFrame {
 	) {
 		super(title, true, true, true, true);
 		this.componentFactory = componentFactory;
+		this.desktopPane = desktopPane;
+		this.itemProviders = itemProviders;
+		this.observer = observer;
 		this.toEdit = toEdit;
+	}
+
+	protected void prepare() {
 		setBounds(20, 20, 600, 400);
 		setContentPane(createContentPanel(toEdit, observer, itemProviders));
 		desktopPane.add(this);
