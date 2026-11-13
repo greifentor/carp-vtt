@@ -51,8 +51,8 @@ class ScenarioServiceImpl implements ScenarioService {
 	}
 
 	@Override
-	public Scenario pushScenario(Scenario toPush) {
-		return scenarioWebPort.pushScenario(toPush);
+	public void pushScenario(Scenario toPush) {
+		scenarioWebPort.pushScenario(toPush);
 	}
 
 	@Override

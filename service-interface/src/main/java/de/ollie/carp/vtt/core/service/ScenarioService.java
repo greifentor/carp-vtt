@@ -25,7 +25,7 @@ public interface ScenarioService {
 
 	void updateAndPushScenario(Scenario toSave);
 
-	Scenario pushScenario(Scenario toPush);
+	void pushScenario(Scenario toPush);
 
 	void pushDeleteScenario(UUID idToDelete);
 
