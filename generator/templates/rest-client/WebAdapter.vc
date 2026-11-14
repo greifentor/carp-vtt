@@ -2,9 +2,11 @@ package ${PackageName};
 
 import ${Properties.get("core-model-package")}.${ClassName};
 import ${Properties.get("core-port-web-package")}.${ClassName}WebPort;
+import ${Properties.get("rest-client-package")}.${ClassName}Client;
 import jakarta.inject.Named;
 import java.util.UUID;
 import lombok.Generated;
+import lombok.RequiredArgsConstructor;
 
 /**
  * ${GeneratedCodeMarker}
@@ -13,16 +15,18 @@ import lombok.Generated;
  */
 @Generated
 @Named
+@RequiredArgsConstructor
 public class ${ClassName}WebAdapter implements ${ClassName}WebPort {
 
+	private final ${ClassName}Client client;
+
 	@Override
-	public ${ClassName} push${ClassName}(${ClassName} toPush) {
-		System.out.println("rest-push " + toPush);
-		return null;
+	public void push${ClassName}(${ClassName} toPush) {
+		client.update${ClassName}(toPush);
 	}
 
 	@Override
 	public void delete${ClassName}(UUID idToDelete) {
-		System.out.println("rest-delete " + idToDelete);
+		client.remove${ClassName}(idToDelete);
 	}
 }

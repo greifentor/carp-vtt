@@ -19,6 +19,8 @@ properties:
     value: de.ollie.carp.vtt.persistence.jpa.mapper
   - name: jpa-repository-package
     value: de.ollie.carp.vtt.persistence.jpa.repository
+  - name: rest-client-package
+    value: de.ollie.carp.vtt.restclient
   - name: swing-gui-package
     value: de.ollie.carp.vtt.swing
 generators:

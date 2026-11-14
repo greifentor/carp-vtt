@@ -40,9 +40,13 @@ public interface ${ClassName}Service {
 	${ClassName} update${ClassName}(${ClassName} toSave);
 
 	#if ($Class.hasPropertyWithName("rest-pushes"))
-	${ClassName} push${ClassName}(${ClassName} toPush);
+	void updateAndPush${ClassName}(${ClassName} toSave);
+
+	void push${ClassName}(${ClassName} toPush);
 
 	void pushDelete${ClassName}(UUID idToDelete);
+
+	void deleteAndPushDelete${ClassName}(UUID idToDelete);
 
 	#end
 }

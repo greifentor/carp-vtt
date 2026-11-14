@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
+#if ($Class.hasPropertyWithName("rest-pushes"))
+import org.springframework.transaction.annotation.Transactional;
+#end
 
 #foreach($Import in $Imports)
 import ${Import};
@@ -73,13 +76,27 @@ class ${ClassName}ServiceImpl implements ${ClassName}Service {
 
 	#if ($Class.hasPropertyWithName("rest-pushes"))
 	@Override
-	public $ClassName push${ClassName}($ClassName toPush) {
-		return ${ClassNameAsAttribute}WebPort.push${ClassName}(toPush);
+	public void push${ClassName}($ClassName toPush) {
+		${ClassNameAsAttribute}WebPort.push${ClassName}(toPush);
 	}
 
 	@Override
 	public void pushDelete${ClassName}(UUID idToDelete) {
 		${ClassNameAsAttribute}WebPort.delete${ClassName}(idToDelete);
+	}
+
+	@Override
+	@Transactional
+	public void updateAndPush${ClassName}(${ClassName} toSave) {
+		${ClassNameAsAttribute}WebPort.push${ClassName}(toSave);
+		${ClassNameAsAttribute}PersistencePort.update(toSave);
+	}
+
+	@Override
+	@Transactional
+	public void deleteAndPushDelete${ClassName}(UUID idToDelete) {
+		${ClassNameAsAttribute}WebPort.delete${ClassName}(idToDelete);
+		${ClassNameAsAttribute}PersistencePort.deleteById(idToDelete);
 	}
 
 	#end
