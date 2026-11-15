@@ -1,0 +1,64 @@
+package de.ollie.carp.vtt.swing.component.edit.token;
+
+import static de.ollie.carp.vtt.swing.SwingConstants.HGAP;
+import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
+
+import de.ollie.carp.vtt.core.service.model.Token;
+import de.ollie.carp.vtt.core.service.model.TokenImpl;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
+import de.ollie.carp.vtt.swing.component.FileUploadField;
+import de.ollie.carp.vtt.swing.component.ItemProvider;
+import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
+import java.awt.GridLayout;
+import java.util.Map;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import lombok.Generated;
+
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+public class TokenEditJPanel extends AbstractEditPanel<Token> {
+
+	private JTextField textFieldName;
+	private FileUploadField uploadFieldImage;
+	private JComboBox<TokenSize> comboBoxTokenSize;
+
+	public TokenEditJPanel(Token toEdit, Map<String, ItemProvider<?>> itemProviders) {
+		super(toEdit, itemProviders);
+		prepare();
+	}
+
+	@Override
+	protected JPanel createLabelPanel(Token toEdit) {
+		return createLabelSubPanel("Name:", "Image:", "Token Size:");
+	}
+
+	@Override
+	protected JPanel createComponentPanel(Token toEdit, Map<String, ItemProvider<?>> itemProviders) {
+		JPanel p = new JPanel(new GridLayout(3, 1, HGAP, VGAP));
+		textFieldName = new JTextField(toEdit.getName(), 40);
+		p.add(textFieldName);
+		uploadFieldImage = new FileUploadField(toEdit.getImage() != null ? toEdit.getImage().length : -1);
+		p.add(uploadFieldImage);
+		comboBoxTokenSize = new JComboBox<>(TokenSize.values());
+		comboBoxTokenSize.setSelectedItem(toEdit.getTokenSize());
+		p.add(comboBoxTokenSize);
+		return p;
+	}
+
+	@Override
+	public Token getCurrentContent() {
+		Token model = new TokenImpl();
+		model.setId(toEdit.getId());
+		model.setName(textFieldName.getText());
+		model.setImage(uploadFieldImage.hasContent() ? uploadFieldImage.getContent() : toEdit.getImage());
+		model.setTokenSize(((TokenSize) comboBoxTokenSize.getSelectedItem()));
+		model.setOwner(toEdit.getOwner());
+		return model;
+	}
+}

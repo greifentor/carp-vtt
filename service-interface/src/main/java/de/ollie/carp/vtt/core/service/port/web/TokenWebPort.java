@@ -1,24 +1,24 @@
 package de.ollie.carp.vtt.core.service.port.web;
 
-import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
-import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
-import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
+import de.ollie.carp.vtt.core.service.model.Token;
+import java.util.List;
 import java.util.UUID;
+import lombok.Generated;
 
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
 public interface TokenWebPort {
 	interface SynchronizationObserver {
 		void progress(int synced, int total);
 	}
 
-	void pushTokenPositionRemove(TokenPositionRemoveEvent tokenPositionRemoveEvent);
+	void deleteToken(UUID idToDelete);
 
-	void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent);
+	void pushToken(Token toPush);
 
-	void pushTokenUpdate(TokenUpdateEvent tokenUpdateEvent);
-
-	void synchronizeTokens(SynchronizationObserver observer);
-
-	void synchronizeTokenUpdates(SynchronizationObserver observer);
-
-	void unselect(UUID battleMapId, UUID partyId, UUID scenarioId);
+	void synchronizeTokens(SynchronizationObserver observer, List<Token> tokens);
 }

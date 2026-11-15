@@ -11,7 +11,7 @@ import lombok.Generated;
  */
 @Generated
 public interface PartyWebPort {
-	void pushParty(Party toPush);
-
 	void deleteParty(UUID idToDelete);
+
+	void pushParty(Party toPush);
 }

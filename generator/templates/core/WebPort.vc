@@ -11,9 +11,19 @@ import lombok.Generated;
  */
 @Generated
 public interface ${ClassName}WebPort {
+	#if ($Class.hasPropertyWithName("synchronize-up"))
+	interface SynchronizationObserver {
+		void progress(int synced, int total);
+	}
+	#end
+
+	void delete${ClassName}(UUID idToDelete);
 
 	void push${ClassName}(${ClassName} toPush);
 
-	void delete${ClassName}(UUID idToDelete);
+	#if ($Class.hasPropertyWithName("synchronize-up"))
+	void synchronize${ClassName}s(SynchronizationObserver observer);
+
+	#end
 
 }

@@ -10,12 +10,10 @@ import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.BattleMapImpl;
-import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.core.service.model.TokenImpl;
 import de.ollie.carp.vtt.core.service.model.event.BattleMapUpdateEvent;
-import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.core.service.port.web.BattleMapWebPort;
+import de.ollie.carp.vtt.core.service.port.web.TokenPositionWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.swing.component.BattleMapSelectionDialog;
@@ -27,6 +25,7 @@ import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener.EventTy
 import de.ollie.carp.vtt.swing.component.SimplifiedWindowListener;
 import de.ollie.carp.vtt.swing.component.select.party.PartySelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.scenario.ScenarioSelectJInternalFrame;
+import de.ollie.carp.vtt.swing.component.select.token.TokenSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
@@ -96,6 +95,9 @@ public class ApplicationFrame
 	private TokenService tokenService;
 
 	@Inject
+	private TokenPositionWebPort tokenPositionWebPort;
+
+	@Inject
 	private TokenWebPort tokenWebPort;
 
 	@Inject
@@ -159,25 +161,27 @@ public class ApplicationFrame
 				.prepare()
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
-			new TokenEditJInternalFrame(
-				new TokenImpl(),
-				swingComponentFactory,
-				desktopPane,
-				new TokenEditJInternalFrame.Observer() {
-					@Override
-					public void deleted() {
-						// NOP
-					}
-
-					@Override
-					public void updated(Token tokenToSave) {
-						tokenToSave = tokenService.save(tokenToSave);
-						tokenWebPort.pushTokenUpdate(new TokenUpdateEvent(uuidService.create(), tokenToSave));
-					}
-				}
-			)
-				.prepare()
-				.setVisible(true);
+			// new TokenEditJInternalFrame(
+			// new TokenImpl(),
+			// swingComponentFactory,
+			// desktopPane,
+			// new TokenEditJInternalFrame.Observer() {
+			// @Override
+			// public void deleted() {
+			// // NOP
+			// }
+			//
+			// @Override
+			// public void updated(Token tokenToSave) {
+			// tokenToSave = tokenService.updateToken(tokenToSave);
+			// tokenPositionWebPort.pushTokenUpdate(new
+			// TokenUpdateEvent(uuidService.create(), tokenToSave));
+			// }
+			// }
+			// )
+			// .prepare()
+			// .setVisible(true);
+			new TokenSelectJInternalFrame(tokenService, desktopPane, editDialogComponentFactory, userConfiguration);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_PARTY) {
 			new PartySelectJInternalFrame(partyService, desktopPane, editDialogComponentFactory, userConfiguration);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_SCENARIO) {
@@ -198,6 +202,7 @@ public class ApplicationFrame
 					tokenHitManager,
 					tokenPositionService,
 					tokenService,
+					tokenPositionWebPort,
 					tokenWebPort,
 					uuidService
 				)
@@ -209,9 +214,12 @@ public class ApplicationFrame
 				System.out.println("Battle Map Synced " + synced + " of " + total)
 			);
 		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_TOKENS) {
-			tokenWebPort.synchronizeTokens((synced, total) -> System.out.println("Token Synced " + synced + " of " + total));
+			tokenWebPort.synchronizeTokens(
+				(synced, total) -> System.out.println("Token Synced " + synced + " of " + total),
+				tokenService.listTokens()
+			);
 		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_TOKEN_POSITIONS) {
-			tokenWebPort.synchronizeTokenUpdates((synced, total) ->
+			tokenPositionWebPort.synchronizeTokenUpdates((synced, total) ->
 				System.out.println("Token Position Synced " + synced + " of " + total)
 			);
 		}

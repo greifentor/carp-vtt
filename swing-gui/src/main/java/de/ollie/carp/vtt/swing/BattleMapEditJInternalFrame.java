@@ -85,7 +85,8 @@ public class BattleMapEditJInternalFrame extends JInternalFrame implements Edito
 	JPanel createPanelFields() {
 		JPanel panel = new JPanel(new GridLayout(2, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		textFieldName = new JTextField(objectToEdit.getName(), 40);
-		uploadFieldImage = new FileUploadField();
+		uploadFieldImage =
+			new FileUploadField(objectToEdit.getImageContent() != null ? objectToEdit.getImageContent().length : -1);
 		panel.add(textFieldName);
 		panel.add(uploadFieldImage);
 		return panel;

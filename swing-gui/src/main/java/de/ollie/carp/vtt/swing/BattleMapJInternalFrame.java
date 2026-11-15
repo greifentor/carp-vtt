@@ -22,6 +22,7 @@ import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenData;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
+import de.ollie.carp.vtt.core.service.port.web.TokenPositionWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
 import de.ollie.carp.vtt.graphics.manager.dnd.DndTokenPaintManager;
@@ -67,6 +68,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private final transient TokenHitManager tokenHitManager;
 	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
+	private final transient TokenPositionWebPort tokenPositionWebPort;
 	private final transient TokenWebPort tokenWebPort;
 	private final transient UuidService uuidService;
 
@@ -155,7 +157,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonAddIcon) {
-			selectedToken = new TokenSelectionDialog(null, tokenService.findAll()).getSelectedToken();
+			selectedToken = new TokenSelectionDialog(null, tokenService.listTokens()).getSelectedToken();
 			battleMapPanel.setSelectedToken(null);
 		} else if ((e.getSource() == buttonDamageIcon) && (battleMapPanel.getSelectedToken() != null)) {
 			updateHitPoints(battleMapPanel.getSelectedToken());
@@ -163,7 +165,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			MapTokenId toDelete = battleMapPanel.getSelectedToken().getId();
 			tokenMap.remove(toDelete);
 			tokenPositionService.delete(toDelete.getUuid());
-			tokenWebPort.pushTokenPositionRemove(new TokenPositionRemoveEvent(toDelete.getUuid()));
+			tokenPositionWebPort.pushTokenPositionRemove(new TokenPositionRemoveEvent(toDelete.getUuid()));
 			battleMapPanel.updateTokens(tokenMap);
 			battleMapPanel.setSelectedToken(null);
 		}
@@ -204,7 +206,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			selected
 		);
 		tokenPositionService.updateTokenPosition(event);
-		tokenWebPort.pushTokenPositionUpdate(event);
+		tokenPositionWebPort.pushTokenPositionUpdate(event);
 		tokenMap.putCoordinates(battleMapPanel.getSelectedToken().getId(), coordinates);
 		battleMapPanel.updateTokens(tokenMap);
 	}
@@ -247,6 +249,6 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	}
 
 	private void unselectSelectedToken() {
-		tokenWebPort.unselect(battleMap.getId(), DUMMY_PARTY.getId(), DUMMY_SCENARIO.getId());
+		tokenPositionWebPort.unselect(battleMap.getId(), DUMMY_PARTY.getId(), DUMMY_SCENARIO.getId());
 	}
 }

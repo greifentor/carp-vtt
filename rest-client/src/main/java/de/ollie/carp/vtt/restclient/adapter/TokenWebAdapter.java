@@ -1,18 +1,9 @@
 package de.ollie.carp.vtt.restclient.adapter;
 
-import de.ollie.carp.vtt.core.service.TokenPositionService;
-import de.ollie.carp.vtt.core.service.TokenService;
-import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
-import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
-import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.restclient.TokenClient;
-import de.ollie.carp.vtt.restclient.TokenPositionClient;
-import de.ollie.carp.vtt.restclient.UnselectClient;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.UUID;
@@ -23,65 +14,25 @@ import lombok.RequiredArgsConstructor;
 public class TokenWebAdapter implements TokenWebPort {
 
 	private final TokenClient tokenClient;
-	private final TokenPositionClient tokenPositionClient;
-	private final TokenPositionService tokenPositionService;
-	private final TokenService tokenService;
-	private final UnselectClient unselectClient;
 
 	@Override
-	public void pushTokenPositionRemove(TokenPositionRemoveEvent tokenPositionRemoveEvent) {
-		tokenPositionClient.removeTokenPosition(tokenPositionRemoveEvent);
+	public void pushToken(Token toPush) {
+		tokenClient.updateToken(new TokenUpdateEvent(null, toPush));
 	}
 
 	@Override
-	public void pushTokenPositionUpdate(TokenPositionUpdateEvent tokenPositionUpdateEvent) {
-		tokenPositionClient.updateTokenPosition(tokenPositionUpdateEvent);
+	public void deleteToken(UUID idToDelete) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public void pushTokenUpdate(TokenUpdateEvent tokenUpdateEvent) {
-		tokenClient.updateToken(tokenUpdateEvent);
-	}
-
-	@Override
-	public void synchronizeTokens(SynchronizationObserver observer) {
-		List<Token> tokens = tokenService.findAll();
+	public void synchronizeTokens(SynchronizationObserver observer, List<Token> tokens) {
 		for (int i = 0, leni = tokens.size(); i < leni; i++) {
-			pushTokenUpdate(new TokenUpdateEvent(UUID.randomUUID(), tokens.get(i)));
+			tokenClient.updateToken(new TokenUpdateEvent(UUID.randomUUID(), tokens.get(i)));
 			if (observer != null) {
 				observer.progress(i, leni - 1);
 			}
 		}
-	}
-
-	@Override
-	public void synchronizeTokenUpdates(SynchronizationObserver observer) {
-		List<TokenMapPartyScenario> tokenPositions = tokenPositionService.findAll();
-		for (int i = 0, leni = tokenPositions.size(); i < leni; i++) {
-			TokenMapPartyScenario tokenPosition = tokenPositions.get(i);
-			Coordinates coordinates = new CoordinatesImpl();
-			coordinates.setFieldX(tokenPosition.getFieldX());
-			coordinates.setFieldY(tokenPosition.getFieldY());
-			pushTokenPositionUpdate(
-				new TokenPositionUpdateEvent(
-					tokenPosition.getId(),
-					tokenPosition.getToken(),
-					tokenPosition.getBattleMap(),
-					tokenPosition.getCounter(),
-					coordinates,
-					tokenPosition.getParty(),
-					tokenPosition.getScenario(),
-					false
-				)
-			);
-			if (observer != null) {
-				observer.progress(i, leni - 1);
-			}
-		}
-	}
-
-	@Override
-	public void unselect(UUID battleMapId, UUID partyId, UUID scenarioId) {
-		unselectClient.unselect(battleMapId, partyId, scenarioId);
 	}
 }

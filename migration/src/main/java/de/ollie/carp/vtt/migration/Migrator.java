@@ -58,7 +58,7 @@ class Migrator {
 
 	private void saveImage(ImageDTO image) {
 		if (isToken(image)) {
-			tokenService.save(toToken(image));
+			tokenService.updateToken(toToken(image));
 			if (image.getDndDataDto() != null) {
 				dndTokenDataService.save(toDndTokenData(image.getDndDataDto(), UUID.fromString(image.getGlobalId())));
 			}

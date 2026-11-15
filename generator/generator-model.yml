@@ -217,13 +217,21 @@ classes:
               value: java.util.UUID
   - name: Token
     properties:
+      - name: generate-service
+        value: true
+      - name: implements
+        value: OwnerProvider
       - name: implements
         value: TokenInfoProvider
-#      - name: implements
-#        value: OwnerProvider
       - name: order
         value: name
       - name: owner-logic
+        value: private-only
+      - name: rest-pushes
+        value: true
+      - name: synchronize-up
+        value: true
+      - name: swing-gui
         value: true
     attributes:
       - name: id
@@ -240,12 +248,16 @@ classes:
               value: java.util.UUID
       - name: image
         properties:
+          - name: editor-position
+            value: 2
           - name: suppress-to-string
             value: true
         type:
           name: byte[]
       - name: name
         properties:
+          - name: editor-position
+            value: 1
           - name: nullable
             value: false
         type:
@@ -253,7 +265,16 @@ classes:
           properties:
             - name: length
               value: 255
+      - name: owner
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
       - name: tokenSize
+        properties:
+          - name: editor-position
+            value: 3
         enum: true
         type:
           name: TokenSize

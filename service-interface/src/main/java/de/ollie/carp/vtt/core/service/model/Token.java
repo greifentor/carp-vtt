@@ -9,14 +9,24 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface Token extends TokenInfoProvider {
+public interface Token extends OwnerProvider, TokenInfoProvider {
+	@Override
 	UUID getId();
+
+	@Override
 	byte[] getImage();
+
+	@Override
 	String getName();
+
+	@Override
 	TokenSize getTokenSize();
 
 	void setId(UUID id);
+
 	void setImage(byte[] image);
+
 	void setName(String name);
+
 	void setTokenSize(TokenSize tokenSize);
 }

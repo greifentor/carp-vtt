@@ -20,5 +20,6 @@ public class TokenImpl implements Token {
 	private byte[] image;
 
 	private String name;
+	private UUID owner;
 	private TokenSize tokenSize;
 }

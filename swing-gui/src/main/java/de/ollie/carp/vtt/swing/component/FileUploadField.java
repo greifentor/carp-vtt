@@ -18,10 +18,10 @@ public class FileUploadField extends JPanel {
 	private byte[] content;
 	private boolean hasContent;
 
-	public FileUploadField() {
+	public FileUploadField(long contentSize) {
 		setLayout(new BorderLayout(5, 0));
 		setPreferredSize(new Dimension(450, 28));
-		labelInfo = new JLabel("Keine Datei ausgewählt");
+		labelInfo = new JLabel(contentSize < 0 ? "Keine Datei ausgewählt" : "Bild ist " + contentSize + " bytes groß");
 		buttonChoose = new JButton("Datei wählen");
 		JPanel leftPanel = new JPanel(new BorderLayout());
 		leftPanel.add(labelInfo, BorderLayout.CENTER);

@@ -90,7 +90,7 @@ public class TokenEditJInternalFrame extends JInternalFrame implements EditorBut
 	JPanel createPanelFields() {
 		JPanel panel = new JPanel(new GridLayout(3, 1, SwingConstants.HGAP, SwingConstants.VGAP));
 		textFieldName = new JTextField(objectToEdit.getName(), 40);
-		uploadFieldImage = new FileUploadField();
+		uploadFieldImage = new FileUploadField(objectToEdit.getImage() != null ? objectToEdit.getImage().length : -1);
 		panel.add(textFieldName);
 		panel.add(comboBoxTokenSize);
 		panel.add(uploadFieldImage);

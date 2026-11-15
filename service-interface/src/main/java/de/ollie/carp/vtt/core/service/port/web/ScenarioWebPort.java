@@ -11,7 +11,7 @@ import lombok.Generated;
  */
 @Generated
 public interface ScenarioWebPort {
-	void pushScenario(Scenario toPush);
-
 	void deleteScenario(UUID idToDelete);
+
+	void pushScenario(Scenario toPush);
 }
