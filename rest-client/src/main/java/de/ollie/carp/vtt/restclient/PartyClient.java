@@ -16,14 +16,14 @@ public class PartyClient {
 
 	private final BearerTokenGenerator bearerTokenGenerator;
 	private final RestClientConfiguration restClientConfiguration;
-	private final PartyDtoMapper partyDtoMapper;
+	private final PartyDtoMapper mapper;
 
 	public void updateParty(Party Party) {
 		ApiClient client = new ApiClient();
 		client.setBasePath(restClientConfiguration.getBaseUrl());
 		client.setBearerToken(bearerTokenGenerator.create());
 		PartyApi api = new PartyApi(client);
-		PartyDto dto = partyDtoMapper.map(Party);
+		PartyDto dto = mapper.map(Party);
 		try {
 			ApiResponse<PartyDto> response = api.updatePartyWithHttpInfo(dto);
 			if (response.getStatusCode() / 100 != 2) {
