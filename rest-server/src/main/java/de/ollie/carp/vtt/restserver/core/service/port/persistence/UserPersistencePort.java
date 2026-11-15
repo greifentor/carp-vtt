@@ -8,13 +8,7 @@ import java.util.UUID;
 
 @Named
 public interface UserPersistencePort {
-	User create(UUID key, String rights);
-
-	void deleteById(UUID id);
-
 	Optional<User> findById(UUID id);
 
 	List<User> list();
-
-	User update(User toSave);
 }

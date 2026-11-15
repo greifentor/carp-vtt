@@ -6,15 +6,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
-	User createUser(UUID key, String rights);
-
-	void deleteUser(UUID id);
-
 	Optional<User> findById(UUID id);
 
 	List<User> listUsers();
 
 	String loadSecretByUid(UUID id);
-
-	User updateUser(User toSave);
 }

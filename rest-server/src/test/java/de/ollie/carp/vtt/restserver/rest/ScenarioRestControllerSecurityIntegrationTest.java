@@ -8,9 +8,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import de.ollie.carp.vtt.restserver.core.service.ScenarioService;
-import de.ollie.carp.vtt.restserver.core.service.UserService;
 import de.ollie.carp.vtt.restserver.core.service.model.Scenario;
 import de.ollie.carp.vtt.restserver.core.service.model.User;
+import de.ollie.carp.vtt.restserver.persistence.jpa.dbo.UserDbo;
+import de.ollie.carp.vtt.restserver.persistence.jpa.mapper.UserDboMapper;
+import de.ollie.carp.vtt.restserver.persistence.jpa.repository.UserDboRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.Filter;
@@ -49,7 +51,10 @@ class ScenarioRestControllerSecurityIntegrationTest {
 	private ScenarioService scenarioService;
 
 	@Autowired
-	private UserService userService;
+	private UserDboMapper userMapper;
+
+	@Autowired
+	private UserDboRepository userRepository;
 
 	private MockMvc mockMvc;
 
@@ -59,8 +64,8 @@ class ScenarioRestControllerSecurityIntegrationTest {
 	}
 
 	private User createUser(String rights) {
-		return userService.updateUser(
-			new User().setId(UUID.randomUUID()).setKey(UUID.randomUUID().toString()).setRights(rights)
+		return userMapper.toModel(
+			userRepository.save(new UserDbo().setId(UUID.randomUUID()).setKey(UUID.randomUUID().toString()).setRights(rights))
 		);
 	}
 

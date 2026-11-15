@@ -16,16 +16,6 @@ class UserServiceImpl implements UserService {
 	private final UserPersistencePort userPersistencePort;
 
 	@Override
-	public User createUser(UUID key, String rights) {
-		return userPersistencePort.create(key, rights);
-	}
-
-	@Override
-	public void deleteUser(UUID id) {
-		userPersistencePort.deleteById(id);
-	}
-
-	@Override
 	public Optional<User> findById(UUID id) {
 		return userPersistencePort.findById(id);
 	}
@@ -38,10 +28,5 @@ class UserServiceImpl implements UserService {
 	@Override
 	public String loadSecretByUid(UUID id) {
 		return findById(id).map(u -> u.getKey().toString()).orElse(null);
-	}
-
-	@Override
-	public User updateUser(User toSave) {
-		return userPersistencePort.update(toSave);
 	}
 }

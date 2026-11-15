@@ -112,7 +112,7 @@ generators:
 # --- Rest ---
   - type: CLASS
     package: de.ollie.carp.vtt.restserver.rest.mapper
-    suppress-when: classModel Load suppress-persistence HasProperty
+    suppress-when: classModel Load suppress-persistence HasProperty classModel Load suppress-rest-controller HasProperty Or
     path: generator
     target-file-name: ${UnitName}DtoMapper
     template: templates/rest/DtoMapper.vc
