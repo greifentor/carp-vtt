@@ -214,8 +214,13 @@
             </column>
         </addColumn>
     </changeSet>
-        <changeSet author="dm-comp" id="ADD-CHANGE-SET-ID-HERE" objectQuotingStrategy="LEGACY" runOnChange="true">
+    <changeSet author="dm-comp" id="Add-Column-OWNER-to-Table-SCENARIO" runInTransaction="true" runOnChange="true">
         <addColumn tableName="SCENARIO">
+            <column name="OWNER" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dm-comp" id="Add-Column-OWNER-to-Table-PARTY" runInTransaction="true" runOnChange="true">
+        <addColumn tableName="PARTY">
             <column name="OWNER" type="UUID"/>
         </addColumn>
     </changeSet>

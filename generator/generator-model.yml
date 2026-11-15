@@ -118,8 +118,18 @@ classes:
               value: java.util.UUID
   - name: Party
     properties:
+      - name: generate-service
+        value: true
+      - name: implements
+        value: OwnerProvider
       - name: order
         value: name
+      - name: owner-logic
+        value: private-only
+      - name: rest-pushes
+        value: true
+      - name: swing-gui
+        value: true
     attributes:
       - name: id
         properties:
@@ -136,18 +146,31 @@ classes:
         properties:
           - name: nullable
             value: false
+          - name: editor-position
+            value: 1
         type:
           name: String
           properties:
             - name: length
               value: 255
       - name: ruleSystem
+        properties:
+          - name: nullable
+            value: false
+          - name: editor-position
+            value: 1
         enum: true
         type:
           name: RuleSystem
           properties:
             - name: project-type
               value: true
+      - name: owner
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
   - name: Scenario
     properties:
       - name: generate-service

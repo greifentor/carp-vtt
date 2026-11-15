@@ -87,6 +87,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
+  /api/v1/parties/{id}:
+    delete:
+      tags:
+        - Party
+      summary: Remove a party
+      operationId: removeParty
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Party removed successfully
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /api/v1/parties:
+    put:
+      tags:
+        - Party
+      summary: Update a party
+      operationId: updateParty
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartyDto'
+      responses:
+        '200':
+          description: Party updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartyDto'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
   /api/v1/scenarios/{id}:
     delete:
       tags:
@@ -361,8 +420,16 @@ components:
           type: string
           example: "orc-ambush-party"
         ruleSystem:
+          $ref: '#/components/schemas/RuleSystemDto'
+        owner:
           type: string
-          example: "SYSTEM_X"
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+    RuleSystemDto:
+      type: string
+      enum:
+        - DND
+        - NONE
     ScenarioDto:
       type: object
       required:

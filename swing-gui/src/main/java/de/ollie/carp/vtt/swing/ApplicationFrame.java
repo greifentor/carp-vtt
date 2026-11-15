@@ -25,6 +25,7 @@ import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener;
 import de.ollie.carp.vtt.swing.component.SimplifiedInternalFrameListener.EventType;
 import de.ollie.carp.vtt.swing.component.SimplifiedWindowListener;
+import de.ollie.carp.vtt.swing.component.select.party.PartySelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.scenario.ScenarioSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.localization.ResourceManager;
 import jakarta.annotation.PostConstruct;
@@ -177,8 +178,9 @@ public class ApplicationFrame
 			)
 				.prepare()
 				.setVisible(true);
+		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_PARTY) {
+			new PartySelectJInternalFrame(partyService, desktopPane, editDialogComponentFactory, userConfiguration);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_SCENARIO) {
-			System.out.println("$$$$$ " + userConfiguration);
 			new ScenarioSelectJInternalFrame(scenarioService, desktopPane, editDialogComponentFactory, userConfiguration);
 		} else if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);

@@ -31,6 +31,9 @@ public class PartyDbo {
 	private String name;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "RULE_SYSTEM", nullable = true)
+	@Column(name = "RULE_SYSTEM", nullable = false)
 	private RuleSystemDbo ruleSystem;
+
+	@Column(name = "OWNER", nullable = true)
+	private UUID owner;
 }

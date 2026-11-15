@@ -1,0 +1,19 @@
+package ${PackageName};
+
+import ${Properties.get("core-model-package")}.${ClassName};
+import java.util.UUID;
+import lombok.Generated;
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+public interface ${ClassName}WebPort {
+
+	void push${ClassName}(${ClassName} toPush);
+
+	void delete${ClassName}(UUID idToDelete);
+
+}

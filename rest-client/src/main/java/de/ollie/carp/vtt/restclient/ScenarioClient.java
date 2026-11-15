@@ -30,7 +30,7 @@ public class ScenarioClient {
 				throw new UploadException("API access denied with code: " + response.getStatusCode());
 			}
 		} catch (ApiException ae) {
-			throw new UploadException("token upload error: " + ae.getMessage());
+			throw new UploadException("scenario upload error: " + ae.getMessage());
 		}
 	}
 
@@ -42,7 +42,7 @@ public class ScenarioClient {
 		try {
 			api.removeScenario(idToDelete);
 		} catch (ApiException ae) {
-			throw new UploadException("token upload error: " + ae.getMessage());
+			throw new UploadException("scenario upload error: " + ae.getMessage());
 		}
 	}
 }

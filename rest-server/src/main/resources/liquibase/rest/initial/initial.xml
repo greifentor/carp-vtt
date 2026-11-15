@@ -137,4 +137,9 @@
         <modifyDataType tableName="SCENARIO" columnName="ID" newDataType="UUID"/>
         <modifyDataType tableName="TOKEN" columnName="ID" newDataType="UUID"/>
     </changeSet>
+        <changeSet author="dm-comp" id="Add-Column-OWNER-to-Table-PARTY" runInTransaction="true">
+        <addColumn tableName="PARTY">
+            <column name="OWNER" type="UUID"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

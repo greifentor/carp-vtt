@@ -16,4 +16,5 @@ public class PartyImpl implements Party {
 	private UUID id;
 	private String name;
 	private RuleSystem ruleSystem;
+	private UUID owner;
 }
