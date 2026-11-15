@@ -17,5 +17,6 @@ public class Party {
 
 	private UUID id;
 	private String name;
+	private UUID owner;
 	private RuleSystem ruleSystem;
 }

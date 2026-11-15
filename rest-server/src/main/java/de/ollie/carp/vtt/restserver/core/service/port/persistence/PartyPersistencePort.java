@@ -16,7 +16,7 @@ import lombok.Generated;
 @Generated
 @Named
 public interface PartyPersistencePort {
-	Party create(String name, RuleSystem ruleSystem);
+	Party create(String name, UUID owner, RuleSystem ruleSystem);
 
 	void deleteById(UUID id);
 

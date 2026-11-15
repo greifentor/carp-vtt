@@ -71,6 +71,12 @@ classes:
             value: false
         type:
           name: String
+      - name: owner
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
       - name: ruleSystem
         enum: true
         type:
