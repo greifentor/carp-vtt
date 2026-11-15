@@ -8,8 +8,15 @@ import de.ollie.carp.vtt.restclient.mapper.PartyDtoMapper;
 import de.ollie.carp.vtt.restclient.model.PartyDto;
 import jakarta.inject.Named;
 import java.util.UUID;
+import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
 @Named
 @RequiredArgsConstructor
 public class PartyClient {
@@ -18,12 +25,9 @@ public class PartyClient {
 	private final RestClientConfiguration restClientConfiguration;
 	private final PartyDtoMapper mapper;
 
-	public void updateParty(Party Party) {
-		ApiClient client = new ApiClient();
-		client.setBasePath(restClientConfiguration.getBaseUrl());
-		client.setBearerToken(bearerTokenGenerator.create());
-		PartyApi api = new PartyApi(client);
-		PartyDto dto = mapper.map(Party);
+	public void updateParty(Party model) {
+		PartyApi api = getApiClient();
+		PartyDto dto = mapper.map(model);
 		try {
 			ApiResponse<PartyDto> response = api.updatePartyWithHttpInfo(dto);
 			if (response.getStatusCode() / 100 != 2) {
@@ -34,12 +38,16 @@ public class PartyClient {
 		}
 	}
 
-	public void removeParty(UUID idToDelete) {
+	private PartyApi getApiClient() {
 		ApiClient client = new ApiClient();
 		client.setBasePath(restClientConfiguration.getBaseUrl());
 		client.setBearerToken(bearerTokenGenerator.create());
-		PartyApi api = new PartyApi(client);
+		return new PartyApi(client);
+	}
+
+	public void removeParty(UUID idToDelete) {
 		try {
+			PartyApi api = getApiClient();
 			api.removeParty(idToDelete);
 		} catch (ApiException ae) {
 			throw new UploadException("party upload error: " + ae.getMessage());

@@ -1,0 +1,56 @@
+package ${PackageName};
+
+import ${Properties.get("core-exception-package")}.UploadException;
+import ${Properties.get("core-model-package")}.${ClassName};
+import ${Properties.get("rest-client-api-package")}.${ClassName}Api;
+import ${Properties.get("rest-client-package")}.config.RestClientConfiguration;
+import ${Properties.get("rest-client-package")}.mapper.${ClassName}DtoMapper;
+import ${Properties.get("rest-client-package")}.model.${ClassName}Dto;
+import jakarta.inject.Named;
+import java.util.UUID;
+import lombok.Generated;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+@RequiredArgsConstructor
+public class ${ClassName}Client {
+
+	private final BearerTokenGenerator bearerTokenGenerator;
+	private final RestClientConfiguration restClientConfiguration;
+	private final ${ClassName}DtoMapper mapper;
+
+	public void update${ClassName}(${ClassName} model) {
+		${ClassName}Api api = getApiClient();
+		${ClassName}Dto dto = mapper.map(model);
+		try {
+			ApiResponse<${ClassName}Dto> response = api.update${ClassName}WithHttpInfo(dto);
+			if (response.getStatusCode() / 100 != 2) {
+				throw new UploadException("API access denied with code: " + response.getStatusCode());
+			}
+		} catch (ApiException ae) {
+			throw new UploadException("${Class.getNameAsAttribute()} upload error: " + ae.getMessage());
+		}
+	}
+
+	private ${ClassName}Api getApiClient() {
+		ApiClient client = new ApiClient();
+		client.setBasePath(restClientConfiguration.getBaseUrl());
+		client.setBearerToken(bearerTokenGenerator.create());
+		return new ${ClassName}Api(client);
+	}
+
+	public void remove${ClassName}(UUID idToDelete) {
+		try {
+			${ClassName}Api api = getApiClient();
+			api.remove${ClassName}(idToDelete);
+		} catch (ApiException ae) {
+			throw new UploadException("${Class.getNameAsAttribute()} upload error: " + ae.getMessage());
+		}
+	}
+}

@@ -8,22 +8,26 @@ import de.ollie.carp.vtt.restclient.mapper.ScenarioDtoMapper;
 import de.ollie.carp.vtt.restclient.model.ScenarioDto;
 import jakarta.inject.Named;
 import java.util.UUID;
+import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * GENERATED CODE - DO NOT TOUCH
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
 @Named
 @RequiredArgsConstructor
 public class ScenarioClient {
 
 	private final BearerTokenGenerator bearerTokenGenerator;
 	private final RestClientConfiguration restClientConfiguration;
-	private final ScenarioDtoMapper scenarioDtoMapper;
+	private final ScenarioDtoMapper mapper;
 
-	public void updateScenario(Scenario scenario) {
-		ApiClient client = new ApiClient();
-		client.setBasePath(restClientConfiguration.getBaseUrl());
-		client.setBearerToken(bearerTokenGenerator.create());
-		ScenarioApi api = new ScenarioApi(client);
-		ScenarioDto dto = scenarioDtoMapper.map(scenario);
+	public void updateScenario(Scenario model) {
+		ScenarioApi api = getApiClient();
+		ScenarioDto dto = mapper.map(model);
 		try {
 			ApiResponse<ScenarioDto> response = api.updateScenarioWithHttpInfo(dto);
 			if (response.getStatusCode() / 100 != 2) {
@@ -34,12 +38,16 @@ public class ScenarioClient {
 		}
 	}
 
-	public void removeScenario(UUID idToDelete) {
+	private ScenarioApi getApiClient() {
 		ApiClient client = new ApiClient();
 		client.setBasePath(restClientConfiguration.getBaseUrl());
 		client.setBearerToken(bearerTokenGenerator.create());
-		ScenarioApi api = new ScenarioApi(client);
+		return new ScenarioApi(client);
+	}
+
+	public void removeScenario(UUID idToDelete) {
 		try {
+			ScenarioApi api = getApiClient();
 			api.removeScenario(idToDelete);
 		} catch (ApiException ae) {
 			throw new UploadException("scenario upload error: " + ae.getMessage());

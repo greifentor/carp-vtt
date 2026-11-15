@@ -21,6 +21,8 @@ properties:
     value: de.ollie.carp.vtt.persistence.jpa.repository
   - name: rest-client-package
     value: de.ollie.carp.vtt.restclient
+  - name: rest-client-api-package
+    value: de.ollie.carp.vtt.restclient.api
   - name: swing-gui-package
     value: de.ollie.carp.vtt.swing
 generators:
@@ -92,6 +94,15 @@ generators:
     target-file-name: ${UnitName}WebAdapter
     path: generator
     template: templates/rest-client/WebAdapter.vc
+    properties:
+      - name: target-path
+        value: rest-client/src/main/java
+  - type: CLASS
+    generate-when: classModel Load rest-pushes HasProperty
+    package: de.ollie.carp.vtt.restclient
+    target-file-name: ${UnitName}Client
+    path: generator
+    template: templates/rest-client/Client.vc
     properties:
       - name: target-path
         value: rest-client/src/main/java
