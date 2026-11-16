@@ -5,8 +5,11 @@ import static ${Properties.get("swing-gui-package")}.SwingConstants.VGAP;
 
 import ${Properties.get("core-model-package")}.${ClassName};
 import ${Properties.get("core-model-package")}.${ClassName}Impl;
-#if ($Class.hasPropertyWithName("owner-logic"))
+#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 import de.ollie.carp.vtt.swing.UserConfiguration;
+#end
+#if ($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))
+import de.ollie.carp.vtt.swing.UserContext;
 #end
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
 import ${Properties.get("core-model-package")}.$Attribute.getTypeClassType().getName();
@@ -29,6 +32,9 @@ import javax.swing.JCheckBox;
 #if($Class.hasAnAttributeWithTypeName("Boolean") == true)
 import javax.swing.JCheckBox;
 #end
+#if($Class.hasAnAttributeWithTypeName("byte[]") == true)
+import de.ollie.carp.vtt.swing.component.FileUploadField;
+#end
 #if($Class.hasAnAttributeWithTypeName("int") || $Class.hasAnAttributeWithTypeName("Integer") || $Class.hasAnAttributeWithTypeName("BigDecimal"))
 import javax.swing.JSpinner;
 #end
@@ -36,9 +42,14 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 #end
+#if ($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))
+import javax.swing.JCheckBox;
+#end
 #if($Class.hasAReferenceAttribute() == true  || $Class.hasAnEnumTypeAttribute() == true)
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+#end
+#if($Class.hasAReferenceAttribute() == true)
 import java.util.List;
 #end
 #if($Class.hasAnAttributeWithTypeName("LocalDate") == true)
@@ -57,7 +68,7 @@ import ${Import};
 @Generated
 public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 
-	#if ($Class.hasPropertyWithName("owner-logic"))
+	#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 	private final UserConfiguration userConfiguration;
 
 	#end
@@ -72,6 +83,8 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 	private JComboBox<${Attribute.getTypeClassType().getName()}> comboBox${Attribute.getNameCamelCase()};
 	#elseif(${Attribute.getTypeName()} == "boolean" || ${Attribute.getTypeName()} == "Boolean")
 	private JCheckBox checkBox${Attribute.getNameCamelCase()};
+	#elseif(${Attribute.getTypeName()} == "byte[]")
+	private FileUploadField uploadField${Attribute.getNameCamelCase()};
 	#elseif(${Attribute.getTypeName()} == "int" || ${Attribute.getTypeName()} == "Integer" || ${Attribute.getTypeName()} == "BigDecimal")
 	private JSpinner spinner${Attribute.getNameCamelCase()};
 	#elseif($Attribute.isTypeEnum() == true)
@@ -80,11 +93,14 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 	private JTextField textField${Attribute.getNameCamelCase()};
 	#end
 #end
+#if ($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))
+	private JCheckBox checkBoxPublic;
+#end
 
-	public ${ClassName}EditJPanel(${ClassName} toEdit, Map<String, ItemProvider<?>> itemProviders	#if ($Class.hasPropertyWithName("owner-logic")), UserConfiguration userConfiguration#end
+	public ${ClassName}EditJPanel(${ClassName} toEdit, Map<String, ItemProvider<?>> itemProviders	#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only")), UserConfiguration userConfiguration#end
 ) {
 		super(toEdit, itemProviders);
-		#if ($Class.hasPropertyWithName("owner-logic"))
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 		this.userConfiguration = userConfiguration;
 		#end
 		prepare();
@@ -92,16 +108,22 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 
 	@Override
 	protected JPanel createLabelPanel(${ClassName} toEdit) {
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 		return createLabelSubPanel(
 		#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))
 				"${Attribute.getCamelCaseNameSeparated(" ")}:"#if($foreach.hasNext),#end
 		#end
 		);
+		#else
+		return UserContext.isManagePublicRightSet()
+			? createLabelSubPanel(#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))"${Attribute.getCamelCaseNameSeparated(" ")}:"#if($foreach.hasNext),#end#end, "Public:")
+			: createLabelSubPanel(#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))"${Attribute.getCamelCaseNameSeparated(" ")}:"#if($foreach.hasNext),#end#end);
+		#end
 	}
 
 	@Override
 	protected JPanel createComponentPanel(${ClassName} toEdit, Map<String, ItemProvider<?>> itemProviders) {
-		JPanel p = new JPanel(new GridLayout(${Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position").size()}, 1, HGAP, VGAP));
+		JPanel p = new JPanel(new GridLayout(#if($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))UserContext.isManagePublicRightSet() ? ${Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position").size()}+1 : #end${Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position").size()}, 1, HGAP, VGAP));
 		#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))
 		#if(${Attribute.isReference()} == true)
 		#set($ReferencedClassName = ${Attribute.getTypeClassType().getName()})
@@ -126,6 +148,9 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 		checkBox${Attribute.getNameCamelCase()} = new JCheckBox();
 		checkBox${Attribute.getNameCamelCase()}.setSelected(toEdit.is${Attribute.getNameCamelCase()}());
 		p.add(checkBox${Attribute.getNameCamelCase()});
+		#elseif(${Attribute.getTypeName()} == "byte[]")
+		uploadField${Attribute.getNameCamelCase()} = new FileUploadField(toEdit.get${Attribute.getNameCamelCase()}() != null ? toEdit.get${Attribute.getNameCamelCase()}().length : -1);
+		p.add(uploadField${Attribute.getNameCamelCase()});
 		#elseif(${Attribute.getTypeName()} == "int")
 		SpinnerModel spinnerModel${Attribute.getNameCamelCase()} = new SpinnerNumberModel(toEdit.get${Attribute.getNameCamelCase()}(), #if($Attribute.hasProperty("editor-min"))$Attribute.getPropertyValue("editor-min")#{else}0#end, #if($Attribute.hasProperty("editor-max"))$Attribute.getPropertyValue("editor-max")#{else}1000000#end, #if($Attribute.hasProperty("editor-step"))$Attribute.getPropertyValue("editor-step")#{else}1#end);
 		spinner${Attribute.getNameCamelCase()} = new JSpinner(spinnerModel${Attribute.getNameCamelCase()});
@@ -143,6 +168,14 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 		#end
 		#end
 		#end
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))
+		checkBoxPublic = new JCheckBox();
+		if (UserContext.isManagePublicRightSet()) {
+			checkBoxPublic = new JCheckBox();
+			checkBoxPublic.setSelected(toEdit.getOwner() == null);
+			p.add(checkBoxPublic);
+		}
+		#end
 		return p;
 	}
 
@@ -157,6 +190,8 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 		model.set${Attribute.getNameCamelCase()}(DateTimeUtil.timeFromString(textField${Attribute.getNameCamelCase()}.getText()));
 		#elseif(${Attribute.getTypeName()} == "boolean")
 		model.set${Attribute.getNameCamelCase()}(checkBox${Attribute.getNameCamelCase()}.isSelected());
+		#elseif(${Attribute.getTypeName()} == "byte[]")
+		model.set${Attribute.getNameCamelCase()}(uploadField${Attribute.getNameCamelCase()}.hasContent() ? uploadField${Attribute.getNameCamelCase()}.getContent() : toEdit.get${Attribute.getNameCamelCase()}());
 		#elseif(${Attribute.getTypeName()} == "int")
 		model.set${Attribute.getNameCamelCase()}((Integer) spinner${Attribute.getNameCamelCase()}.getValue());
 		#elseif(${Attribute.getTypeName()} == "BigDecimal")
@@ -169,8 +204,11 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 		model.set${Attribute.getNameCamelCase()}(textField${Attribute.getNameCamelCase()}#if(${Attribute.hasPropertyWithValue("nullable", "true")}).getText().isEmpty() ? null : textField${Attribute.getNameCamelCase()}#end .getText());
 		#end
 		#end
-		#if ($Class.hasPropertyWithName("owner-logic"))
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 		model.setOwner(userConfiguration.getUserId());
+		#end
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))
+		model.setOwner(UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : toEdit.getOwner());
 		#end
 		return model;
 	}

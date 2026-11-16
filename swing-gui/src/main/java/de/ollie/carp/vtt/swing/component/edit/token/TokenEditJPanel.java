@@ -12,8 +12,10 @@ import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
 import java.awt.GridLayout;
 import java.util.Map;
+import java.util.UUID;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.Generated;
@@ -45,7 +47,7 @@ public class TokenEditJPanel extends AbstractEditPanel<Token> {
 
 	@Override
 	protected JPanel createComponentPanel(Token toEdit, Map<String, ItemProvider<?>> itemProviders) {
-		JPanel p = new JPanel(new GridLayout(UserContext.isManagePublicRightSet() ? 4 : 3, 1, HGAP, VGAP));
+		JPanel p = new JPanel(new GridLayout(UserContext.isManagePublicRightSet() ? 3 + 1 : 3, 1, HGAP, VGAP));
 		textFieldName = new JTextField(toEdit.getName(), 40);
 		p.add(textFieldName);
 		uploadFieldImage = new FileUploadField(toEdit.getImage() != null ? toEdit.getImage().length : -1);
