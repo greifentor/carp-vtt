@@ -1,7 +1,6 @@
 package ${PackageName};
 
 #if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
-import ${Properties.get("core-service-package")}.${ClassName}Service;
 import de.ollie.carp.vtt.swing.UserConfiguration;
 #end
 import ${Properties.get("core-model-package")}.${ClassName};

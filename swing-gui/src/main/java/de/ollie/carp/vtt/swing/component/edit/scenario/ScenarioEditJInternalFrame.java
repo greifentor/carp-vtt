@@ -1,6 +1,5 @@
 package de.ollie.carp.vtt.swing.component.edit.scenario;
 
-import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;

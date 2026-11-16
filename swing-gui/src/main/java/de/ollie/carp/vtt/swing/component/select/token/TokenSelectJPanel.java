@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.swing.component.select.token;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenImpl;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.edit.token.TokenEditJInternalFrame;
@@ -60,7 +61,7 @@ public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements Se
 
 	@Override
 	protected void createEditInternalFrame(Token selected) {
-		new TokenEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane());
+		new TokenEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane(), userConfiguration);
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements Se
 		model.setId(UUID.randomUUID());
 		model.setImage(null);
 		model.setName("");
-		model.setOwner(userConfiguration.getUserId() != null ? userConfiguration.getUserId() : null);
+		model.setOwner(null);
 		model.setTokenSize(null);
 		return model;
 	}

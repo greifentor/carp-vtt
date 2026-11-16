@@ -1,6 +1,5 @@
 package de.ollie.carp.vtt.swing.component.edit.party;
 
-import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;

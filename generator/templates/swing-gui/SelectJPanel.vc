@@ -84,12 +84,14 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 
 	@Override
 	protected AbstractSelectionTableModel<${ClassName}> createSelectionModel() {
-		return new AbstractSelectionTableModel<${ClassName}>(getObjectsToSelect(), #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))"${Attribute.getCamelCaseNameSeparated(" ")}"#if($foreach.hasNext), #end#end) {
+		return new AbstractSelectionTableModel<${ClassName}>(getObjectsToSelect(), #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))#if($Attribute.hasProperty("suppress-to-selection"))#else"${Attribute.getCamelCaseNameSeparated(" ")}"#if($foreach.hasNext), #end#end#end) {
 			@Override
 			protected Object getColumnValueFor(${ClassName} t, int columnIndex) {
 				return switch (columnIndex) {
 					#set($count = 0)
 					#foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValue("editor-position"))
+					#if($Attribute.hasProperty("suppress-to-selection"))
+					#else
 					#if($Attribute.isReference() == true)
 					case $count -> (t.get${Attribute.getNameCamelCase()}() != null ? t.get${Attribute.getNameCamelCase()}().getName() : "-");
 					#elseif($Attribute.getTypeName() == "LocalDate")
@@ -104,6 +106,7 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 					case $count -> t.get${Attribute.getNameCamelCase()}();
 					#end
 					#set($count = $count + 1)
+					#end
 					#end
 					default -> null;
 				};
