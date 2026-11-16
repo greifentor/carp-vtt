@@ -46,13 +46,12 @@ public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements Se
 
 	@Override
 	protected AbstractSelectionTableModel<Token> createSelectionModel() {
-		return new AbstractSelectionTableModel<Token>(getObjectsToSelect(), "Name", "Image", "Token Size") {
+		return new AbstractSelectionTableModel<Token>(getObjectsToSelect(), "Name", "Token Size") {
 			@Override
 			protected Object getColumnValueFor(Token t, int columnIndex) {
 				return switch (columnIndex) {
 					case 0 -> t.getName();
-					case 1 -> t.getImage();
-					case 2 -> t.getTokenSize();
+					case 1 -> t.getTokenSize();
 					default -> null;
 				};
 			}
