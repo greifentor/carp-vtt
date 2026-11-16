@@ -10,23 +10,15 @@ import lombok.Generated;
  */
 @Generated
 public interface Token extends OwnerProvider, TokenInfoProvider {
-	@Override
 	UUID getId();
-
-	@Override
 	byte[] getImage();
-
-	@Override
 	String getName();
-
-	@Override
+	UUID getOwner();
 	TokenSize getTokenSize();
 
 	void setId(UUID id);
-
 	void setImage(byte[] image);
-
 	void setName(String name);
-
+	void setOwner(UUID owner);
 	void setTokenSize(TokenSize tokenSize);
 }

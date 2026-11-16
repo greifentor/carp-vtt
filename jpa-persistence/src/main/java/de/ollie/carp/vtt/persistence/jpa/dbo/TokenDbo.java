@@ -33,6 +33,9 @@ public class TokenDbo {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
+	@Column(name = "OWNER", nullable = true)
+	private UUID owner;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_SIZE", nullable = true)
 	private TokenSizeDbo tokenSize;

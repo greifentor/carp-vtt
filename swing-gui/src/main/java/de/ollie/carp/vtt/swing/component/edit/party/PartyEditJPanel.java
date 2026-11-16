@@ -10,7 +10,6 @@ import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
 import java.awt.GridLayout;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.swing.JComboBox;
