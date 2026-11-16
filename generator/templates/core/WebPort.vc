@@ -1,6 +1,9 @@
 package ${PackageName};
 
 import ${Properties.get("core-model-package")}.${ClassName};
+#if ($Class.hasPropertyWithName("synchronize-up"))
+import java.util.List;
+#end
 import java.util.UUID;
 import lombok.Generated;
 
@@ -22,7 +25,7 @@ public interface ${ClassName}WebPort {
 	void push${ClassName}(${ClassName} toPush);
 
 	#if ($Class.hasPropertyWithName("synchronize-up"))
-	void synchronize${ClassName}s(SynchronizationObserver observer);
+	void synchronize${ClassName}s(SynchronizationObserver observer, List<${ClassName}> ${ClassNameAsAttribute}s);
 
 	#end
 

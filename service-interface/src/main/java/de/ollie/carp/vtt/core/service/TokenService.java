@@ -14,7 +14,7 @@ import lombok.Generated;
  */
 @Generated
 public interface TokenService {
-	Token createToken(byte[] image, String name, TokenSize tokenSize);
+	Token createToken(byte[] image, String name, UUID owner, TokenSize tokenSize);
 
 	void deleteToken(UUID id);
 

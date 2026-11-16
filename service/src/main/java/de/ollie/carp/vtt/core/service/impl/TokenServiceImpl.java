@@ -27,8 +27,8 @@ class TokenServiceImpl implements TokenService {
 	private final TokenWebPort tokenWebPort;
 
 	@Override
-	public Token createToken(byte[] image, String name, TokenSize tokenSize) {
-		return tokenPersistencePort.create(image, name, tokenSize);
+	public Token createToken(byte[] image, String name, UUID owner, TokenSize tokenSize) {
+		return tokenPersistencePort.create(image, name, owner, tokenSize);
 	}
 
 	@Override

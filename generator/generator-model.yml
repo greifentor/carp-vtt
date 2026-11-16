@@ -20,6 +20,8 @@ classes:
         properties:
           - name: suppress-to-string
             value: true
+          - name: suppress-to-selection
+            value: true
         type:
           name: byte[]
       - name: name
@@ -226,7 +228,7 @@ classes:
       - name: order
         value: name
       - name: owner-logic
-        value: private-only
+        value: public-private
       - name: rest-pushes
         value: true
       - name: synchronize-up
@@ -251,6 +253,8 @@ classes:
           - name: editor-position
             value: 2
           - name: suppress-to-string
+            value: true
+          - name: suppress-to-selection
             value: true
         type:
           name: byte[]
