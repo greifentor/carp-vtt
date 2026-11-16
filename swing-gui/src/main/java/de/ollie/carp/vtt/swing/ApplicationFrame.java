@@ -181,7 +181,7 @@ public class ApplicationFrame
 			// )
 			// .prepare()
 			// .setVisible(true);
-			new TokenSelectJInternalFrame(tokenService, desktopPane, editDialogComponentFactory, userConfiguration);
+			new TokenSelectJInternalFrame(tokenService, desktopPane, editDialogComponentFactory);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_PARTY) {
 			new PartySelectJInternalFrame(partyService, desktopPane, editDialogComponentFactory, userConfiguration);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_SCENARIO) {

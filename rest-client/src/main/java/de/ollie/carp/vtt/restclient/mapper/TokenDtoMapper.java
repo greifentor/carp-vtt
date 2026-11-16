@@ -13,6 +13,7 @@ public class TokenDtoMapper {
 		dto.setId(tokenUpdateEvent.getToken().getId());
 		dto.setImageContent(tokenUpdateEvent.getToken().getImage());
 		dto.setName(tokenUpdateEvent.getToken().getName());
+		dto.setOwner(tokenUpdateEvent.getToken().getOwner());
 		dto.setTokenSize(TokenSizeDto.valueOf(tokenUpdateEvent.getToken().getTokenSize().name()));
 		return dto;
 	}

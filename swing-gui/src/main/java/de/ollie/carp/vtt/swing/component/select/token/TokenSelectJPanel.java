@@ -4,7 +4,6 @@ import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenImpl;
 import de.ollie.carp.vtt.core.service.model.TokenSize;
-import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.edit.token.TokenEditJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
@@ -24,19 +23,16 @@ import lombok.Generated;
 public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements SelectionPanelObserver {
 
 	private final TokenService tokenService;
-	private final UserConfiguration userConfiguration;
 
 	public TokenSelectJPanel(
 		TokenService tokenService,
 		String className,
 		JDesktopPane desktopPane,
 		EditDialogComponentFactory editDialogComponentFactory,
-		SelectionPanelObserver observer,
-		UserConfiguration userConfiguration
+		SelectionPanelObserver observer
 	) {
 		super(desktopPane, className + "s", editDialogComponentFactory, observer);
 		this.tokenService = tokenService;
-		this.userConfiguration = userConfiguration;
 		updateTableSelection();
 	}
 
@@ -61,7 +57,7 @@ public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements Se
 
 	@Override
 	protected void createEditInternalFrame(Token selected) {
-		new TokenEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane(), userConfiguration);
+		new TokenEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane());
 	}
 
 	@Override

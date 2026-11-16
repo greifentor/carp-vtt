@@ -22,29 +22,19 @@ public class TokenSelectJInternalFrame extends AbstractSelectJInternalFrame<Toke
 	private static final String CLASS_NAME = "Token";
 
 	private final TokenService tokenService;
-	private final UserConfiguration userConfiguration;
 
 	public TokenSelectJInternalFrame(
 		TokenService tokenService,
 		JDesktopPane desktopPane,
-		EditDialogComponentFactory editDialogComponentFactory,
-		UserConfiguration userConfiguration
+		EditDialogComponentFactory editDialogComponentFactory
 	) {
 		super(desktopPane, CLASS_NAME, editDialogComponentFactory);
 		this.tokenService = tokenService;
-		this.userConfiguration = userConfiguration;
 		finishConstruct();
 	}
 
 	@Override
 	protected AbstractSelectJPanel<Token> createSelectPanel() {
-		return new TokenSelectJPanel(
-			tokenService,
-			CLASS_NAME,
-			desktopPane,
-			editDialogComponentFactory,
-			this,
-			userConfiguration
-		);
+		return new TokenSelectJPanel(tokenService, CLASS_NAME, desktopPane, editDialogComponentFactory, this);
 	}
 }

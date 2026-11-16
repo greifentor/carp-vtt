@@ -501,6 +501,10 @@ components:
           format: byte
           description: Base64-encoded image content
           example: "iVBORw0KGgoAAAANSUhEUgAA..."
+        owner:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
         tokenSize:
           $ref: '#/components/schemas/TokenSizeDto'
     TokenSizeDto:
