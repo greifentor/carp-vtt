@@ -33,7 +33,7 @@ public class ${ClassName}SelectJInternalFrame
 	private static final String CLASS_NAME = "${ClassName}";
 
 	private final ${ClassName}Service ${ClassNameAsAttribute}Service;
-	#if ($Class.hasPropertyWithName("owner-logic"))
+	#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 	private final UserConfiguration userConfiguration;
 	#end
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
@@ -48,12 +48,12 @@ public class ${ClassName}SelectJInternalFrame
 		${TypeClassName.getName()}Service ${TypeClassName.getNameAsAttribute()}Service,
 #end
 		JDesktopPane desktopPane,
-		EditDialogComponentFactory editDialogComponentFactory#if ($Class.hasPropertyWithName("owner-logic")),
+		EditDialogComponentFactory editDialogComponentFactory#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only")),
 		UserConfiguration userConfiguration#end
 	) {
 		super(desktopPane, CLASS_NAME, editDialogComponentFactory);
 		this.${ClassNameAsAttribute}Service = ${ClassNameAsAttribute}Service;
-		#if ($Class.hasPropertyWithName("owner-logic"))
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 		this.userConfiguration = userConfiguration;
 		#end
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
@@ -74,7 +74,7 @@ public class ${ClassName}SelectJInternalFrame
 				CLASS_NAME,
 				desktopPane,
 				editDialogComponentFactory,
-				this#if ($Class.hasPropertyWithName("owner-logic")),
+				this#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only")),
 				userConfiguration#end);
 	}
 }

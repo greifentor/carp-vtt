@@ -10,7 +10,7 @@ import ${Properties.get("core-service-package")}.${TypeClassName}Service;
 #end
 import ${Properties.get("core-model-package")}.${ClassName};
 import ${Properties.get("core-model-package")}.${ClassName}Impl;
-#if ($Class.hasPropertyWithName("owner-logic"))
+#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 import de.ollie.carp.vtt.swing.UserConfiguration;
 #end
 import ${Properties.get("swing-gui-package")}.component.EditDialogComponentFactory;
@@ -40,7 +40,7 @@ import ${Import};
 public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}> implements SelectionPanelObserver {
 
 	private final ${ClassName}Service ${ClassNameAsAttribute}Service;
-	#if ($Class.hasPropertyWithName("owner-logic"))
+	#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 	private final UserConfiguration userConfiguration;
 	#end
 #foreach($Attribute in $Class.getAttributesWithPropertySetSortedByPropertyValueReferencesOnly("editor-position"))
@@ -57,7 +57,7 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 		String className,
 		JDesktopPane desktopPane,
 		EditDialogComponentFactory editDialogComponentFactory,
-		SelectionPanelObserver observer#if ($Class.hasPropertyWithName("owner-logic")),
+		SelectionPanelObserver observer#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only")),
 		UserConfiguration userConfiguration#end
 	) {
 		super(desktopPane, className + "s", editDialogComponentFactory, observer);
@@ -66,7 +66,7 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 #set($TypeClassName = $Attribute.getTypeClassType())
 		this.${TypeClassName.getNameAsAttribute()}Service = ${TypeClassName.getNameAsAttribute()}Service;
 #end
-		#if ($Class.hasPropertyWithName("owner-logic"))
+		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only"))
 		this.userConfiguration = userConfiguration;
 		#end
 		updateTableSelection();
@@ -124,7 +124,7 @@ public class ${ClassName}SelectJPanel extends AbstractSelectJPanel<${ClassName}>
 #end
 				getEditDialogComponentFactory(),
 				this,
-				getDesktopPane()#if ($Class.hasPropertyWithName("owner-logic")),
+				getDesktopPane()#if ($Class.hasPropertyWithNameAndValue("owner-logic", "private-only")),
 				userConfiguration#end
 		);
 	}
