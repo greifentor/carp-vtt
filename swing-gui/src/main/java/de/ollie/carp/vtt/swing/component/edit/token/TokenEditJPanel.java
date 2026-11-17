@@ -12,10 +12,8 @@ import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
 import java.awt.GridLayout;
 import java.util.Map;
-import java.util.UUID;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lombok.Generated;
@@ -71,7 +69,9 @@ public class TokenEditJPanel extends AbstractEditPanel<Token> {
 		model.setName(textFieldName.getText());
 		model.setImage(uploadFieldImage.hasContent() ? uploadFieldImage.getContent() : toEdit.getImage());
 		model.setTokenSize(((TokenSize) comboBoxTokenSize.getSelectedItem()));
-		model.setOwner(UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : toEdit.getOwner());
+		model.setOwner(
+			UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : UserContext.getUserId()
+		);
 		return model;
 	}
 }

@@ -17,7 +17,7 @@ public class TokenWebAdapter implements TokenWebPort {
 
 	@Override
 	public void pushToken(Token toPush) {
-		tokenClient.updateToken(new TokenUpdateEvent(null, toPush));
+		tokenClient.updateToken(new TokenUpdateEvent(toPush.getId(), toPush));
 	}
 
 	@Override

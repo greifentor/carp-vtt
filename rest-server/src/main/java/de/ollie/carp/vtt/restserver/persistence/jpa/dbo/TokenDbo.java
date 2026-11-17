@@ -33,6 +33,9 @@ public class TokenDbo {
 	@Column(name = "IMAGE", nullable = true)
 	private byte[] imageContent;
 
+	@Column(name = "OWNER", nullable = true)
+	private UUID owner;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TOKEN_SIZE", nullable = true)
 	private TokenSizeDbo tokenSize;
