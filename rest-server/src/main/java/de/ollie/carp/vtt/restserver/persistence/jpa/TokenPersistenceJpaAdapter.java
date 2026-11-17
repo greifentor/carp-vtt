@@ -26,7 +26,7 @@ public class TokenPersistenceJpaAdapter implements TokenPersistencePort {
 	private final TokenDboRepository repository;
 
 	@Override
-	public Token create(String name, byte[] imageContent, TokenSize tokenSize) {
+	public Token create(String name, byte[] imageContent, UUID owner, TokenSize tokenSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}

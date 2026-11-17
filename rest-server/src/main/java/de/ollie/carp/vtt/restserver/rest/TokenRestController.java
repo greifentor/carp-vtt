@@ -19,7 +19,6 @@ public class TokenRestController implements TokenApi {
 
 	@Override
 	public ResponseEntity<TokenDto> updateToken(@Valid TokenDto tokenDto) {
-		System.out.println(tokenDto);
 		Token token = tokenDtoMapper.toModel(tokenDto);
 		token = tokenService.updateToken(token);
 		return ResponseEntity.ofNullable(tokenDtoMapper.toDto(token));

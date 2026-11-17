@@ -22,5 +22,6 @@ public class Token {
 	@Exclude
 	private byte[] imageContent;
 
+	private UUID owner;
 	private TokenSize tokenSize;
 }
