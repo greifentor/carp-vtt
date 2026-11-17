@@ -208,7 +208,7 @@ public class ${ClassName}EditJPanel extends AbstractEditPanel<${ClassName}> {
 		model.setOwner(userConfiguration.getUserId());
 		#end
 		#if ($Class.hasPropertyWithNameAndValue("owner-logic", "public-private"))
-		model.setOwner(UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : toEdit.getOwner());
+		model.setOwner(UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : UserContext.getUserId());
 		#end
 		return model;
 	}
