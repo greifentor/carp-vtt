@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.swing;
 
+import de.ollie.carp.vtt.core.service.BattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.BattleMapService;
 import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
@@ -16,7 +17,7 @@ import de.ollie.carp.vtt.core.service.port.web.BattleMapWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenPositionWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
-import de.ollie.carp.vtt.swing.component.BattleMapSelectionDialog;
+import de.ollie.carp.vtt.swing.component.BattleMapPartyScenarioSelectionDialog;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar;
 import de.ollie.carp.vtt.swing.component.CarpVttMenuBar.MenuItemIdentifier;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
@@ -54,6 +55,9 @@ public class ApplicationFrame
 
 	@Inject
 	private BattleMapService battleMapService;
+
+	@Inject
+	private BattleMapPartyScenarioService battleMapPartyScenarioService;
 
 	@Inject
 	private BattleMapWebPort battleMapWebPort;
@@ -161,26 +165,6 @@ public class ApplicationFrame
 				.prepare()
 				.setVisible(true);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_TOKEN) {
-			// new TokenEditJInternalFrame(
-			// new TokenImpl(),
-			// swingComponentFactory,
-			// desktopPane,
-			// new TokenEditJInternalFrame.Observer() {
-			// @Override
-			// public void deleted() {
-			// // NOP
-			// }
-			//
-			// @Override
-			// public void updated(Token tokenToSave) {
-			// tokenToSave = tokenService.updateToken(tokenToSave);
-			// tokenPositionWebPort.pushTokenUpdate(new
-			// TokenUpdateEvent(uuidService.create(), tokenToSave));
-			// }
-			// }
-			// )
-			// .prepare()
-			// .setVisible(true);
 			new TokenSelectJInternalFrame(tokenService, desktopPane, editDialogComponentFactory);
 		} else if (selectedMenuItem == MenuItemIdentifier.EDIT_PARTY) {
 			new PartySelectJInternalFrame(partyService, desktopPane, editDialogComponentFactory, userConfiguration);
@@ -189,26 +173,34 @@ public class ApplicationFrame
 		} else if (selectedMenuItem == MenuItemIdentifier.FILE_QUIT) {
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
-			BattleMap selectedBattleMap = new BattleMapSelectionDialog(this, battleMapService.findAll()).getSelectedItem();
-			if (selectedBattleMap != null) {
-				new BattleMapJInternalFrame(
-					desktopPane,
-					selectedBattleMap,
-					coordinatesToFieldConverter,
-					dndTokenDataService,
-					dndTokenBattleMapPartyScenarioService,
-					graphicsManager,
-					partyService,
-					tokenHitManager,
-					tokenPositionService,
-					tokenService,
-					tokenPositionWebPort,
-					tokenWebPort,
-					uuidService
-				)
-					.prepare()
-					.setVisible(true);
-			}
+			new BattleMapPartyScenarioSelectionDialog(
+				null,
+				battleMapService,
+				battleMapPartyScenarioService,
+				partyService,
+				scenarioService
+			);
+			// BattleMap selectedBattleMap = new BattleMapSelectionDialog(this,
+			// battleMapService.findAll()).getSelectedItem();
+			// if (selectedBattleMap != null) {
+			// new BattleMapJInternalFrame(
+			// desktopPane,
+			// selectedBattleMap,
+			// coordinatesToFieldConverter,
+			// dndTokenDataService,
+			// dndTokenBattleMapPartyScenarioService,
+			// graphicsManager,
+			// partyService,
+			// tokenHitManager,
+			// tokenPositionService,
+			// tokenService,
+			// tokenPositionWebPort,
+			// tokenWebPort,
+			// uuidService
+			// )
+			// .prepare()
+			// .setVisible(true);
+			// }
 		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_BATTLE_MAPS) {
 			battleMapWebPort.synchronizeBattleMaps((synced, total) ->
 				System.out.println("Battle Map Synced " + synced + " of " + total)
