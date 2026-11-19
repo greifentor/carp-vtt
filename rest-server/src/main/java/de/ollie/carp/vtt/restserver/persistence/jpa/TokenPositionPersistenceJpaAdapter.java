@@ -1,7 +1,9 @@
 package de.ollie.carp.vtt.restserver.persistence.jpa;
 
+import de.ollie.carp.vtt.restserver.core.service.model.MapPartyScenario;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import de.ollie.carp.vtt.restserver.core.service.port.persistence.TokenPositionPersistencePort;
+import de.ollie.carp.vtt.restserver.persistence.jpa.mapper.MapPartyScenarioDboMapper;
 import de.ollie.carp.vtt.restserver.persistence.jpa.mapper.TokenPositionDboMapper;
 import de.ollie.carp.vtt.restserver.persistence.jpa.repository.TokenPositionDboRepository;
 import jakarta.inject.Named;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersistencePort {
 
+	private final MapPartyScenarioDboMapper mapPartyScenarioDboMapper;
 	private final TokenPositionDboMapper mapper;
 	private final TokenPositionDboRepository repository;
 
@@ -43,6 +46,11 @@ public class TokenPositionPersistenceJpaAdapter implements TokenPositionPersiste
 	@Override
 	public void deleteById(UUID id) {
 		repository.deleteById(id);
+	}
+
+	@Override
+	public List<MapPartyScenario> findAllImageDataDistinct() {
+		return mapPartyScenarioDboMapper.toModel(repository.findAllBattleMapPartyScenarios());
 	}
 
 	@Override

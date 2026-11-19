@@ -50,4 +50,8 @@ public class BattleMapPartyScenarioTableModel extends AbstractTableModel {
 				return (battleMapPartyScenarios.get(rowIndex)).battleMap().getName();
 		}
 	}
+
+	public BattleMapPartyScenario getItem(int i) {
+		return battleMapPartyScenarios.get(i);
+	}
 }

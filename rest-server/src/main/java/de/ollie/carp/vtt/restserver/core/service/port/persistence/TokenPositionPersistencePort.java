@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.restserver.core.service.port.persistence;
 
+import de.ollie.carp.vtt.restserver.core.service.model.MapPartyScenario;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import jakarta.inject.Named;
 import java.util.List;
@@ -28,6 +29,8 @@ public interface TokenPositionPersistencePort {
 	);
 
 	void deleteById(UUID id);
+
+	List<MapPartyScenario> findAllImageDataDistinct();
 
 	Optional<TokenPosition> findById(UUID id);
 

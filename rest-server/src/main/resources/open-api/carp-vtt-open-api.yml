@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: '3.0.3'
 info:
   title: Battle Map Service API
   version: 1.0.0
@@ -38,7 +38,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDto'
-  /api/v1/images/scenario/{scenarioId}/parties/{partyId}/battlemaps/{battleMapId}:
+  /api/v1/images/scenarios/{scenarioId}/parties/{partyId}/battlemaps/{battleMapId}:
     get:
       tags:
         - Image
@@ -75,6 +75,33 @@ paths:
               schema:
                 type: string
                 format: binary
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /api/v1/images/scenarios:
+    get:
+      tags:
+        - List scenario image data
+      summary: Download a list of scenario image data.
+      operationId: findAllScenarioImageData
+      responses:
+        '200':
+          description: Delivers a list with the data of all available scenario images (not the images itself).
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageInfoDto'
         '400':
           description: Invalid request
           content:
@@ -439,6 +466,15 @@ components:
           type: integer
           format: int32
           example: 4711
+    ImageInfoDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "a name"
+        url:
+          type: string
+          example: "/bla/bla/4711"
     PartyDto:
       type: object
       required:

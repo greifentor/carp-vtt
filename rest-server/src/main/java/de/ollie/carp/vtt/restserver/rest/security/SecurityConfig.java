@@ -29,15 +29,17 @@ public class SecurityConfig {
 			http
 				.csrf(AbstractHttpConfigurer::disable)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+				// .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/error").permitAll().anyRequest().authenticated())
 				.addFilterBefore(
 					new BearerTokenAuthenticationFilter(bearerChecker, userService),
 					UsernamePasswordAuthenticationFilter.class
 				)
 				.exceptionHandling(ex ->
-					ex.authenticationEntryPoint((request, response, authException) ->
-						response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
-					)
+					ex.authenticationEntryPoint((request, response, authException) -> {
+						authException.printStackTrace();
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+					})
 				);
 			return http.build();
 		}

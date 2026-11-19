@@ -27,17 +27,33 @@ public class MapController {
 	// Der externe REST-Endpunkt, der byte[] liefert
 	private static final String IMAGE_SOURCE_URL = "http://localhost:8081/api/v1/images";
 
+	private record ImageInfo(String name, String url) {}
+
 	@GetMapping("/")
 	public String showImage(Model model) {
-		model.addAttribute("imageUrl", "/map");
-		model.addAttribute("backgroundImageUrl", "/background/dnd");
+		try {
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Authorization", "Bearer " + bearerTokenGenerator.create());
+			HttpEntity<Void> entity = new HttpEntity<>(headers);
+			ResponseEntity<ImageInfo[]> response = restTemplate.exchange(
+				IMAGE_SOURCE_URL + "/scenarios",
+				HttpMethod.GET,
+				entity,
+				ImageInfo[].class
+			);
+			model.addAttribute("images", response.getBody());
+			model.addAttribute("imageUrl", "/map");
+			model.addAttribute("backgroundImageUrl", "/background/dnd");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "imageview";
 	}
 
 	@GetMapping(value = "/map", produces = MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<byte[]> getImage() {
 		String s =
-			"/scenario/{scenarioId}/parties/{partyId}/battlemaps/{battleMapId}".replace(
+			"/scenarios/{scenarioId}/parties/{partyId}/battlemaps/{battleMapId}".replace(
 					"{scenarioId}",
 					"60d8b44d-f60f-4b04-b9bb-133b3335db0f"
 				)
@@ -50,7 +66,6 @@ public class MapController {
 		if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
 			return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(response.getBody());
 		}
-
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 }

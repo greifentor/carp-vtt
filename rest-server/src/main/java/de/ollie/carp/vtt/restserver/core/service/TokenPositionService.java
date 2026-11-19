@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.restserver.core.service;
 
+import de.ollie.carp.vtt.restserver.core.service.model.MapPartyScenario;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,8 @@ public interface TokenPositionService {
 	void deleteTokenPosition(UUID id);
 
 	Optional<TokenPosition> findById(UUID id);
+
+	List<MapPartyScenario> findAllImageDataDistinct();
 
 	List<TokenPosition> listTokenPositions();
 

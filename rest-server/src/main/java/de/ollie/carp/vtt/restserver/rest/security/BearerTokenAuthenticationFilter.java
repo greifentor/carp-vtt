@@ -51,11 +51,15 @@ public class BearerTokenAuthenticationFilter extends OncePerRequestFilter {
 			}
 			User user = userService.findById(UUID.fromString(uid)).orElse(null);
 			if (user != null) {
-				System.out.println(user.getKey());
+				System.out.println("*** " + user.getKey());
 				Key key = Keys.hmacShaKeyFor(user.getKey().toString().getBytes(StandardCharsets.UTF_8));
+				System.out.println("1");
 				Jwts.parser().verifyWith((javax.crypto.SecretKey) key).build().parseSignedClaims(token);
+				System.out.println("2");
 				Authentication authentication = new UsernamePasswordAuthenticationToken(uid, null, getAuthorities(user));
+				System.out.println("3");
 				SecurityContextHolder.getContext().setAuthentication(authentication);
+				System.out.println("4 - " + authentication);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

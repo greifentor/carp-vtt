@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.restserver.core.service.impl;
 
 import de.ollie.carp.vtt.restserver.core.service.TokenPositionService;
+import de.ollie.carp.vtt.restserver.core.service.model.MapPartyScenario;
 import de.ollie.carp.vtt.restserver.core.service.model.TokenPosition;
 import de.ollie.carp.vtt.restserver.core.service.port.persistence.TokenPositionPersistencePort;
 import jakarta.inject.Named;
@@ -50,6 +51,11 @@ class TokenPositionServiceImpl implements TokenPositionService {
 	@Override
 	public void deleteTokenPosition(UUID id) {
 		tokenPositionPersistencePort.deleteById(id);
+	}
+
+	@Override
+	public List<MapPartyScenario> findAllImageDataDistinct() {
+		return tokenPositionPersistencePort.findAllImageDataDistinct();
 	}
 
 	@Override

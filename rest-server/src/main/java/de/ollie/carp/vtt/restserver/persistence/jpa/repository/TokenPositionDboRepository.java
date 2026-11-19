@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.restserver.persistence.jpa.repository;
 
+import de.ollie.carp.vtt.restserver.persistence.jpa.dbo.MapPartyScenarioDbo;
 import de.ollie.carp.vtt.restserver.persistence.jpa.dbo.TokenPositionDbo;
 import java.util.List;
 import java.util.UUID;
@@ -16,4 +17,9 @@ import org.springframework.stereotype.Repository;
 public interface TokenPositionDboRepository extends JpaRepository<TokenPositionDbo, UUID> {
 	@Query("SELECT dbo FROM TokenPositionDbo dbo")
 	List<TokenPositionDbo> findAllOrdered();
+
+	@Query(
+		"select distinct new de.ollie.carp.vtt.restserver.persistence.jpa.dbo.MapPartyScenarioDbo(dbo.battleMapId, dbo.partyId, dbo.scenarioId) from TokenPositionDbo dbo"
+	)
+	List<MapPartyScenarioDbo> findAllBattleMapPartyScenarios();
 }

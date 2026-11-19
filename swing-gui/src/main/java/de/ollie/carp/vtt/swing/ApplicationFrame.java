@@ -174,11 +174,29 @@ public class ApplicationFrame
 			System.exit(0);
 		} else if (selectedMenuItem == MenuItemIdentifier.MAP_OPEN) {
 			new BattleMapPartyScenarioSelectionDialog(
-				null,
+				this,
 				battleMapService,
 				battleMapPartyScenarioService,
 				partyService,
-				scenarioService
+				scenarioService,
+				selected ->
+					new BattleMapJInternalFrame(
+						desktopPane,
+						selected.battleMap(),
+						coordinatesToFieldConverter,
+						dndTokenDataService,
+						dndTokenBattleMapPartyScenarioService,
+						graphicsManager,
+						partyService,
+						tokenHitManager,
+						tokenPositionService,
+						tokenService,
+						tokenPositionWebPort,
+						tokenWebPort,
+						uuidService
+					)
+						.prepare()
+						.setVisible(true)
 			);
 			// BattleMap selectedBattleMap = new BattleMapSelectionDialog(this,
 			// battleMapService.findAll()).getSelectedItem();
