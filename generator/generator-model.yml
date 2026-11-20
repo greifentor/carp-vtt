@@ -41,6 +41,8 @@ classes:
         value: true
       - name: suppress-service
         value: true
+      - name: deprecated
+        value: true
     attributes:
       - name: fieldX
         properties:
@@ -63,6 +65,9 @@ classes:
             - name: import
               value: java.math.BigDecimal
   - name: DndTokenBattleMapPartyScenarioData
+    properties:
+      - name: deprecated
+        value: true
     attributes:
       - name: currentHitPoints
         properties:
@@ -170,6 +175,9 @@ classes:
             value: 1
         type:
           name: RuleSystem
+          properties:
+            - name: project-type
+              value: true
   - name: Scenario
     properties:
       - name: generate-service
@@ -279,6 +287,9 @@ classes:
             value: 3
         type:
           name: TokenSize
+          properties:
+            - name: project-type
+              value: true
   - name: TokenBattleMapPartyScenario
     properties:
       - name: suppress-persistence
@@ -357,6 +368,8 @@ classes:
         value: true
       - name: suppress-service
         value: true
+      - name: deprecated
+        value: true
     attributes:
       - name: coordinates
         properties:
@@ -399,6 +412,8 @@ classes:
         value: true
       - name: order
         value: name
+      - name: deprecated
+        value: true
     attributes:
       - name: id
         properties:
