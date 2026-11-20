@@ -14,7 +14,7 @@ import lombok.Generated;
  */
 @Generated
 public interface PartyService {
-	Party createParty(String name, RuleSystem ruleSystem, UUID owner);
+	Party createParty(String name, UUID owner, RuleSystem ruleSystem);
 
 	void deleteParty(UUID id);
 

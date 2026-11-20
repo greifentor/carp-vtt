@@ -26,7 +26,7 @@ public class PartyPersistenceJpaAdapter implements PartyPersistencePort {
 	private final PartyDboRepository repository;
 
 	@Override
-	public Party create(String name, RuleSystem ruleSystem, UUID owner) {
+	public Party create(String name, UUID owner, RuleSystem ruleSystem) {
 		// TODO Auto-generated method stub
 		return null;
 	}

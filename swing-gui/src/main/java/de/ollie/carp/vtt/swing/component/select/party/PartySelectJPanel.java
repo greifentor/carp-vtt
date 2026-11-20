@@ -69,8 +69,8 @@ public class PartySelectJPanel extends AbstractSelectJPanel<Party> implements Se
 		Party model = new PartyImpl();
 		model.setId(UUID.randomUUID());
 		model.setName("");
-		model.setRuleSystem(null);
 		model.setOwner(null);
+		model.setRuleSystem(null);
 		return model;
 	}
 

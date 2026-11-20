@@ -12,11 +12,11 @@ import lombok.Generated;
 public interface Party extends OwnerProvider {
 	UUID getId();
 	String getName();
-	RuleSystem getRuleSystem();
 	UUID getOwner();
+	RuleSystem getRuleSystem();
 
 	void setId(UUID id);
 	void setName(String name);
-	void setRuleSystem(RuleSystem ruleSystem);
 	void setOwner(UUID owner);
+	void setRuleSystem(RuleSystem ruleSystem);
 }

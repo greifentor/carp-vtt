@@ -60,6 +60,9 @@ import ${Properties.get("baselib")}.util.DateTimeUtil;
 import ${Import};
 #end
 
+#if ($Class.hasPropertyWithName("deprecated"))
+@Deprecated
+#end
 /**
  * ${GeneratedCodeMarker}
  *

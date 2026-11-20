@@ -13,6 +13,7 @@ import lombok.Generated;
 @Generated
 public class TokenBattleMapPartyScenarioImpl implements TokenBattleMapPartyScenario {
 
+	private UUID tokenId;
 	private UUID battleMapId;
 	private int counter;
 	private int fieldX;
@@ -20,5 +21,4 @@ public class TokenBattleMapPartyScenarioImpl implements TokenBattleMapPartyScena
 	private UUID id;
 	private UUID partyId;
 	private UUID scenarioId;
-	private UUID tokenId;
 }

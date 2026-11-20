@@ -11,6 +11,9 @@ import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
+#if ($Class.hasPropertyWithName("deprecated"))
+@Deprecated
+#end
 /**
  * ${GeneratedCodeMarker}
  *

@@ -22,6 +22,9 @@ import lombok.RequiredArgsConstructor;
 import ${Import};
 #end
 
+#if ($Class.hasPropertyWithName("deprecated"))
+@Deprecated
+#end
 /**
  * ${GeneratedCodeMarker}
  *

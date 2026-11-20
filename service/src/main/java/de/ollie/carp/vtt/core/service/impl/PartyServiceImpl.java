@@ -27,8 +27,8 @@ class PartyServiceImpl implements PartyService {
 	private final PartyWebPort partyWebPort;
 
 	@Override
-	public Party createParty(String name, RuleSystem ruleSystem, UUID owner) {
-		return partyPersistencePort.create(name, ruleSystem, owner);
+	public Party createParty(String name, UUID owner, RuleSystem ruleSystem) {
+		return partyPersistencePort.create(name, owner, ruleSystem);
 	}
 
 	@Override

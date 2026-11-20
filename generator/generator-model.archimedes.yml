@@ -11,12 +11,12 @@ views:
       - name: Coordinates
         x: 350
         y: 125
-      - name: DndTokenData
-        x: 675
-        y: 125
       - name: DndTokenBattleMapPartyScenarioData
         x: 25
-        y: 900
+        y: 700
+      - name: DndTokenData
+        x: 350
+        y: 700
       - name: Party
         x: 25
         y: 375
@@ -24,17 +24,24 @@ views:
         x: 350
         y: 375
       - name: Token
-        x: 675
-        y: 375
-      - name: TokenData
-        x: 25
-        y: 625
+        x: 1100
+        y: 125
       - name: TokenBattleMapPartyScenario
-        x: 350
-        y: 625
+        x: 1500
+        y: 125
+      - name: TokenData
+        x: 1500
+        y: 475
       - name: TokenTyp
-        x: 675
-        y: 625
+        x: 1100
+        y: 475
+    relations:
+      - table: TokenBattleMapPartyScenario
+        column: tokenId
+        direction-0: LEFT
+        offset-0: 25
+        direction-1: RIGHT
+        offset-1: 25
 tables:
   - name: BattleMap
     background-color: weiß

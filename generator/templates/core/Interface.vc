@@ -5,6 +5,9 @@ import ${Import};
 #end
 import lombok.Generated;
 
+#if ($Class.hasPropertyWithName("deprecated"))
+@Deprecated
+#end
 /**
  * ${GeneratedCodeMarker}
  *

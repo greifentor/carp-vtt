@@ -18,9 +18,9 @@ classes:
               value: java.util.UUID
       - name: imageContent
         properties:
-          - name: suppress-to-string
-            value: true
           - name: suppress-to-selection
+            value: true
+          - name: suppress-to-string
             value: true
         type:
           name: byte[]
@@ -155,24 +155,21 @@ classes:
           properties:
             - name: length
               value: 255
-      - name: ruleSystem
-        properties:
-          - name: nullable
-            value: false
-          - name: editor-position
-            value: 1
-        enum: true
-        type:
-          name: RuleSystem
-          properties:
-            - name: project-type
-              value: true
       - name: owner
         type:
           name: UUID
           properties:
             - name: import
               value: java.util.UUID
+      - name: ruleSystem
+        enum: true
+        properties:
+          - name: nullable
+            value: false
+          - name: editor-position
+            value: 1
+        type:
+          name: RuleSystem
   - name: Scenario
     properties:
       - name: generate-service
@@ -231,9 +228,9 @@ classes:
         value: public-private
       - name: rest-pushes
         value: true
-      - name: synchronize-up
-        value: true
       - name: swing-gui
+        value: true
+      - name: synchronize-up
         value: true
     attributes:
       - name: id
@@ -252,18 +249,18 @@ classes:
         properties:
           - name: editor-position
             value: 2
-          - name: suppress-to-string
-            value: true
           - name: suppress-to-selection
+            value: true
+          - name: suppress-to-string
             value: true
         type:
           name: byte[]
       - name: name
         properties:
-          - name: editor-position
-            value: 1
           - name: nullable
             value: false
+          - name: editor-position
+            value: 1
         type:
           name: String
           properties:
@@ -276,15 +273,12 @@ classes:
             - name: import
               value: java.util.UUID
       - name: tokenSize
+        enum: true
         properties:
           - name: editor-position
             value: 3
-        enum: true
         type:
           name: TokenSize
-          properties:
-            - name: project-type
-              value: true
   - name: TokenBattleMapPartyScenario
     properties:
       - name: suppress-persistence
@@ -292,6 +286,13 @@ classes:
       - name: suppress-service
         value: true
     attributes:
+      - name: tokenId
+        reference: true
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: Token
       - name: battleMapId
         properties:
           - name: nullable
@@ -340,15 +341,6 @@ classes:
             - name: import
               value: java.util.UUID
       - name: scenarioId
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
-      - name: tokenId
         properties:
           - name: nullable
             value: false
