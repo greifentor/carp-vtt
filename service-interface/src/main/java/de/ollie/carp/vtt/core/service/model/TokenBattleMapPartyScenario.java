@@ -10,35 +10,21 @@ import lombok.Generated;
  */
 @Generated
 public interface TokenBattleMapPartyScenario {
-	UUID getTokenId();
-
+	Token getTokenId();
 	UUID getBattleMapId();
-
 	int getCounter();
-
 	int getFieldX();
-
 	int getFieldY();
-
 	UUID getId();
-
 	UUID getPartyId();
-
 	UUID getScenarioId();
 
-	void setTokenId(UUID tokenId);
-
+	void setTokenId(Token tokenId);
 	void setBattleMapId(UUID battleMapId);
-
 	void setCounter(int counter);
-
 	void setFieldX(int fieldX);
-
 	void setFieldY(int fieldY);
-
 	void setId(UUID id);
-
 	void setPartyId(UUID partyId);
-
 	void setScenarioId(UUID scenarioId);
 }

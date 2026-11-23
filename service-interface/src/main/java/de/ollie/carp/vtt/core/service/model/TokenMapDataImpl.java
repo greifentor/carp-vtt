@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.core.service.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.Data;
 import lombok.Generated;
@@ -11,11 +12,12 @@ import lombok.Generated;
  */
 @Data
 @Generated
-public class TokenDataImpl implements TokenData {
+public class TokenMapDataImpl implements TokenMapData {
 
-	private Coordinates coordinates;
-	private int counter;
-	private UUID id;
-	private boolean selected;
+	private BattleMapPartyScenario battleMapPartyScenario;
 	private Token token;
+	private int counter;
+	private BigDecimal fieldX;
+	private BigDecimal fieldY;
+	private UUID id;
 }

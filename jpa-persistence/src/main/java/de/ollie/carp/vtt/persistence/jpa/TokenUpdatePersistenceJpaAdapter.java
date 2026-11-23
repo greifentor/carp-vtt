@@ -3,10 +3,9 @@ package de.ollie.carp.vtt.persistence.jpa;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.core.service.UuidService;
-import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
-import de.ollie.carp.vtt.core.service.model.TokenData;
-import de.ollie.carp.vtt.core.service.model.TokenDataImpl;
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
+import de.ollie.carp.vtt.core.service.model.TokenMapData;
+import de.ollie.carp.vtt.core.service.model.TokenMapDataImpl;
 import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenUpdatePersistencePort;
 import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
@@ -52,7 +51,7 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 	}
 
 	@Override
-	public List<TokenData> findAllByMapPartyScenario(UUID battleMapId, UUID partyId, UUID scenarioId) {
+	public List<TokenMapData> findAllByMapPartyScenario(UUID battleMapId, UUID partyId, UUID scenarioId) {
 		ensure(battleMapId != null, "battle map id cannot be null!");
 		ensure(partyId != null, "party id cannot be null!");
 		ensure(scenarioId != null, "scenario id cannot be null!");
@@ -73,19 +72,17 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 		return map(dbos);
 	}
 
-	private List<TokenData> map(List<TokenMapPartyScenarioDbo> dbos) {
+	private List<TokenMapData> map(List<TokenMapPartyScenarioDbo> dbos) {
 		return dbos
 			.stream()
 			.map(dbo -> {
-				Coordinates coordinates = new CoordinatesImpl();
-				coordinates.setFieldX(dbo.getFieldX());
-				coordinates.setFieldY(dbo.getFieldY());
-				TokenData tokenData = new TokenDataImpl();
-				tokenData.setCoordinates(coordinates);
-				tokenData.setCounter(dbo.getCounter());
-				tokenData.setId(dbo.getId());
-				tokenData.setToken(tokenDboMapper.toModel(dbo.getToken()));
-				return tokenData;
+				TokenMapData tokenMapData = new TokenMapDataImpl();
+				tokenMapData.setFieldX(dbo.getFieldX());
+				tokenMapData.setFieldY(dbo.getFieldY());
+				tokenMapData.setCounter(dbo.getCounter());
+				tokenMapData.setId(dbo.getId());
+				tokenMapData.setToken(tokenDboMapper.toModel(dbo.getToken()));
+				return tokenMapData;
 			})
 			.map(impl -> impl)
 			.toList();
@@ -98,7 +95,7 @@ public class TokenUpdatePersistenceJpaAdapter implements TokenUpdatePersistenceP
 		UUID battleMapId,
 		UUID partyId,
 		UUID scenarioId,
-		Coordinates coordinates,
+		CoordinatesInfoProvider coordinates,
 		int counter
 	) {
 		ensure(coordinates != null, "coordinates can not be null!");

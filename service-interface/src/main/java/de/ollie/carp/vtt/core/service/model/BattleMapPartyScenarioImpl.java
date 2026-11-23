@@ -1,6 +1,7 @@
 package de.ollie.carp.vtt.core.service.model;
 
 import java.util.UUID;
+import lombok.Data;
 import lombok.Generated;
 
 /**
@@ -8,13 +9,12 @@ import lombok.Generated;
  *
  * Remove this comment to suspend class from generation process.
  */
+@Data
 @Generated
-public interface TokenTyp {
-	UUID getId();
-	String getName();
-	byte[] getToken();
+public class BattleMapPartyScenarioImpl implements BattleMapPartyScenario {
 
-	void setId(UUID id);
-	void setName(String name);
-	void setToken(byte[] token);
+	private BattleMap battleMap;
+	private Party party;
+	private Scenario scenario;
+	private UUID id;
 }

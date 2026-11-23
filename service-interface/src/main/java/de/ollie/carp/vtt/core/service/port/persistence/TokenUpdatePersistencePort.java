@@ -1,7 +1,7 @@
 package de.ollie.carp.vtt.core.service.port.persistence;
 
-import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
+import de.ollie.carp.vtt.core.service.model.TokenMapData;
 import de.ollie.carp.vtt.core.service.model.TokenMapPartyScenario;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +11,7 @@ public interface TokenUpdatePersistencePort {
 
 	List<TokenMapPartyScenario> findAll();
 
-	List<TokenData> findAllByMapPartyScenario(UUID mapId, UUID partyId, UUID scenarioId);
+	List<TokenMapData> findAllByMapPartyScenario(UUID mapId, UUID partyId, UUID scenarioId);
 
 	UUID updateTokenPosition(
 		UUID id,
@@ -19,7 +19,7 @@ public interface TokenUpdatePersistencePort {
 		UUID mapId,
 		UUID partyId,
 		UUID scenarioId,
-		Coordinates coordinates,
+		CoordinatesInfoProvider coordinates,
 		int counter
 	);
 }

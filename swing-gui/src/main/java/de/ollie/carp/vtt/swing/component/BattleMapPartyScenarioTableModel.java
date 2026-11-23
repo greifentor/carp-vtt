@@ -43,11 +43,11 @@ public class BattleMapPartyScenarioTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 			case 0:
-				return (battleMapPartyScenarios.get(rowIndex)).party().getName();
+				return (battleMapPartyScenarios.get(rowIndex)).getParty().getName();
 			case 1:
-				return (battleMapPartyScenarios.get(rowIndex)).scenario().getName();
+				return (battleMapPartyScenarios.get(rowIndex)).getScenario().getName();
 			default:
-				return (battleMapPartyScenarios.get(rowIndex)).battleMap().getName();
+				return (battleMapPartyScenarios.get(rowIndex)).getBattleMap().getName();
 		}
 	}
 

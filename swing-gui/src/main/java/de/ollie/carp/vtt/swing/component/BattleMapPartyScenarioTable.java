@@ -7,7 +7,7 @@ import javax.swing.JTable;
 public class BattleMapPartyScenarioTable extends JTable {
 
 	public BattleMapPartyScenarioTable(BattleMapPartyScenarioService battleMapPartyScenarioService) {
-		setModel(new BattleMapPartyScenarioTableModel(battleMapPartyScenarioService.findAll()));
+		setModel(new BattleMapPartyScenarioTableModel(battleMapPartyScenarioService.listBattleMapPartyScenarios()));
 		getSelectionModel().addListSelectionListener(this);
 	}
 

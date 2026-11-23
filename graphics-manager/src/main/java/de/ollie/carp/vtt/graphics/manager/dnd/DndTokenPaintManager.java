@@ -1,6 +1,6 @@
 package de.ollie.carp.vtt.graphics.manager.dnd;
 
-import de.ollie.carp.vtt.core.service.model.DndTokenBattleMapPartyScenarioData;
+import de.ollie.carp.vtt.core.service.model.DndTokenMapData;
 import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.graphics.manager.model.TokenPaintManager;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class DndTokenPaintManager implements TokenPaintManager {
 
-	private DndTokenBattleMapPartyScenarioData dtbmps;
+	private DndTokenMapData dtmd;
 	private int maxHitPoints;
 	private TokenSize tokenSize;
 
@@ -23,7 +23,7 @@ public class DndTokenPaintManager implements TokenPaintManager {
 		graphics.setColor(Color.BLACK);
 		graphics.drawRect(x, y, tokenSize.getFields() * 50, 3);
 		int hundred = tokenSize.getFields() * 50 - 2;
-		int length = (int) (((100.0 / maxHitPoints) * dtbmps.getCurrentHitPoints()) * (hundred / 100.0));
+		int length = (int) (((100.0 / maxHitPoints) * dtmd.getCurrentHitPoints()) * (hundred / 100.0));
 		graphics.setColor(Color.GREEN);
 		graphics.fillRect(x + 1, y + 1, length, 1);
 	}
@@ -34,6 +34,6 @@ public class DndTokenPaintManager implements TokenPaintManager {
 	}
 
 	public void decreaseHitPoints(int decrease) {
-		dtbmps.setCurrentHitPoints(dtbmps.getCurrentHitPoints() - decrease);
+		dtmd.setCurrentHitPoints(dtmd.getCurrentHitPoints() - decrease);
 	}
 }

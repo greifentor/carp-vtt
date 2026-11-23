@@ -3,7 +3,7 @@ package de.ollie.carp.vtt.core.service.model.event;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.core.service.model.BattleMap;
-import de.ollie.carp.vtt.core.service.model.Coordinates;
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.Token;
@@ -24,7 +24,7 @@ public class TokenPositionUpdateEvent {
 	private Token token;
 	private BattleMap battleMap;
 	private int counter;
-	private Coordinates coordinates;
+	private CoordinatesInfoProvider coordinates;
 	private Party party;
 	private Scenario scenario;
 	private boolean selected;
@@ -34,13 +34,13 @@ public class TokenPositionUpdateEvent {
 		Token token,
 		BattleMap battleMap,
 		int counter,
-		Coordinates coordinates,
+		CoordinatesInfoProvider coordinates,
 		Party party,
 		Scenario scenario,
 		boolean selected
 	) {
-		ensure(coordinates != null, "coordinates cannot be null!");
 		ensure(battleMap != null, "map cannot be null!");
+		ensure(coordinates != null, "coordinates cannot be null!");
 		ensure(id != null, "id cannot be null!");
 		ensure(party != null, "party cannot be null!");
 		ensure(scenario != null, "scenario cannot be null!");

@@ -61,7 +61,7 @@ generators:
       - name: target-path
         value: service-interface/src/main/java
   - type: CLASS
-    generate-when: classModel Load generate-service HasProperty
+    suppress-when: classModel Load suppress-service HasProperty
     package: de.ollie.carp.vtt.core.service
     target-file-name: ${UnitName}Service
     path: generator
@@ -70,7 +70,7 @@ generators:
       - name: target-path
         value: service-interface/src/main/java
   - type: CLASS
-    generate-when: classModel Load generate-service HasProperty
+    suppress-when: classModel Load suppress-service HasProperty
     package: de.ollie.carp.vtt.core.service.impl
     target-file-name: ${UnitName}ServiceImpl
     path: generator
@@ -79,7 +79,7 @@ generators:
       - name: target-path
         value: service/src/main/java
   - type: CLASS
-    generate-when: classModel Load rest-pushes HasProperty
+    suppress-when: classModel Load suppress-service HasProperty
     package: de.ollie.carp.vtt.core.service.port.web
     target-file-name: ${UnitName}WebPort
     path: generator

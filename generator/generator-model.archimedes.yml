@@ -8,77 +8,128 @@ views:
       - name: BattleMap
         x: 25
         y: 125
+      - name: BattleMapPartyScenario
+        x: 25
+        y: 400
       - name: Coordinates
-        x: 350
+        x: 725
         y: 125
-      - name: DndTokenBattleMapPartyScenarioData
-        x: 25
-        y: 700
       - name: DndTokenData
-        x: 350
-        y: 700
+        x: 725
+        y: 750
+      - name: DndTokenMapData
+        x: 375
+        y: 750
       - name: Party
-        x: 25
-        y: 375
-      - name: Scenario
         x: 350
-        y: 375
+        y: 125
+      - name: Scenario
+        x: 25
+        y: 750
       - name: Token
-        x: 1100
-        y: 125
-      - name: TokenBattleMapPartyScenario
-        x: 1500
-        y: 125
-      - name: TokenData
-        x: 1500
-        y: 475
-      - name: TokenTyp
-        x: 1100
-        y: 475
+        x: 725
+        y: 400
+      - name: TokenMapData
+        x: 350
+        y: 400
     relations:
-      - table: TokenBattleMapPartyScenario
-        column: tokenId
-        direction-0: LEFT
+      - table: BattleMapPartyScenario
+        column: battleMap
+        direction-0: UP
         offset-0: 25
+        direction-1: DOWN
+        offset-1: 25
+      - table: BattleMapPartyScenario
+        column: party
+        direction-0: RIGHT
+        offset-0: 25
+        direction-1: LEFT
+        offset-1: 25
+        points:
+          - x: 325
+            y: 425
+          - x: 325
+            y: 150
+      - table: BattleMapPartyScenario
+        column: scenario
+        direction-0: DOWN
+        offset-0: 25
+        direction-1: UP
+        offset-1: 25
+      - table: TokenMapData
+        column: battleMapPartyScenario
+        direction-0: LEFT
+        offset-0: 50
         direction-1: RIGHT
+        offset-1: 50
+      - table: TokenMapData
+        column: token
+        direction-0: RIGHT
+        offset-0: 25
+        direction-1: LEFT
         offset-1: 25
 tables:
   - name: BattleMap
-    background-color: weiß
+    background-color: pastell-rot
+    font-color: schwarz
+  - name: BattleMapPartyScenario
+    background-color: goldgelb
     font-color: schwarz
   - name: Coordinates
-    background-color: weiß
-    font-color: schwarz
-  - name: DndTokenBattleMapPartyScenarioData
-    background-color: weiß
+    background-color: hellgrau
     font-color: schwarz
   - name: DndTokenData
-    background-color: weiß
+    background-color: grün
+    font-color: schwarz
+  - name: DndTokenMapData
+    background-color: orange
     font-color: schwarz
   - name: Party
-    background-color: weiß
+    background-color: pastell-lila
     font-color: schwarz
   - name: Scenario
-    background-color: weiß
+    background-color: pastell-blau
     font-color: schwarz
   - name: Token
-    background-color: weiß
+    background-color: pastell-grün
     font-color: schwarz
-  - name: TokenBattleMapPartyScenario
-    background-color: weiß
-    font-color: schwarz
-  - name: TokenData
-    background-color: weiß
-    font-color: schwarz
-  - name: TokenTyp
-    background-color: weiß
+  - name: TokenMapData
+    background-color: goldgelb
     font-color: schwarz
 colors:
-  - name: weiß
-    red: 255
-    green: 255
-    blue: 255
+  - name: pastell-rot
+    red: 244
+    green: 165
+    blue: 191
   - name: schwarz
     red: 0
     green: 0
     blue: 0
+  - name: goldgelb
+    red: 255
+    green: 225
+    blue: 0
+  - name: hellgrau
+    red: 192
+    green: 192
+    blue: 192
+  - name: grün
+    red: 0
+    green: 255
+    blue: 0
+  - name: orange
+    red: 255
+    green: 200
+    blue: 0
+  - name: pastell-lila
+    red: 244
+    green: 211
+    blue: 255
+  - name: pastell-blau
+    red: 211
+    green: 247
+    blue: 255
+  - name: pastell-grün
+    red: 211
+    green: 255
+    blue: 234

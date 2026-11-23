@@ -17,9 +17,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-@Entity(name = "DndTokenBattleMapPartyScenarioDataDbo")
-@Table(name = "DND_TOKEN_BATTLE_MAP_PARTY_SCENARIO_DATA")
-public class DndTokenBattleMapPartyScenarioDataDbo {
+@Entity(name = "DndTokenMapDataDbo")
+@Table(name = "DND_TOKEN_MAP_DATA")
+public class DndTokenMapDataDbo {
 
 	@Column(name = "CURRENT_HIT_POINTS", nullable = false)
 	private int currentHitPoints;

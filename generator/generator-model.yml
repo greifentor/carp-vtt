@@ -33,6 +33,49 @@ classes:
           properties:
             - name: length
               value: 255
+  - name: BattleMapPartyScenario
+    attributes:
+      - name: battleMap
+        reference: true
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: BattleMap
+          properties:
+            - name: project-type
+              value: true
+      - name: party
+        reference: true
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: Party
+          properties:
+            - name: project-type
+              value: true
+      - name: scenario
+        reference: true
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: Scenario
+          properties:
+            - name: project-type
+              value: true
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
   - name: Coordinates
     properties:
       - name: implements
@@ -41,15 +84,13 @@ classes:
         value: true
       - name: suppress-service
         value: true
-      - name: deprecated
-        value: true
     attributes:
       - name: fieldX
         properties:
           - name: nullable
             value: false
-          - name: id
-            value: true
+          - name: import
+            value: java.math.BigDecimal
         type:
           name: BigDecimal
           properties:
@@ -59,15 +100,33 @@ classes:
         properties:
           - name: nullable
             value: false
+          - name: import
+            value: java.math.BigDecimal
         type:
           name: BigDecimal
           properties:
             - name: import
               value: java.math.BigDecimal
-  - name: DndTokenBattleMapPartyScenarioData
-    properties:
-      - name: deprecated
-        value: true
+  - name: DndTokenData
+    attributes:
+      - name: hitPoints
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: int
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+          - name: id
+            value: true
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+  - name: DndTokenMapData
     attributes:
       - name: currentHitPoints
         properties:
@@ -104,29 +163,8 @@ classes:
             value: false
         type:
           name: int
-  - name: DndTokenData
-    attributes:
-      - name: hitPoints
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: int
-      - name: id
-        properties:
-          - name: nullable
-            value: false
-          - name: id
-            value: true
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
   - name: Party
     properties:
-      - name: generate-service
-        value: true
       - name: implements
         value: OwnerProvider
       - name: order
@@ -180,8 +218,6 @@ classes:
               value: true
   - name: Scenario
     properties:
-      - name: generate-service
-        value: true
       - name: implements
         value: OwnerProvider
       - name: order
@@ -224,8 +260,6 @@ classes:
               value: java.util.UUID
   - name: Token
     properties:
-      - name: generate-service
-        value: true
       - name: implements
         value: OwnerProvider
       - name: implements
@@ -290,29 +324,30 @@ classes:
           properties:
             - name: project-type
               value: true
-  - name: TokenBattleMapPartyScenario
-    properties:
-      - name: suppress-persistence
-        value: true
-      - name: suppress-service
-        value: true
+  - name: TokenMapData
     attributes:
-      - name: tokenId
+      - name: battleMapPartyScenario
+        reference: true
+        properties:
+          - name: findable
+            value: true
+          - name: nullable
+            value: false
+        type:
+          name: BattleMapPartyScenario
+          properties:
+            - name: project-type
+              value: true
+      - name: token
         reference: true
         properties:
           - name: nullable
             value: false
         type:
           name: Token
-      - name: battleMapId
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: UUID
           properties:
-            - name: import
-              value: java.util.UUID
+            - name: project-type
+              value: true
       - name: counter
         properties:
           - name: nullable
@@ -323,14 +358,24 @@ classes:
         properties:
           - name: nullable
             value: false
+          - name: import
+            value: java.math.BigDecimal
         type:
-          name: int
+          name: BigDecimal
+          properties:
+            - name: import
+              value: java.math.BigDecimal
       - name: fieldY
         properties:
           - name: nullable
             value: false
+          - name: import
+            value: java.math.BigDecimal
         type:
-          name: int
+          name: BigDecimal
+          properties:
+            - name: import
+              value: java.math.BigDecimal
       - name: id
         properties:
           - name: nullable
@@ -342,111 +387,6 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
-      - name: partyId
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
-      - name: scenarioId
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
-  - name: TokenData
-    properties:
-      - name: implements
-        value: TokenDataInfoProvider
-      - name: suppress-persistence
-        value: true
-      - name: suppress-service
-        value: true
-      - name: deprecated
-        value: true
-    attributes:
-      - name: coordinates
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: Coordinates
-      - name: counter
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: int
-      - name: id
-        properties:
-          - name: nullable
-            value: false
-          - name: id
-            value: true
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
-      - name: selected
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: boolean
-      - name: token
-        properties:
-          - name: nullable
-            value: false
-        type:
-          name: Token
-  - name: TokenTyp
-    properties:
-      - name: gui
-        value: true
-      - name: order
-        value: name
-      - name: deprecated
-        value: true
-    attributes:
-      - name: id
-        properties:
-          - name: nullable
-            value: false
-          - name: id
-            value: true
-        type:
-          name: UUID
-          properties:
-            - name: import
-              value: java.util.UUID
-      - name: name
-        properties:
-          - name: nullable
-            value: false
-          - name: editor-position
-            value: 1
-          - name: findable
-            value: true
-        type:
-          name: String
-          properties:
-            - name: length
-              value: 255
-      - name: token
-        properties:
-          - name: nullable
-            value: false
-          - name: editor-position
-            value: 2
-        type:
-          name: byte[]
 enums:
   - name: RuleSystem
     identifiers:

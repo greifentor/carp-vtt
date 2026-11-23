@@ -9,7 +9,7 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface DndTokenBattleMapPartyScenarioData {
+public interface DndTokenMapData {
 	int getCurrentHitPoints();
 	int getDeathSavingThrowsFail();
 	int getDeathSavingThrowsSuccess();

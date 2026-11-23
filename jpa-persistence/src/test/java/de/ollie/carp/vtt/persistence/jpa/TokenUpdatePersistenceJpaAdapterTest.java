@@ -9,10 +9,9 @@ import static org.mockito.Mockito.when;
 
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.core.service.model.TokenData;
-import de.ollie.carp.vtt.core.service.model.TokenDataImpl;
+import de.ollie.carp.vtt.core.service.model.TokenMapData;
+import de.ollie.carp.vtt.core.service.model.TokenMapDataImpl;
 import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.PartyDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.ScenarioDbo;
@@ -125,14 +124,12 @@ class TokenUpdatePersistenceJpaAdapterTest {
 				.setParty(partyDbo)
 				.setScenario(scenarioDbo)
 				.setToken(tokenDbo);
-			Coordinates coordinates = new CoordinatesImpl();
-			coordinates.setFieldX(FIELD_X);
-			coordinates.setFieldY(FIELD_Y);
-			TokenData data = new TokenDataImpl();
-			data.setCoordinates(coordinates);
+			TokenMapData data = new TokenMapDataImpl();
+			data.setFieldX(FIELD_X);
+			data.setFieldY(FIELD_Y);
 			data.setId(ID);
 			data.setToken(token);
-			List<TokenData> expected = List.of(data);
+			List<TokenMapData> expected = List.of(data);
 			when(battleMapDboRepository.findById(MAP_ID)).thenReturn(Optional.of(battleMapDbo));
 			when(partyDboRepository.findById(PARTY_ID)).thenReturn(Optional.of(partyDbo));
 			when(scenarioDboRepository.findById(SCENARIO_ID)).thenReturn(Optional.of(scenarioDbo));
@@ -142,7 +139,7 @@ class TokenUpdatePersistenceJpaAdapterTest {
 			)
 				.thenReturn(List.of(dbo));
 			// Run
-			List<TokenData> returned = unitUnderTest.findAllByMapPartyScenario(MAP_ID, PARTY_ID, SCENARIO_ID);
+			List<TokenMapData> returned = unitUnderTest.findAllByMapPartyScenario(MAP_ID, PARTY_ID, SCENARIO_ID);
 			// Check
 			assertEquals(expected, returned);
 		}

@@ -3,29 +3,29 @@ package de.ollie.carp.vtt.swing;
 import static de.ollie.carp.vtt.swing.SwingConstants.HGAP;
 import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
-import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
+import de.ollie.carp.vtt.core.service.DndTokenMapDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
-import de.ollie.carp.vtt.core.service.model.BattleMap;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.DndTokenBattleMapPartyScenarioData;
+import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.DndTokenData;
+import de.ollie.carp.vtt.core.service.model.DndTokenMapData;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.PartyImpl;
 import de.ollie.carp.vtt.core.service.model.RuleSystem;
 import de.ollie.carp.vtt.core.service.model.Scenario;
 import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
 import de.ollie.carp.vtt.core.service.model.Token;
-import de.ollie.carp.vtt.core.service.model.TokenData;
+import de.ollie.carp.vtt.core.service.model.TokenMapData;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionRemoveEvent;
 import de.ollie.carp.vtt.core.service.model.event.TokenPositionUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.web.TokenPositionWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import de.ollie.carp.vtt.graphics.manager.GraphicsManager;
-import de.ollie.carp.vtt.graphics.manager.dnd.DndTokenPaintManager;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
@@ -59,10 +59,10 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private static final Scenario DUMMY_SCENARIO = new ScenarioImpl();
 
 	private final JDesktopPane desktopPane;
-	private final BattleMap battleMap;
+	private final BattleMapPartyScenario battleMapPartyScenario;
 	private final transient CoordinatesToFieldConverter coordinatesToFieldConverter;
 	private final transient DndTokenDataService dndTokenDataService;
-	private final transient DndTokenBattleMapPartyScenarioService dndTokenBattleMapPartyScenarioService;
+	private final transient DndTokenMapDataService dndTokenMapDataService;
 	private final transient GraphicsManager graphicsManager;
 	private final transient PartyService partyService;
 	private final transient TokenHitManager tokenHitManager;
@@ -94,7 +94,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		pack();
 		panelImage.removeAll();
 		try {
-			Image image = ImageIO.read(new ByteArrayInputStream(battleMap.getImageContent()));
+			Image image = ImageIO.read(new ByteArrayInputStream(battleMapPartyScenario.getBattleMap().getImageContent()));
 			ImageIcon imageIcon = new ImageIcon(image);
 			battleMapPanel =
 				new MapPanel(imageIcon, tokenMap, this, graphicsManager, tokenHitManager, coordinatesToFieldConverter);
@@ -113,8 +113,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 							battleMapPanel.setSelectedToken(newMapToken);
 							tokenMap.put(newMapToken.getId(), newMapToken);
 							DndTokenData dtd = dndTokenDataService.findById(newMapToken.getToken().getId()).get();
-							DndTokenBattleMapPartyScenarioData dtbmps = dndTokenBattleMapPartyScenarioService.getByBattleMapPartyScenarioToken(
-								battleMap.getId(),
+							DndTokenMapData dtbmps = dndTokenMapDataService.getByBattleMapPartyScenarioToken(
+								battleMapPartyScenario.getBattleMap().getId(),
 								DUMMY_PARTY.getId(),
 								DUMMY_SCENARIO.getId(),
 								newMapToken.getToken().getId()
@@ -128,7 +128,11 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			);
 			panelImage.add(new JScrollPane(battleMapPanel), BorderLayout.CENTER);
 			setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
-			List<TokenData> storedTokens = tokenPositionService.findAllBy(battleMap, DUMMY_PARTY, DUMMY_SCENARIO);
+			List<TokenMapData> storedTokens = tokenPositionService.findAllBy(
+				battleMapPartyScenario.getBattleMap(),
+				DUMMY_PARTY,
+				DUMMY_SCENARIO
+			);
 			battleMapPanel.updateTokens(map(storedTokens));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -171,20 +175,13 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		}
 	}
 
-	private TokenMap map(List<TokenData> tokenData) {
+	private TokenMap map(List<TokenMapData> tokenData) {
 		tokenMap.clear();
 		tokenData.forEach(td -> {
 			MapTokenId id = new MapTokenId(td.getId());
 			TokenPaintManager tokenPaintManager = null;
 			if (DUMMY_PARTY.getRuleSystem() == RuleSystem.DND) {
-				DndTokenData dtd = dndTokenDataService.findById(td.getToken().getId()).get();
-				DndTokenBattleMapPartyScenarioData dtbmps = dndTokenBattleMapPartyScenarioService.getByBattleMapPartyScenarioToken(
-					battleMap.getId(),
-					DUMMY_PARTY.getId(),
-					DUMMY_SCENARIO.getId(),
-					td.getToken().getId()
-				);
-				tokenPaintManager = new DndTokenPaintManager(dtbmps, dtd.getHitPoints(), td.getToken().getTokenSize());
+				// TODO
 			}
 			tokenMap.put(
 				id,
@@ -194,11 +191,11 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		return tokenMap;
 	}
 
-	private void updatePosition(MapToken mapToken, Coordinates coordinates, boolean selected) {
+	private void updatePosition(MapToken mapToken, CoordinatesInfoProvider coordinates, boolean selected) {
 		TokenPositionUpdateEvent event = new TokenPositionUpdateEvent(
 			mapToken.getId().getUuid(),
 			(Token) battleMapPanel.getSelectedToken().getToken(),
-			battleMap,
+			battleMapPartyScenario.getBattleMap(),
 			mapToken.getCounter(),
 			coordinates,
 			DUMMY_PARTY,
@@ -223,9 +220,10 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		// selected
 		// );
 		if (DUMMY_PARTY.getRuleSystem() == RuleSystem.DND) {
-			DndTokenPaintManager dtpm = (DndTokenPaintManager) mapToken.getTokenPaintManager();
-			dtpm.decreaseHitPoints(10);
-			dtpm.setDtbmps(dndTokenBattleMapPartyScenarioService.update(dtpm.getDtbmps()));
+			// DndTokenPaintManager dtpm = (DndTokenPaintManager)
+			// mapToken.getTokenPaintManager();
+			// dtpm.decreaseHitPoints(10);
+			// dtpm.setDtbmps(dndTokenBattleMapPartyScenarioService.update(dtpm.getDtbmps()));
 		}
 		// tokenWebPort.pushTokenPositionUpdate(event);
 		battleMapPanel.updateTokens(tokenMap);
@@ -249,6 +247,10 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	}
 
 	private void unselectSelectedToken() {
-		tokenPositionWebPort.unselect(battleMap.getId(), DUMMY_PARTY.getId(), DUMMY_SCENARIO.getId());
+		tokenPositionWebPort.unselect(
+			battleMapPartyScenario.getBattleMap().getId(),
+			battleMapPartyScenario.getParty().getId(),
+			battleMapPartyScenario.getScenario().getId()
+		);
 	}
 }

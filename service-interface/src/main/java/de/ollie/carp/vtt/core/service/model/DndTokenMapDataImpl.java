@@ -11,7 +11,7 @@ import lombok.Generated;
  */
 @Data
 @Generated
-public class DndTokenBattleMapPartyScenarioDataImpl implements DndTokenBattleMapPartyScenarioData {
+public class DndTokenMapDataImpl implements DndTokenMapData {
 
 	private int currentHitPoints;
 	private int deathSavingThrowsFail;

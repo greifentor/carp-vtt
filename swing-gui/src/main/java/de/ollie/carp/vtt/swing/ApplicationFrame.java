@@ -2,8 +2,8 @@ package de.ollie.carp.vtt.swing;
 
 import de.ollie.carp.vtt.core.service.BattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.BattleMapService;
-import de.ollie.carp.vtt.core.service.DndTokenBattleMapPartyScenarioService;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
+import de.ollie.carp.vtt.core.service.DndTokenMapDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.ScenarioService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
@@ -69,7 +69,7 @@ public class ApplicationFrame
 	private DndTokenDataService dndTokenDataService;
 
 	@Inject
-	private DndTokenBattleMapPartyScenarioService dndTokenBattleMapPartyScenarioService;
+	private DndTokenMapDataService dndTokenMapDataService;
 
 	@Inject
 	private EditDialogComponentFactory editDialogComponentFactory;
@@ -157,7 +157,7 @@ public class ApplicationFrame
 
 					@Override
 					public void updated(BattleMap battleMapToSave) {
-						battleMapToSave = battleMapService.save(battleMapToSave);
+						battleMapToSave = battleMapService.updateBattleMap(battleMapToSave);
 						battleMapWebPort.pushBattleMapUpdate(new BattleMapUpdateEvent(uuidService.create(), battleMapToSave));
 					}
 				}
@@ -182,10 +182,10 @@ public class ApplicationFrame
 				selected ->
 					new BattleMapJInternalFrame(
 						desktopPane,
-						selected.battleMap(),
+						selected,
 						coordinatesToFieldConverter,
 						dndTokenDataService,
-						dndTokenBattleMapPartyScenarioService,
+						dndTokenMapDataService,
 						graphicsManager,
 						partyService,
 						tokenHitManager,

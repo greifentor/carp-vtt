@@ -122,7 +122,7 @@ public class BattleMapPartyScenarioSelectionDialog extends JDialog implements Ac
 
 	private JComboBox<BattleMap> createBattleMapComboBox() {
 		JComboBox<BattleMap> cb = new JComboBox<>();
-		List<BattleMap> battleMaps = battleMapService.findAll();
+		List<BattleMap> battleMaps = battleMapService.listBattleMaps();
 		cb.setModel(new DefaultComboBoxModel<BattleMap>(battleMaps.toArray(new BattleMap[battleMaps.size()])));
 		cb.setRenderer(new BattleMapListCellRenderer());
 		return cb;

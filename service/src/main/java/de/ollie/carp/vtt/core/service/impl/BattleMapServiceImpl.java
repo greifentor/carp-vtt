@@ -1,12 +1,12 @@
 package de.ollie.carp.vtt.core.service.impl;
 
-import static de.ollie.baselib.util.Check.ensure;
-
 import de.ollie.carp.vtt.core.service.BattleMapService;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.port.persistence.BattleMapPersistencePort;
 import jakarta.inject.Named;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
@@ -20,16 +20,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class BattleMapServiceImpl implements BattleMapService {
 
-	private final BattleMapPersistencePort persistencePort;
+	private final BattleMapPersistencePort battleMapPersistencePort;
 
 	@Override
-	public List<BattleMap> findAll() {
-		return persistencePort.list();
+	public BattleMap createBattleMap(byte[] imageContent, String name) {
+		return battleMapPersistencePort.create(imageContent, name);
 	}
 
 	@Override
-	public BattleMap save(BattleMap toSave) {
-		ensure(toSave != null, "map cannot be null!");
-		return persistencePort.update(toSave);
+	public void deleteBattleMap(UUID id) {
+		battleMapPersistencePort.deleteById(id);
+	}
+
+	@Override
+	public Optional<BattleMap> findById(UUID id) {
+		return battleMapPersistencePort.findById(id);
+	}
+
+	@Override
+	public List<BattleMap> listBattleMaps() {
+		return battleMapPersistencePort.list();
+	}
+
+	@Override
+	public BattleMap updateBattleMap(BattleMap toSave) {
+		return battleMapPersistencePort.update(toSave);
 	}
 }
