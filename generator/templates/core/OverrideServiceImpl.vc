@@ -1,0 +1,50 @@
+package ${PackageName};
+
+import ${Properties.get("core-service-package")}.${ClassName}Service;
+import ${Properties.get("core-model-package")}.${ClassName};
+#foreach($Attribute in $Attributes)
+#if (${Attribute.isReference()})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
+#if (${Attribute.isTypeEnum()})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
+#end
+import ${Properties.get("core-port-persistence-package")}.${ClassName}PersistencePort;
+#if ($Class.hasPropertyWithName("rest-pushes"))
+import ${Properties.get("core-port-web-package")}.${ClassName}WebPort;
+#end
+import jakarta.inject.Named;
+import java.util.List;
+import java.util.Optional;
+import lombok.Generated;
+import lombok.RequiredArgsConstructor;
+#if ($Class.hasPropertyWithName("rest-pushes"))
+import org.springframework.transaction.annotation.Transactional;
+#end
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+#if ($Class.hasPropertyWithName("deprecated"))
+@Deprecated
+#end
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+@RequiredArgsConstructor
+class ${ClassName}ServiceImpl extends Generated${ClassName}Service {
+
+#foreach($Property in ${Class.getPropertiesWithName("service-method")})
+	${Property.getValue()} {
+		// TODO
+	}
+
+#end
+
+}

@@ -28,9 +28,11 @@ public interface TokenMapDataService {
 
 	Optional<TokenMapData> findById(UUID id);
 
-	List<TokenMapData> findByAllBattleMapPartyScenario(UUID battleMapPartyServiceId);
-
 	List<TokenMapData> listTokenMapDatas();
 
 	TokenMapData updateTokenMapData(TokenMapData toSave);
+
+	Optional<TokenMapData> findByTokenAndBattleMapPartyScenario(UUID token, UUID battleMapPartyScenario);
+
+	List<TokenMapData> findAllByBattleMapPartyScenario(BattleMapPartyScenario battleMapPartyScenario);
 }

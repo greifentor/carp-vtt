@@ -19,9 +19,8 @@ import lombok.RequiredArgsConstructor;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-@Named
 @RequiredArgsConstructor
-class TokenMapDataServiceImpl implements TokenMapDataService {
+abstract class GeneratedTokenMapDataServiceImpl implements TokenMapDataService {
 
 	private final TokenMapDataPersistencePort tokenMapDataPersistencePort;
 
@@ -54,10 +53,5 @@ class TokenMapDataServiceImpl implements TokenMapDataService {
 	@Override
 	public TokenMapData updateTokenMapData(TokenMapData toSave) {
 		return tokenMapDataPersistencePort.update(toSave);
-	}
-
-	@Override
-	public List<TokenMapData> findByAllBattleMapPartyScenario(UUID battleMapPartyServiceId) {
-		return tokenMapDataPersistencePort.findByAllBattleMapPartyScenario(battleMapPartyServiceId);
 	}
 }

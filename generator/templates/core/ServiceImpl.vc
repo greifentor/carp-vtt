@@ -36,9 +36,11 @@ import ${Import};
  * Remove this comment to suspend class from generation process.
  */
 @Generated
+#if(!$Class.hasPropertyWithName("service-override"))
 @Named
+#end
 @RequiredArgsConstructor
-class ${ClassName}ServiceImpl implements ${ClassName}Service {
+#if($Class.hasPropertyWithName("service-override"))abstract#end class #if($Class.hasPropertyWithName("service-override"))Generated#end${ClassName}ServiceImpl implements ${ClassName}Service {
 
 	private final ${ClassName}PersistencePort ${ClassNameAsAttribute}PersistencePort;
 	#if ($Class.hasPropertyWithName("rest-pushes"))
@@ -77,7 +79,7 @@ class ${ClassName}ServiceImpl implements ${ClassName}Service {
 		return ${ClassNameAsAttribute}PersistencePort.update(toSave);
 	}
 
-	#if ($Class.hasPropertyWithName("rest-pushes"))
+#if ($Class.hasPropertyWithName("rest-pushes"))
 	@Override
 	public void push${ClassName}($ClassName toPush) {
 		${ClassNameAsAttribute}WebPort.push${ClassName}(toPush);
@@ -102,5 +104,5 @@ class ${ClassName}ServiceImpl implements ${ClassName}Service {
 		${ClassNameAsAttribute}PersistencePort.deleteById(idToDelete);
 	}
 
-	#end
+#end
 }

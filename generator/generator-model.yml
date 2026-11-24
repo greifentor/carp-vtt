@@ -325,14 +325,19 @@ classes:
             - name: project-type
               value: true
   - name: TokenMapData
+    properties:
+      - name: service-override
+        value: true
+      - name: service-method
+        value: Optional<TokenMapData> findByTokenAndBattleMapPartyScenario(UUID token, UUID battleMapPartyScenario)
     attributes:
       - name: battleMapPartyScenario
         reference: true
         properties:
-          - name: findable
-            value: true
           - name: nullable
             value: false
+          - name: findAllBy
+            value: true
         type:
           name: BattleMapPartyScenario
           properties:

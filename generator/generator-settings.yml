@@ -28,6 +28,15 @@ properties:
 generators:
 # --- Service ---
   - type: CLASS
+    suppress-when: classModel Load service-override HasProperty
+    package: de.ollie.carp.vtt.core.service.port.web
+    target-file-name: ${UnitName}ServiceImpl
+    path: generator
+    template: templates/core/OverrideServiceImpl.vc
+    properties:
+      - name: target-path
+        value: service/src/main/java
+  - type: CLASS
     package: de.ollie.carp.vtt.core.service.model
     target-file-name: ${UnitName}Impl
     path: generator
@@ -72,7 +81,7 @@ generators:
   - type: CLASS
     suppress-when: classModel Load suppress-service HasProperty
     package: de.ollie.carp.vtt.core.service.impl
-    target-file-name: ${UnitName}ServiceImpl
+    target-file-name: ${UnitName}ServiceImpl ${UnitName}GeneratedServiceImpl classModel Load service-override HasProperty DropLastIfTrue
     path: generator
     template: templates/core/ServiceImpl.vc
     properties:

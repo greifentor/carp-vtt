@@ -30,8 +30,6 @@ public interface TokenMapDataPersistencePort {
 
 	Optional<TokenMapData> findById(UUID id);
 
-	List<TokenMapData> findByAllBattleMapPartyScenario(UUID battleMapPartyServiceId);
-
 	List<TokenMapData> list();
 
 	TokenMapData update(TokenMapData toSave);

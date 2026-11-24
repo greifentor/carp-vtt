@@ -58,9 +58,4 @@ public class TokenMapDataPersistenceJpaAdapter implements TokenMapDataPersistenc
 	public TokenMapData update(TokenMapData toSave) {
 		return mapper.toModel(repository.save(mapper.toDbo(toSave)));
 	}
-
-	@Override
-	public List<TokenMapData> findByAllBattleMapPartyScenario(UUID battleMapPartyServiceId) {
-		return mapper.toModels(repository.findByAllBattleMapPartyScenario(battleMapPartyServiceId));
-	}
 }
