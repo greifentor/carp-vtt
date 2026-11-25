@@ -1,5 +1,6 @@
 package de.ollie.carp.vtt.persistence.jpa.repository;
 
+import de.ollie.carp.vtt.persistence.jpa.dbo.BattleMapPartyScenarioDbo;
 import de.ollie.carp.vtt.persistence.jpa.dbo.TokenMapDataDbo;
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,4 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface TokenMapDataDboRepository extends JpaRepository<TokenMapDataDbo, UUID> {
 	@Query("SELECT dbo FROM TokenMapDataDbo dbo")
 	List<TokenMapDataDbo> findAllOrdered();
+
+	List<TokenMapDataDbo> findAllByBattleMapPartyScenario(BattleMapPartyScenarioDbo battleMapPartyScenario);
 }

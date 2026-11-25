@@ -37,11 +37,15 @@ import ${Import};
  */
 @Generated
 @Named
-@RequiredArgsConstructor
-class ${ClassName}ServiceImpl extends Generated${ClassName}Service {
+class ${ClassName}ServiceImpl extends Generated${ClassName}ServiceImpl {
+
+	public ${ClassName}ServiceImpl(${ClassName}PersistencePort ${ClassNameAsAttribute}PersistencePort) {
+		super(${ClassNameAsAttribute}PersistencePort);
+	}
 
 #foreach($Property in ${Class.getPropertiesWithName("service-method")})
-	${Property.getValue()} {
+	@Override
+	public ${Property.getValue()} {
 		// TODO
 	}
 

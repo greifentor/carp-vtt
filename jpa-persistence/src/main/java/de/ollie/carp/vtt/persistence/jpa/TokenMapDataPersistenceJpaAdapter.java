@@ -1,9 +1,16 @@
 package de.ollie.carp.vtt.persistence.jpa;
 
 import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenMapData;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenMapDataPersistencePort;
+import de.ollie.carp.vtt.persistence.jpa.mapper.BattleMapPartyScenarioDboMapper;
 import de.ollie.carp.vtt.persistence.jpa.mapper.TokenMapDataDboMapper;
 import de.ollie.carp.vtt.persistence.jpa.repository.TokenMapDataDboRepository;
 import jakarta.inject.Named;
@@ -27,6 +34,8 @@ public class TokenMapDataPersistenceJpaAdapter implements TokenMapDataPersistenc
 	private final TokenMapDataDboMapper mapper;
 	private final TokenMapDataDboRepository repository;
 
+	private final BattleMapPartyScenarioDboMapper battleMapPartyScenarioDboMapper;
+
 	@Override
 	public TokenMapData create(
 		BattleMapPartyScenario battleMapPartyScenario,
@@ -47,6 +56,13 @@ public class TokenMapDataPersistenceJpaAdapter implements TokenMapDataPersistenc
 	@Override
 	public Optional<TokenMapData> findById(UUID id) {
 		return repository.findById(id).map(mapper::toModel);
+	}
+
+	@Override
+	public List<TokenMapData> findAllByBattleMapPartyScenario(BattleMapPartyScenario battleMapPartyScenario) {
+		return mapper.toModels(
+			repository.findAllByBattleMapPartyScenario(battleMapPartyScenarioDboMapper.toDbo(battleMapPartyScenario))
+		);
 	}
 
 	@Override
