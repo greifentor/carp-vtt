@@ -1,6 +1,9 @@
 package ${PackageName};
 
 import ${Properties.get("jpa-entity-package")}.${ClassName}Dbo;
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+import ${Properties.get("jpa-entity-package")}.${Attribute.getTypeName()}Dbo;
+#end
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -26,5 +29,9 @@ public interface ${ClassName}DboRepository extends JpaRepository<${ClassName}Dbo
 
 	@Query("SELECT dbo FROM ${ClassName}Dbo dbo WHERE dbo.${Attribute.getName()} LIKE CONCAT('%', :${Attribute.getName()}, '%')")
 	List<${ClassName}Dbo> findAllBy${Attribute.getNameCamelCase()}Match(String ${Attribute.getName()});
+#end
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+
+	List<${ClassName}Dbo> findAllBy${Attribute.getNameCamelCase()}(${Attribute.getTypeName()}Dbo ${Attribute.getName()});
 #end
 }

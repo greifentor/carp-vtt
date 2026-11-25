@@ -29,4 +29,5 @@ public class PartyWebAdapter implements PartyWebPort {
 	public void deleteParty(UUID idToDelete) {
 		client.removeParty(idToDelete);
 	}
+
 }

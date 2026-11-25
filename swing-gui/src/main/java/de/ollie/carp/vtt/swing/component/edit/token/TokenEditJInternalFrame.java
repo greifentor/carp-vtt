@@ -4,11 +4,13 @@ import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditJInternalFrame;
+
 import java.util.Map;
-import java.util.UUID;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import lombok.Generated;
+
+import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -24,7 +26,8 @@ public class TokenEditJInternalFrame extends AbstractEditJInternalFrame<Token> {
 		Observer<Token> observer,
 		JDesktopPane desktopPane
 	) {
-		super(desktopPane, "Token", toEdit, editDialogComponentFactory, observer, Map.of());
+		super(desktopPane, "Token", toEdit, editDialogComponentFactory, observer, Map.of(
+		));
 		prepare();
 	}
 

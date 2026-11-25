@@ -7,9 +7,10 @@ import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
-import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
+
+import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -17,7 +18,9 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public class PartySelectJInternalFrame extends AbstractSelectJInternalFrame<Party> implements SelectionPanelObserver {
+public class PartySelectJInternalFrame
+	extends AbstractSelectJInternalFrame<Party>
+	implements SelectionPanelObserver {
 
 	private static final String CLASS_NAME = "Party";
 
@@ -39,12 +42,11 @@ public class PartySelectJInternalFrame extends AbstractSelectJInternalFrame<Part
 	@Override
 	protected AbstractSelectJPanel<Party> createSelectPanel() {
 		return new PartySelectJPanel(
-			partyService,
-			CLASS_NAME,
-			desktopPane,
-			editDialogComponentFactory,
-			this,
-			userConfiguration
-		);
+				partyService,
+				CLASS_NAME,
+				desktopPane,
+				editDialogComponentFactory,
+				this,
+				userConfiguration);
 	}
 }

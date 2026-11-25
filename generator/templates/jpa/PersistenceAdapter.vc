@@ -5,12 +5,18 @@ import ${Properties.get("core-model-package")}.${ClassName};
 #if (${Attribute.isReference()})
 import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
 #end
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
 #if (${Attribute.isTypeEnum()})
 import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
 #end
 #end
 import ${Properties.get("core-port-persistence-package")}.${ClassName}PersistencePort;
 import ${Properties.get("jpa-mapper-package")}.${ClassName}DboMapper;
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+import ${Properties.get("jpa-mapper-package")}.${Attribute.getTypeName()}DboMapper;
+#end
 import ${Properties.get("jpa-repository-package")}.${ClassName}DboRepository;
 import jakarta.inject.Named;
 import java.util.List;
@@ -37,6 +43,10 @@ public class ${ClassName}PersistenceJpaAdapter implements ${ClassName}Persistenc
 
 	private final ${ClassName}DboMapper mapper;
 	private final ${ClassName}DboRepository repository;
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+
+	private final ${Attribute.getTypeName()}DboMapper ${Attribute.getName()}DboMapper;
+#end
 
 	@Override
 	public ${ClassName} create(#foreach($Attribute in ${Class.getAttributesWithPropertyNotSet("id")})${Attribute.getTypeName()} ${Attribute.getName()}#if($foreach.hasNext), #end#end) {
@@ -58,6 +68,13 @@ public class ${ClassName}PersistenceJpaAdapter implements ${ClassName}Persistenc
 	@Override
 	public Optional<${ClassName}> findByIdOr${Attribute.getNameCamelCase()}Particle(String ${Attribute.getName()}) {
 		return Optional.empty();
+	}
+#end
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+
+	@Override
+	public List<${ClassName}> findAllBy${Attribute.getNameCamelCase()}(${Attribute.getTypeName()} ${Attribute.getName()}) {
+		return mapper.toModels(repository.findAllBy${Attribute.getNameCamelCase()}(${Attribute.getName()}DboMapper.toDbo(${Attribute.getName()})));
 	}
 #end
 

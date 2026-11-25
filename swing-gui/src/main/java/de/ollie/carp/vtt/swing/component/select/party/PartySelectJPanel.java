@@ -3,17 +3,18 @@ package de.ollie.carp.vtt.swing.component.select.party;
 import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.PartyImpl;
-import de.ollie.carp.vtt.core.service.model.RuleSystem;
 import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.edit.party.PartyEditJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectionTableModel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
+import de.ollie.carp.vtt.core.service.model.RuleSystem;
 import java.util.List;
-import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
+
+import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -42,7 +43,12 @@ public class PartySelectJPanel extends AbstractSelectJPanel<Party> implements Se
 
 	@Override
 	protected List<Party> getObjectsToSelect() {
-		return partyService != null ? partyService.listPartys().stream().toList() : List.of();
+		return partyService != null
+			? partyService
+				.listPartys()
+				.stream()
+				.toList()
+			: List.of();
 	}
 
 	@Override
@@ -61,7 +67,13 @@ public class PartySelectJPanel extends AbstractSelectJPanel<Party> implements Se
 
 	@Override
 	protected void createEditInternalFrame(Party selected) {
-		new PartyEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane(), userConfiguration);
+		new PartyEditJInternalFrame(
+				selected,
+				getEditDialogComponentFactory(),
+				this,
+				getDesktopPane(),
+				userConfiguration
+		);
 	}
 
 	@Override
@@ -69,8 +81,8 @@ public class PartySelectJPanel extends AbstractSelectJPanel<Party> implements Se
 		Party model = new PartyImpl();
 		model.setId(UUID.randomUUID());
 		model.setName("");
-		model.setOwner(null);
-		model.setRuleSystem(null);
+		model.setOwner( null);
+		model.setRuleSystem( null);
 		return model;
 	}
 

@@ -39,6 +39,10 @@ public interface ${ClassName}PersistencePort {
 
 	Optional<${ClassName}> findByIdOr${Attribute.getNameCamelCase()}Particle(String ${Attribute.getName()});
 #end
+#foreach($Attribute in ${Class.getAttributesWithPropertySet("findAllBy")})
+
+	List<${ClassName}> findAllBy${Attribute.getNameCamelCase()}(${Attribute.getTypeName()} ${Attribute.getName()});
+#end
 
 	List<${ClassName}> list();
 	

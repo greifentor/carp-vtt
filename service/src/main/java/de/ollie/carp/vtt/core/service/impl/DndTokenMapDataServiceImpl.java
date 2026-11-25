@@ -6,9 +6,10 @@ import de.ollie.carp.vtt.core.service.port.persistence.DndTokenMapDataPersistenc
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -18,23 +19,13 @@ import lombok.RequiredArgsConstructor;
 @Generated
 @Named
 @RequiredArgsConstructor
-class DndTokenMapDataServiceImpl implements DndTokenMapDataService {
+ class DndTokenMapDataServiceImpl implements DndTokenMapDataService {
 
-	private final DndTokenMapDataPersistencePort dndTokenMapDataPersistencePort;
+ private final DndTokenMapDataPersistencePort dndTokenMapDataPersistencePort;
 
 	@Override
-	public DndTokenMapData createDndTokenMapData(
-		int currentHitPoints,
-		int deathSavingThrowsFail,
-		int deathSavingThrowsSuccess,
-		int temporaryHitPoints
-	) {
-		return dndTokenMapDataPersistencePort.create(
-			currentHitPoints,
-			deathSavingThrowsFail,
-			deathSavingThrowsSuccess,
-			temporaryHitPoints
-		);
+	public DndTokenMapData createDndTokenMapData(int currentHitPoints, int deathSavingThrowsFail, int deathSavingThrowsSuccess, int temporaryHitPoints) {
+		return dndTokenMapDataPersistencePort.create(currentHitPoints, deathSavingThrowsFail, deathSavingThrowsSuccess, temporaryHitPoints);
 	}
 
 	@Override
@@ -51,9 +42,10 @@ class DndTokenMapDataServiceImpl implements DndTokenMapDataService {
 	public List<DndTokenMapData> listDndTokenMapDatas() {
 		return dndTokenMapDataPersistencePort.list();
 	}
-
+	
 	@Override
 	public DndTokenMapData updateDndTokenMapData(DndTokenMapData toSave) {
 		return dndTokenMapDataPersistencePort.update(toSave);
 	}
+
 }

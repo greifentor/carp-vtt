@@ -5,20 +5,21 @@ import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenImpl;
-import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.swing.UserContext;
-import de.ollie.carp.vtt.swing.component.FileUploadField;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
+import lombok.Generated;
 import java.awt.GridLayout;
 import java.util.Map;
-import java.util.UUID;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import de.ollie.carp.vtt.swing.component.FileUploadField;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import lombok.Generated;
+
+import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -33,7 +34,8 @@ public class TokenEditJPanel extends AbstractEditPanel<Token> {
 	private JComboBox<TokenSize> comboBoxTokenSize;
 	private JCheckBox checkBoxPublic;
 
-	public TokenEditJPanel(Token toEdit, Map<String, ItemProvider<?>> itemProviders) {
+	public TokenEditJPanel(Token toEdit, Map<String, ItemProvider<?>> itemProviders	
+) {
 		super(toEdit, itemProviders);
 		prepare();
 	}
@@ -41,13 +43,13 @@ public class TokenEditJPanel extends AbstractEditPanel<Token> {
 	@Override
 	protected JPanel createLabelPanel(Token toEdit) {
 		return UserContext.isManagePublicRightSet()
-			? createLabelSubPanel("Name:", "Image:", "Token Size:", "Public:")
-			: createLabelSubPanel("Name:", "Image:", "Token Size:");
+			? createLabelSubPanel("Name:","Image:","Token Size:", "Public:")
+			: createLabelSubPanel("Name:","Image:","Token Size:");
 	}
 
 	@Override
 	protected JPanel createComponentPanel(Token toEdit, Map<String, ItemProvider<?>> itemProviders) {
-		JPanel p = new JPanel(new GridLayout(UserContext.isManagePublicRightSet() ? 3 + 1 : 3, 1, HGAP, VGAP));
+		JPanel p = new JPanel(new GridLayout(UserContext.isManagePublicRightSet() ? 3+1 : 3, 1, HGAP, VGAP));
 		textFieldName = new JTextField(toEdit.getName(), 40);
 		p.add(textFieldName);
 		uploadFieldImage = new FileUploadField(toEdit.getImage() != null ? toEdit.getImage().length : -1);
@@ -68,12 +70,13 @@ public class TokenEditJPanel extends AbstractEditPanel<Token> {
 	public Token getCurrentContent() {
 		Token model = new TokenImpl();
 		model.setId(toEdit.getId());
-		model.setName(textFieldName.getText());
+;
+		model.setName(textFieldName .getText());
+;
 		model.setImage(uploadFieldImage.hasContent() ? uploadFieldImage.getContent() : toEdit.getImage());
+;
 		model.setTokenSize(((TokenSize) comboBoxTokenSize.getSelectedItem()));
-		model.setOwner(
-			UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : UserContext.getUserId()
-		);
+		model.setOwner(UserContext.isManagePublicRightSet() && checkBoxPublic.isSelected() ? null : UserContext.getUserId());
 		return model;
 	}
 }
