@@ -326,10 +326,10 @@ classes:
               value: true
   - name: TokenMapData
     properties:
-      - name: service-override
-        value: true
       - name: service-method
         value: Optional<TokenMapData> findByTokenAndBattleMapPartyScenario(UUID token, UUID battleMapPartyScenario)
+      - name: service-override
+        value: true
     attributes:
       - name: battleMapPartyScenario
         reference: true
@@ -392,6 +392,9 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
+      - name: selected
+        type:
+          name: Boolean
 enums:
   - name: RuleSystem
     identifiers:

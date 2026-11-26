@@ -1,17 +1,15 @@
 package de.ollie.carp.vtt.swing.component.edit.party;
 
-import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.core.service.model.Party;
+import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditJInternalFrame;
-
 import java.util.Map;
+import java.util.UUID;
 import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import lombok.Generated;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -30,8 +28,7 @@ public class PartyEditJInternalFrame extends AbstractEditJInternalFrame<Party> {
 		JDesktopPane desktopPane,
 		UserConfiguration userConfiguration
 	) {
-		super(desktopPane, "Party", toEdit, editDialogComponentFactory, observer, Map.of(
-		));
+		super(desktopPane, "Party", toEdit, editDialogComponentFactory, observer, Map.of());
 		this.userConfiguration = userConfiguration;
 		prepare();
 	}

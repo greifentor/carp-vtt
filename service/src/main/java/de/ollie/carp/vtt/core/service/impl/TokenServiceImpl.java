@@ -8,11 +8,10 @@ import de.ollie.carp.vtt.core.service.port.web.TokenWebPort;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -22,9 +21,9 @@ import java.util.UUID;
 @Generated
 @Named
 @RequiredArgsConstructor
- class TokenServiceImpl implements TokenService {
+class TokenServiceImpl implements TokenService {
 
- private final TokenPersistencePort tokenPersistencePort;
+	private final TokenPersistencePort tokenPersistencePort;
 	private final TokenWebPort tokenWebPort;
 
 	@Override
@@ -46,7 +45,7 @@ import java.util.UUID;
 	public List<Token> listTokens() {
 		return tokenPersistencePort.list();
 	}
-	
+
 	@Override
 	public Token updateToken(Token toSave) {
 		return tokenPersistencePort.update(toSave);
@@ -75,5 +74,4 @@ import java.util.UUID;
 		tokenWebPort.deleteToken(idToDelete);
 		tokenPersistencePort.deleteById(idToDelete);
 	}
-
 }

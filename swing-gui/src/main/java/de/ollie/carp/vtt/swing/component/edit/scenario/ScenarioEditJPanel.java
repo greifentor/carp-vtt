@@ -8,13 +8,12 @@ import de.ollie.carp.vtt.core.service.model.ScenarioImpl;
 import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
-import lombok.Generated;
 import java.awt.GridLayout;
 import java.util.Map;
+import java.util.UUID;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import java.util.UUID;
+import lombok.Generated;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -28,8 +27,11 @@ public class ScenarioEditJPanel extends AbstractEditPanel<Scenario> {
 
 	private JTextField textFieldName;
 
-	public ScenarioEditJPanel(Scenario toEdit, Map<String, ItemProvider<?>> itemProviders	, UserConfiguration userConfiguration
-) {
+	public ScenarioEditJPanel(
+		Scenario toEdit,
+		Map<String, ItemProvider<?>> itemProviders,
+		UserConfiguration userConfiguration
+	) {
 		super(toEdit, itemProviders);
 		this.userConfiguration = userConfiguration;
 		prepare();
@@ -37,9 +39,7 @@ public class ScenarioEditJPanel extends AbstractEditPanel<Scenario> {
 
 	@Override
 	protected JPanel createLabelPanel(Scenario toEdit) {
-		return createLabelSubPanel(
-				"Name:"
-		);
+		return createLabelSubPanel("Name:");
 	}
 
 	@Override
@@ -54,8 +54,7 @@ public class ScenarioEditJPanel extends AbstractEditPanel<Scenario> {
 	public Scenario getCurrentContent() {
 		Scenario model = new ScenarioImpl();
 		model.setId(toEdit.getId());
-;
-		model.setName(textFieldName .getText());
+		model.setName(textFieldName.getText());
 		model.setOwner(userConfiguration.getUserId());
 		return model;
 	}

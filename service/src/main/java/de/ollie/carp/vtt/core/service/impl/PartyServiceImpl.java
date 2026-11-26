@@ -8,11 +8,10 @@ import de.ollie.carp.vtt.core.service.port.web.PartyWebPort;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -22,9 +21,9 @@ import java.util.UUID;
 @Generated
 @Named
 @RequiredArgsConstructor
- class PartyServiceImpl implements PartyService {
+class PartyServiceImpl implements PartyService {
 
- private final PartyPersistencePort partyPersistencePort;
+	private final PartyPersistencePort partyPersistencePort;
 	private final PartyWebPort partyWebPort;
 
 	@Override
@@ -46,7 +45,7 @@ import java.util.UUID;
 	public List<Party> listPartys() {
 		return partyPersistencePort.list();
 	}
-	
+
 	@Override
 	public Party updateParty(Party toSave) {
 		return partyPersistencePort.update(toSave);
@@ -75,5 +74,4 @@ import java.util.UUID;
 		partyWebPort.deleteParty(idToDelete);
 		partyPersistencePort.deleteById(idToDelete);
 	}
-
 }

@@ -2,7 +2,6 @@ package de.ollie.carp.vtt.graphics.manager.model;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +23,9 @@ public class TokenMap {
 	@Data
 	public static class MapToken {
 
-		private CoordinatesInfoProvider coordinates;
 		private int counter;
+		private int fieldX;
+		private int fieldY;
 		private MapTokenId id;
 		private TokenInfoProvider token;
 		private TokenPaintManager tokenPaintManager;
@@ -53,11 +53,18 @@ public class TokenMap {
 			int counter,
 			MapTokenId id,
 			boolean selected,
-			CoordinatesInfoProvider coordinates,
+			int fieldX,
+			int fieldY,
 			TokenPaintManager tokenPaintManager
 		) {
 			this(token, counter, id, selected, tokenPaintManager);
-			this.coordinates = coordinates;
+			this.fieldX = fieldX;
+			this.fieldY = fieldY;
+		}
+
+		public void setFieldXY(int fieldX, int fieldY) {
+			this.fieldX = fieldX;
+			this.fieldY = fieldY;
 		}
 	}
 
@@ -112,12 +119,11 @@ public class TokenMap {
 		tokens.put(key, mapToken);
 	}
 
-	public void putCoordinates(MapTokenId key, CoordinatesInfoProvider coordinates) {
+	public void putCoordinates(MapTokenId key, int fieldX, int fieldY) {
 		ensure(key != null, "key cannot be null!");
-		ensure(coordinates != null, "coordinates cannot be null!");
 		MapToken mapToken = get(key);
 		ensure(mapToken != null, "There is no mapToken for key: " + key);
-		mapToken.setCoordinates(coordinates);
+		mapToken.setFieldXY(fieldX, fieldY);
 	}
 
 	public void remove(MapTokenId key) {

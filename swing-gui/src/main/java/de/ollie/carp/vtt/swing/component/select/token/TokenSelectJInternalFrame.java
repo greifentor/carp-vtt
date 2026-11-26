@@ -7,10 +7,9 @@ import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
+import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -18,9 +17,7 @@ import java.util.UUID;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public class TokenSelectJInternalFrame
-	extends AbstractSelectJInternalFrame<Token>
-	implements SelectionPanelObserver {
+public class TokenSelectJInternalFrame extends AbstractSelectJInternalFrame<Token> implements SelectionPanelObserver {
 
 	private static final String CLASS_NAME = "Token";
 
@@ -38,11 +35,6 @@ public class TokenSelectJInternalFrame
 
 	@Override
 	protected AbstractSelectJPanel<Token> createSelectPanel() {
-		return new TokenSelectJPanel(
-				tokenService,
-				CLASS_NAME,
-				desktopPane,
-				editDialogComponentFactory,
-				this);
+		return new TokenSelectJPanel(tokenService, CLASS_NAME, desktopPane, editDialogComponentFactory, this);
 	}
 }

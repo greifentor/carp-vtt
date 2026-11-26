@@ -7,11 +7,10 @@ import de.ollie.carp.vtt.core.service.port.web.ScenarioWebPort;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -21,9 +20,9 @@ import java.util.UUID;
 @Generated
 @Named
 @RequiredArgsConstructor
- class ScenarioServiceImpl implements ScenarioService {
+class ScenarioServiceImpl implements ScenarioService {
 
- private final ScenarioPersistencePort scenarioPersistencePort;
+	private final ScenarioPersistencePort scenarioPersistencePort;
 	private final ScenarioWebPort scenarioWebPort;
 
 	@Override
@@ -45,7 +44,7 @@ import java.util.UUID;
 	public List<Scenario> listScenarios() {
 		return scenarioPersistencePort.list();
 	}
-	
+
 	@Override
 	public Scenario updateScenario(Scenario toSave) {
 		return scenarioPersistencePort.update(toSave);
@@ -74,5 +73,4 @@ import java.util.UUID;
 		scenarioWebPort.deleteScenario(idToDelete);
 		scenarioPersistencePort.deleteById(idToDelete);
 	}
-
 }

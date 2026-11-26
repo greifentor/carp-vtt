@@ -3,17 +3,16 @@ package de.ollie.carp.vtt.swing.component.select.token;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenImpl;
+import de.ollie.carp.vtt.core.service.model.TokenSize;
 import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.edit.token.TokenEditJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectionTableModel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
-import de.ollie.carp.vtt.core.service.model.TokenSize;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -39,12 +38,7 @@ public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements Se
 
 	@Override
 	protected List<Token> getObjectsToSelect() {
-		return tokenService != null
-			? tokenService
-				.listTokens()
-				.stream()
-				.toList()
-			: List.of();
+		return tokenService != null ? tokenService.listTokens().stream().toList() : List.of();
 	}
 
 	@Override
@@ -63,22 +57,17 @@ public class TokenSelectJPanel extends AbstractSelectJPanel<Token> implements Se
 
 	@Override
 	protected void createEditInternalFrame(Token selected) {
-		new TokenEditJInternalFrame(
-				selected,
-				getEditDialogComponentFactory(),
-				this,
-				getDesktopPane()
-		);
+		new TokenEditJInternalFrame(selected, getEditDialogComponentFactory(), this, getDesktopPane());
 	}
 
 	@Override
 	protected Token createNewObject() {
 		Token model = new TokenImpl();
 		model.setId(UUID.randomUUID());
-		model.setImage( null);
+		model.setImage(null);
 		model.setName("");
-		model.setOwner( null);
-		model.setTokenSize( null);
+		model.setOwner(null);
+		model.setTokenSize(null);
 		return model;
 	}
 

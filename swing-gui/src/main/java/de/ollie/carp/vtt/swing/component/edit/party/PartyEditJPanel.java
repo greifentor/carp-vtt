@@ -5,19 +5,18 @@ import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.PartyImpl;
-import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.core.service.model.RuleSystem;
+import de.ollie.carp.vtt.swing.UserConfiguration;
 import de.ollie.carp.vtt.swing.component.ItemProvider;
 import de.ollie.carp.vtt.swing.component.edit.AbstractEditPanel;
-import lombok.Generated;
 import java.awt.GridLayout;
 import java.util.Map;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.util.UUID;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-
-import java.util.UUID;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import lombok.Generated;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -32,8 +31,11 @@ public class PartyEditJPanel extends AbstractEditPanel<Party> {
 	private JTextField textFieldName;
 	private JComboBox<RuleSystem> comboBoxRuleSystem;
 
-	public PartyEditJPanel(Party toEdit, Map<String, ItemProvider<?>> itemProviders	, UserConfiguration userConfiguration
-) {
+	public PartyEditJPanel(
+		Party toEdit,
+		Map<String, ItemProvider<?>> itemProviders,
+		UserConfiguration userConfiguration
+	) {
 		super(toEdit, itemProviders);
 		this.userConfiguration = userConfiguration;
 		prepare();
@@ -41,10 +43,7 @@ public class PartyEditJPanel extends AbstractEditPanel<Party> {
 
 	@Override
 	protected JPanel createLabelPanel(Party toEdit) {
-		return createLabelSubPanel(
-				"Name:",
-				"Rule System:"
-		);
+		return createLabelSubPanel("Name:", "Rule System:");
 	}
 
 	@Override
@@ -62,9 +61,7 @@ public class PartyEditJPanel extends AbstractEditPanel<Party> {
 	public Party getCurrentContent() {
 		Party model = new PartyImpl();
 		model.setId(toEdit.getId());
-;
-		model.setName(textFieldName .getText());
-;
+		model.setName(textFieldName.getText());
 		model.setRuleSystem(((RuleSystem) comboBoxRuleSystem.getSelectedItem()));
 		model.setOwner(userConfiguration.getUserId());
 		return model;

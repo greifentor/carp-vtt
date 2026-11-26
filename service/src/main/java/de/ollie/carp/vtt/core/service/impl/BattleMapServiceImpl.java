@@ -6,10 +6,9 @@ import de.ollie.carp.vtt.core.service.port.persistence.BattleMapPersistencePort;
 import jakarta.inject.Named;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -19,9 +18,9 @@ import java.util.UUID;
 @Generated
 @Named
 @RequiredArgsConstructor
- class BattleMapServiceImpl implements BattleMapService {
+class BattleMapServiceImpl implements BattleMapService {
 
- private final BattleMapPersistencePort battleMapPersistencePort;
+	private final BattleMapPersistencePort battleMapPersistencePort;
 
 	@Override
 	public BattleMap createBattleMap(byte[] imageContent, String name) {
@@ -42,10 +41,9 @@ import java.util.UUID;
 	public List<BattleMap> listBattleMaps() {
 		return battleMapPersistencePort.list();
 	}
-	
+
 	@Override
 	public BattleMap updateBattleMap(BattleMap toSave) {
 		return battleMapPersistencePort.update(toSave);
 	}
-
 }

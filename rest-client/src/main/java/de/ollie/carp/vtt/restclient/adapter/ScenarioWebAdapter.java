@@ -29,5 +29,4 @@ public class ScenarioWebAdapter implements ScenarioWebPort {
 	public void deleteScenario(UUID idToDelete) {
 		client.removeScenario(idToDelete);
 	}
-
 }

@@ -7,10 +7,9 @@ import de.ollie.carp.vtt.swing.component.EditDialogComponentFactory;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJInternalFrame;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
+import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -42,11 +41,12 @@ public class ScenarioSelectJInternalFrame
 	@Override
 	protected AbstractSelectJPanel<Scenario> createSelectPanel() {
 		return new ScenarioSelectJPanel(
-				scenarioService,
-				CLASS_NAME,
-				desktopPane,
-				editDialogComponentFactory,
-				this,
-				userConfiguration);
+			scenarioService,
+			CLASS_NAME,
+			desktopPane,
+			editDialogComponentFactory,
+			this,
+			userConfiguration
+		);
 	}
 }

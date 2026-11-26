@@ -10,10 +10,9 @@ import de.ollie.carp.vtt.swing.component.select.AbstractSelectJPanel;
 import de.ollie.carp.vtt.swing.component.select.AbstractSelectionTableModel;
 import de.ollie.carp.vtt.swing.component.select.SelectionPanelObserver;
 import java.util.List;
+import java.util.UUID;
 import javax.swing.JDesktopPane;
 import lombok.Generated;
-
-import java.util.UUID;
 
 /**
  * GENERATED CODE - DO NOT TOUCH
@@ -42,12 +41,7 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 
 	@Override
 	protected List<Scenario> getObjectsToSelect() {
-		return scenarioService != null
-			? scenarioService
-				.listScenarios()
-				.stream()
-				.toList()
-			: List.of();
+		return scenarioService != null ? scenarioService.listScenarios().stream().toList() : List.of();
 	}
 
 	@Override
@@ -66,11 +60,11 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 	@Override
 	protected void createEditInternalFrame(Scenario selected) {
 		new ScenarioEditJInternalFrame(
-				selected,
-				getEditDialogComponentFactory(),
-				this,
-				getDesktopPane(),
-				userConfiguration
+			selected,
+			getEditDialogComponentFactory(),
+			this,
+			getDesktopPane(),
+			userConfiguration
 		);
 	}
 
@@ -79,7 +73,7 @@ public class ScenarioSelectJPanel extends AbstractSelectJPanel<Scenario> impleme
 		Scenario model = new ScenarioImpl();
 		model.setId(UUID.randomUUID());
 		model.setName("");
-		model.setOwner( null);
+		model.setOwner(null);
 		return model;
 	}
 

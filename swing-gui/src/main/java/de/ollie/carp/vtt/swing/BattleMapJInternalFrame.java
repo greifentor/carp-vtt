@@ -6,14 +6,13 @@ import static de.ollie.carp.vtt.swing.SwingConstants.VGAP;
 import de.ollie.carp.vtt.core.service.DndTokenDataService;
 import de.ollie.carp.vtt.core.service.DndTokenMapDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
+import de.ollie.carp.vtt.core.service.TokenMapDataService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.Coordinates;
 import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
-import de.ollie.carp.vtt.core.service.model.DndTokenData;
-import de.ollie.carp.vtt.core.service.model.DndTokenMapData;
 import de.ollie.carp.vtt.core.service.model.Party;
 import de.ollie.carp.vtt.core.service.model.PartyImpl;
 import de.ollie.carp.vtt.core.service.model.RuleSystem;
@@ -67,6 +66,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private final transient PartyService partyService;
 	private final transient TokenHitManager tokenHitManager;
 	private final transient TokenPositionService tokenPositionService;
+	private final transient TokenMapDataService tokenMapDataService;
 	private final transient TokenService tokenService;
 	private final transient TokenPositionWebPort tokenPositionWebPort;
 	private final transient TokenWebPort tokenWebPort;
@@ -112,14 +112,11 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 							);
 							battleMapPanel.setSelectedToken(newMapToken);
 							tokenMap.put(newMapToken.getId(), newMapToken);
-							DndTokenData dtd = dndTokenDataService.findById(newMapToken.getToken().getId()).get();
-							DndTokenMapData dtbmps = dndTokenMapDataService.getByBattleMapPartyScenarioToken(
-								battleMapPartyScenario.getBattleMap().getId(),
-								DUMMY_PARTY.getId(),
-								DUMMY_SCENARIO.getId(),
-								newMapToken.getToken().getId()
-							);
-							dtbmps.setCurrentHitPoints(dtd.getHitPoints());
+							// DndTokenData dtd =
+							// dndTokenDataService.findById(newMapToken.getToken().getId()).get();
+							// DndTokenMapData dtbmps =
+							// dndTokenMapDataService.findById(tokenMapData.getId());
+							// dtbmps.setCurrentHitPoints(dtd.getHitPoints());
 							updatePosition(newMapToken, coordinatesToFieldConverter.getFieldCoordinates(e.getX(), e.getY()), true);
 							selectedToken = null;
 						}
@@ -128,11 +125,7 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			);
 			panelImage.add(new JScrollPane(battleMapPanel), BorderLayout.CENTER);
 			setBounds(getX(), getY(), imageIcon.getIconWidth(), imageIcon.getIconHeight());
-			List<TokenMapData> storedTokens = tokenPositionService.findAllBy(
-				battleMapPartyScenario.getBattleMap(),
-				DUMMY_PARTY,
-				DUMMY_SCENARIO
-			);
+			List<TokenMapData> storedTokens = tokenMapDataService.findAllByBattleMapPartyScenario(battleMapPartyScenario);
 			battleMapPanel.updateTokens(map(storedTokens));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -185,7 +178,15 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 			}
 			tokenMap.put(
 				id,
-				new MapToken(td.getToken(), td.getCounter(), id, td.isSelected(), td.getCoordinates(), tokenPaintManager)
+				new MapToken(
+					td.getToken(),
+					td.getCounter(),
+					id,
+					td.isSelected(),
+					td.getFieldX(),
+					td.getFieldY(),
+					tokenPaintManager
+				)
 			);
 		});
 		return tokenMap;
