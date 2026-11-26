@@ -19,5 +19,6 @@ public class TokenMapDataImpl implements TokenMapData {
 	private int counter;
 	private BigDecimal fieldX;
 	private BigDecimal fieldY;
+	private boolean selected;
 	private UUID id;
 }

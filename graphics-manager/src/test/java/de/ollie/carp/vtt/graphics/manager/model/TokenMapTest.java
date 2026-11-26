@@ -17,6 +17,7 @@ import de.ollie.carp.vtt.core.service.model.CoordinatesInfoProvider;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapToken;
 import de.ollie.carp.vtt.graphics.manager.model.TokenMap.MapTokenId;
+import java.math.BigDecimal;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -181,19 +182,27 @@ class TokenMapTest {
 	@Nested
 	class putCoordinates_MapTokenId_CoordinatesInfoProvider {
 
+		private static final BigDecimal FIELD_X = new BigDecimal(4711);
+		private static final BigDecimal FIELD_Y = new BigDecimal(815);
+
 		@Test
 		void throwsAnException_passingANullValueAsKey() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(null, coordinates));
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(null, FIELD_X, FIELD_Y));
 		}
 
 		@Test
-		void throwsAnException_passingANullValueAsMapToken() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, null));
+		void throwsAnException_passingANullValueAsFieldX() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, null, FIELD_Y));
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAsFieldY() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, FIELD_X, null));
 		}
 
 		@Test
 		void throwsAnException_passingAnIdWhichIsNotAlreadyStored() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, coordinates));
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.putCoordinates(ID, FIELD_X, FIELD_Y));
 		}
 
 		@Test
@@ -201,9 +210,9 @@ class TokenMapTest {
 			// Prepare
 			unitUnderTest.put(ID, mapToken);
 			// Run
-			unitUnderTest.putCoordinates(ID, coordinates);
+			unitUnderTest.putCoordinates(ID, FIELD_X, FIELD_Y);
 			// Check
-			verify(mapToken, times(1)).setCoordinates(coordinates);
+			verify(mapToken, times(1)).setFieldXY(FIELD_X, FIELD_Y);
 		}
 	}
 

@@ -7,6 +7,7 @@ import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
+import de.ollie.carp.vtt.core.service.model.BattleMapPartyScenario;
 import de.ollie.carp.vtt.core.service.model.Token;
 import de.ollie.carp.vtt.core.service.model.TokenMapData;
 import de.ollie.carp.vtt.core.service.port.persistence.TokenMapDataPersistencePort;
@@ -42,7 +43,8 @@ public class TokenMapDataPersistenceJpaAdapter implements TokenMapDataPersistenc
 		Token token,
 		int counter,
 		BigDecimal fieldX,
-		BigDecimal fieldY
+		BigDecimal fieldY,
+		boolean selected
 	) {
 		// TODO Auto-generated method stub
 		return null;

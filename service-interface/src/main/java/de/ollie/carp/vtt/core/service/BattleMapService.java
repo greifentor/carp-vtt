@@ -13,7 +13,7 @@ import lombok.Generated;
  */
 @Generated
 public interface BattleMapService {
-	BattleMap createBattleMap(byte[] imageContent, String name);
+	BattleMap createBattleMap(byte[] imageContent, String name, UUID owner);
 
 	void deleteBattleMap(UUID id);
 
@@ -22,4 +22,12 @@ public interface BattleMapService {
 	List<BattleMap> listBattleMaps();
 
 	BattleMap updateBattleMap(BattleMap toSave);
+
+	void updateAndPushBattleMap(BattleMap toSave);
+
+	void pushBattleMap(BattleMap toPush);
+
+	void pushDeleteBattleMap(UUID idToDelete);
+
+	void deleteAndPushDeleteBattleMap(UUID idToDelete);
 }

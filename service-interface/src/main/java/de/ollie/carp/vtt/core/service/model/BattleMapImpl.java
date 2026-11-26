@@ -20,4 +20,5 @@ public class BattleMapImpl implements BattleMap {
 	private byte[] imageContent;
 
 	private String name;
+	private UUID owner;
 }

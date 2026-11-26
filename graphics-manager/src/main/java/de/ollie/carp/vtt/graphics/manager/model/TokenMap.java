@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.graphics.manager.model;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,8 +25,8 @@ public class TokenMap {
 	public static class MapToken {
 
 		private int counter;
-		private int fieldX;
-		private int fieldY;
+		private BigDecimal fieldX;
+		private BigDecimal fieldY;
 		private MapTokenId id;
 		private TokenInfoProvider token;
 		private TokenPaintManager tokenPaintManager;
@@ -53,8 +54,8 @@ public class TokenMap {
 			int counter,
 			MapTokenId id,
 			boolean selected,
-			int fieldX,
-			int fieldY,
+			BigDecimal fieldX,
+			BigDecimal fieldY,
 			TokenPaintManager tokenPaintManager
 		) {
 			this(token, counter, id, selected, tokenPaintManager);
@@ -62,7 +63,7 @@ public class TokenMap {
 			this.fieldY = fieldY;
 		}
 
-		public void setFieldXY(int fieldX, int fieldY) {
+		public void setFieldXY(BigDecimal fieldX, BigDecimal fieldY) {
 			this.fieldX = fieldX;
 			this.fieldY = fieldY;
 		}
@@ -119,7 +120,7 @@ public class TokenMap {
 		tokens.put(key, mapToken);
 	}
 
-	public void putCoordinates(MapTokenId key, int fieldX, int fieldY) {
+	public void putCoordinates(MapTokenId key, BigDecimal fieldX, BigDecimal fieldY) {
 		ensure(key != null, "key cannot be null!");
 		MapToken mapToken = get(key);
 		ensure(mapToken != null, "There is no mapToken for key: " + key);

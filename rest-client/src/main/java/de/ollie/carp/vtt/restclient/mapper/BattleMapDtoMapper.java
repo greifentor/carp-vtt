@@ -1,17 +1,17 @@
 package de.ollie.carp.vtt.restclient.mapper;
 
-import de.ollie.carp.vtt.core.service.model.event.BattleMapUpdateEvent;
+import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.restclient.model.BattleMapDto;
 import jakarta.inject.Named;
 
 @Named
 public class BattleMapDtoMapper {
 
-	public BattleMapDto map(BattleMapUpdateEvent battleMapUpdateEvent) {
+	public BattleMapDto map(BattleMap battleMap) {
 		BattleMapDto dto = new BattleMapDto();
-		dto.setId(battleMapUpdateEvent.getBattleMap().getId());
-		dto.setImage(battleMapUpdateEvent.getBattleMap().getImageContent());
-		dto.setName(battleMapUpdateEvent.getBattleMap().getName());
+		dto.setId(battleMap.getId());
+		dto.setImage(battleMap.getImageContent());
+		dto.setName(battleMap.getName());
 		return dto;
 	}
 }

@@ -9,12 +9,14 @@ import lombok.Generated;
  * Remove this comment to suspend class from generation process.
  */
 @Generated
-public interface BattleMap {
+public interface BattleMap extends OwnerProvider {
 	UUID getId();
 	byte[] getImageContent();
 	String getName();
+	UUID getOwner();
 
 	void setId(UUID id);
 	void setImageContent(byte[] imageContent);
 	void setName(String name);
+	void setOwner(UUID owner);
 }

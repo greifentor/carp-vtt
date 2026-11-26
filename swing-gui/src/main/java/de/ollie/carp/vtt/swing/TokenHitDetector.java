@@ -18,8 +18,8 @@ class TokenHitDetector {
 
 	boolean hits(MapToken mapToken, int x, int y) throws IOException {
 		TokenInfoProvider token = mapToken.getToken();
-		int tokenX = (mapToken.getCoordinates().getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
-		int tokenY = (mapToken.getCoordinates().getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
+		int tokenX = (mapToken.getFieldX().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
+		int tokenY = (mapToken.getFieldY().intValue() * FIELD_SIZE_IN_PIXELS) + OFFSET_IN_PIXELS;
 		Image tokenImage = ImageIO.read(new ByteArrayInputStream(token.getImage()));
 		int w = tokenImage.getWidth(null);
 		int h = tokenImage.getHeight(null);

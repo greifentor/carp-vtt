@@ -6,6 +6,7 @@ import de.ollie.carp.vtt.restserver.rest.api.BattleMapApi;
 import de.ollie.carp.vtt.restserver.rest.mapper.BattleMapDtoMapper;
 import de.ollie.carp.vtt.restserver.rest.model.BattleMapDto;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,5 +23,11 @@ public class BattleMapRestController implements BattleMapApi {
 		BattleMap battleMap = battleMapDtoMapper.toModel(battleMapDto);
 		battleMap = battleMapService.updateBattleMap(battleMap);
 		return ResponseEntity.ofNullable(battleMapDtoMapper.toDto(battleMap));
+	}
+
+	@Override
+	public ResponseEntity<Void> removeBattleMap(UUID id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

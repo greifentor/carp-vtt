@@ -16,6 +16,7 @@ public interface TokenMapData {
 	int getCounter();
 	BigDecimal getFieldX();
 	BigDecimal getFieldY();
+	boolean isSelected();
 	UUID getId();
 
 	void setBattleMapPartyScenario(BattleMapPartyScenario battleMapPartyScenario);
@@ -23,5 +24,6 @@ public interface TokenMapData {
 	void setCounter(int counter);
 	void setFieldX(BigDecimal fieldX);
 	void setFieldY(BigDecimal fieldY);
+	void setSelected(boolean selected);
 	void setId(UUID id);
 }

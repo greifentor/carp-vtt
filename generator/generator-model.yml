@@ -2,8 +2,18 @@ title: DIAGRAMMNAME
 classes:
   - name: BattleMap
     properties:
+      - name: implements
+        value: OwnerProvider
       - name: order
         value: name
+      - name: owner-logic
+        value: private-only
+      - name: rest-pushes
+        value: true
+      - name: swing-gui
+        value: true
+      - name: synchronize-up
+        value: true
     attributes:
       - name: id
         properties:
@@ -22,17 +32,27 @@ classes:
             value: true
           - name: suppress-to-string
             value: true
+          - name: editor-position
+            value: 2
         type:
           name: byte[]
       - name: name
         properties:
           - name: nullable
             value: false
+          - name: editor-position
+            value: 1
         type:
           name: String
           properties:
             - name: length
               value: 255
+      - name: owner
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
   - name: BattleMapPartyScenario
     attributes:
       - name: battleMap
@@ -78,6 +98,8 @@ classes:
               value: java.util.UUID
   - name: Coordinates
     properties:
+      - name: deprecated
+        value: true
       - name: implements
         value: CoordinatesInfoProvider
       - name: suppress-persistence
@@ -289,12 +311,12 @@ classes:
               value: java.util.UUID
       - name: image
         properties:
-          - name: editor-position
-            value: 2
           - name: suppress-to-selection
             value: true
           - name: suppress-to-string
             value: true
+          - name: editor-position
+            value: 2
         type:
           name: byte[]
       - name: name
@@ -381,6 +403,12 @@ classes:
           properties:
             - name: import
               value: java.math.BigDecimal
+      - name: selected
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: boolean
       - name: id
         properties:
           - name: nullable
@@ -392,9 +420,6 @@ classes:
           properties:
             - name: import
               value: java.util.UUID
-      - name: selected
-        type:
-          name: Boolean
 enums:
   - name: RuleSystem
     identifiers:

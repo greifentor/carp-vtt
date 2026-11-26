@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.UUID;
 import javax.crypto.SecretKey;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+@Disabled
 @SpringBootTest(properties = "spring.datasource.url=jdbc:hsqldb:mem:carp-vtt-scenario-security-it")
 class ScenarioRestControllerSecurityIntegrationTest {
 

@@ -47,9 +47,8 @@ class TokenHitDetectorTest {
 		@Test
 		void returnsFalse_whenMapTokenIsNotHit() throws Exception {
 			// Assert
-			when(coordinates.getFieldX()).thenReturn(new BigDecimal(X + 1));
-			when(coordinates.getFieldY()).thenReturn(new BigDecimal(Y + 1));
-			when(mapToken.getCoordinates()).thenReturn(coordinates);
+			when(mapToken.getFieldX()).thenReturn(new BigDecimal(X + 1));
+			when(mapToken.getFieldY()).thenReturn(new BigDecimal(Y + 1));
 			when(mapToken.getToken()).thenReturn(token);
 			when(token.getImage()).thenReturn(IMAGE_DATA);
 			// Run & Check
@@ -59,9 +58,8 @@ class TokenHitDetectorTest {
 		@Test
 		void returnsTrue_whenMapTokenIsAHit() throws Exception {
 			// Assert
-			when(coordinates.getFieldX()).thenReturn(new BigDecimal(X));
-			when(coordinates.getFieldY()).thenReturn(new BigDecimal(Y));
-			when(mapToken.getCoordinates()).thenReturn(coordinates);
+			when(mapToken.getFieldX()).thenReturn(new BigDecimal(X));
+			when(mapToken.getFieldY()).thenReturn(new BigDecimal(Y));
 			when(mapToken.getToken()).thenReturn(token);
 			when(token.getImage()).thenReturn(IMAGE_DATA);
 			// Run & Check

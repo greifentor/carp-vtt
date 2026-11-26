@@ -4,6 +4,9 @@ import ${Properties.get("core-model-package")}.${ClassName};
 import ${Properties.get("core-port-web-package")}.${ClassName}WebPort;
 import ${Properties.get("rest-client-package")}.${ClassName}Client;
 import jakarta.inject.Named;
+#if ($Class.hasPropertyWithName("synchronize-up"))
+import java.util.List;
+#end
 import java.util.UUID;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class ${ClassName}WebAdapter implements ${ClassName}WebPort {
 
 	private final ${ClassName}Client client;
-	#if ($Class.hasPropertyWithName("synchronize-up"))
-	private final ${ClassName}Service service;
-	#end
 
 	@Override
 	public void push${ClassName}(${ClassName} toPush) {
@@ -38,10 +38,9 @@ public class ${ClassName}WebAdapter implements ${ClassName}WebPort {
 
 	#if ($Class.hasPropertyWithName("synchronize-up"))
 	@Override
-	public void synchronize${ClassName}s(SynchronizationObserver observer) {
-		List<${ClassName}> ${ClassNameAsAttribute}s = service.list${ClassName}s();
+	public void synchronize${ClassName}s(SynchronizationObserver observer, List<${ClassName}> ${ClassNameAsAttribute}s) {
 		for (int i = 0, leni = ${ClassNameAsAttribute}s.size(); i < leni; i++) {
-			${ClassNameAsAttribute}Client.update${ClassName}(new ${ClassName}UpdateEvent(UUID.randomUUID(), ${ClassNameAsAttribute}s.get(i)));
+			client.update${ClassName}(${ClassNameAsAttribute}s.get(i));
 			if (observer != null) {
 				observer.progress(i, leni - 1);
 			}

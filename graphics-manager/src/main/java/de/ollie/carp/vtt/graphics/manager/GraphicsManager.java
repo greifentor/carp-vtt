@@ -37,7 +37,12 @@ public class GraphicsManager {
 		for (MapTokenId id : tokens.keySet()) {
 			MapToken mapToken = tokens.get(id);
 			TokenInfoProvider token = mapToken.getToken();
-			TokenInfo ti = tokenInfoMapper.toTokenInfo(token, mapToken.getCoordinates(), mapToken.getCounter());
+			TokenInfo ti = tokenInfoMapper.toTokenInfo(
+				token,
+				mapToken.getFieldX(),
+				mapToken.getFieldY(),
+				mapToken.getCounter()
+			);
 			try {
 				if (mapToken.getTokenPaintManager() != null) {
 					mapToken.getTokenPaintManager().prePaint(g, ti.x(), ti.y());

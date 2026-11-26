@@ -16,6 +16,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiPredicate;
@@ -34,6 +35,8 @@ class GraphicsManagerTest {
 	private static final MapTokenId ID = new MapTokenId(UUID.randomUUID());
 	private static final BiPredicate<MapToken, MapToken> IS_NOT_SELECTED = (m0, m1) -> false;
 	private static final BiPredicate<MapToken, MapToken> IS_SELECTED = (m0, m1) -> true;
+	private static final BigDecimal FIELD_X = new BigDecimal(4711);
+	private static final BigDecimal FIELD_Y = new BigDecimal(815);
 
 	@Mock
 	private BattleMapDrawer battleMapDrawer;
@@ -121,11 +124,12 @@ class GraphicsManagerTest {
 		void throwsAnException_whenTokenDrawingFails() throws Exception {
 			// Prepare
 			IOException exception = mock(IOException.class);
-			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
 			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getFieldX()).thenReturn(FIELD_X);
+			when(mapToken.getFieldY()).thenReturn(FIELD_Y);
 			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
 			doThrow(exception).when(tokenDrawer).drawToken(graphics, tokenInfo, imageObserver);
-			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
+			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, FIELD_X, FIELD_Y, COUNTER)).thenReturn(tokenInfo);
 			when(tokenMap.keySet()).thenReturn(Set.of(ID));
 			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run
@@ -144,10 +148,11 @@ class GraphicsManagerTest {
 		@Test
 		void callsTheDrawTokenMethodOfTheTokenDrawerCorrectly_noSelectionNoCounter() throws Exception {
 			// Prepare
-			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
 			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getFieldX()).thenReturn(FIELD_X);
+			when(mapToken.getFieldY()).thenReturn(FIELD_Y);
 			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
-			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
+			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, FIELD_X, FIELD_Y, COUNTER)).thenReturn(tokenInfo);
 			when(tokenMap.keySet()).thenReturn(Set.of(ID));
 			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run
@@ -167,10 +172,11 @@ class GraphicsManagerTest {
 		@Test
 		void callsTheCounterMarkerCorrectly_noSelection() {
 			// Prepare
-			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
 			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getFieldX()).thenReturn(FIELD_X);
+			when(mapToken.getFieldY()).thenReturn(FIELD_Y);
 			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
-			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
+			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, FIELD_X, FIELD_Y, COUNTER)).thenReturn(tokenInfo);
 			when(tokenMap.hasTokenMoreThanOneTimes(tokenInfoProvider)).thenReturn(true);
 			when(tokenMap.keySet()).thenReturn(Set.of(ID));
 			when(tokenMap.get(ID)).thenReturn(mapToken);
@@ -191,10 +197,11 @@ class GraphicsManagerTest {
 		@Test
 		void callsTheSelectedTokenMarkerCorrectly_noCounter() {
 			// Prepare
-			when(mapToken.getCoordinates()).thenReturn(coordinatesInfoProvider);
 			when(mapToken.getCounter()).thenReturn(COUNTER);
+			when(mapToken.getFieldX()).thenReturn(FIELD_X);
+			when(mapToken.getFieldY()).thenReturn(FIELD_Y);
 			when(mapToken.getToken()).thenReturn(tokenInfoProvider);
-			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, coordinatesInfoProvider, COUNTER)).thenReturn(tokenInfo);
+			when(tokenInfoMapper.toTokenInfo(tokenInfoProvider, FIELD_X, FIELD_Y, COUNTER)).thenReturn(tokenInfo);
 			when(tokenMap.keySet()).thenReturn(Set.of(ID));
 			when(tokenMap.get(ID)).thenReturn(mapToken);
 			// Run

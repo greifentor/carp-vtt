@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 import lombok.Generated;
 
+@Deprecated
 /**
  * GENERATED CODE - DO NOT TOUCH
  *

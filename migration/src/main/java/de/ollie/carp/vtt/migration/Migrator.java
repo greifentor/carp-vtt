@@ -63,7 +63,7 @@ class Migrator {
 				dndTokenDataService.save(toDndTokenData(image.getDndDataDto(), UUID.fromString(image.getGlobalId())));
 			}
 		} else if (isMap(image)) {
-			mapService.save(toBattleMap(image));
+			mapService.updateAndPushBattleMap(toBattleMap(image));
 		}
 	}
 

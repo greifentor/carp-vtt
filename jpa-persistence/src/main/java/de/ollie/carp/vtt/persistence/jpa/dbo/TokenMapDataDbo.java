@@ -42,6 +42,9 @@ public class TokenMapDataDbo {
 	@Column(name = "FIELD_Y", nullable = false)
 	private BigDecimal fieldY;
 
+	@Column(name = "SELECTED", nullable = false)
+	private boolean selected;
+
 	@Id
 	@Column(name = "ID", nullable = false)
 	private UUID id;

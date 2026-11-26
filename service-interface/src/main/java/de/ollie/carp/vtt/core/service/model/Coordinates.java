@@ -3,6 +3,7 @@ package de.ollie.carp.vtt.core.service.model;
 import java.math.BigDecimal;
 import lombok.Generated;
 
+@Deprecated
 /**
  * GENERATED CODE - DO NOT TOUCH
  *

@@ -21,7 +21,8 @@ public interface TokenMapDataService {
 		Token token,
 		int counter,
 		BigDecimal fieldX,
-		BigDecimal fieldY
+		BigDecimal fieldY,
+		boolean selected
 	);
 
 	void deleteTokenMapData(UUID id);

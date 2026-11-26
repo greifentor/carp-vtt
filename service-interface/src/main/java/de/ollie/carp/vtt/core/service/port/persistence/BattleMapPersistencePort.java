@@ -15,7 +15,7 @@ import lombok.Generated;
 @Generated
 @Named
 public interface BattleMapPersistencePort {
-	BattleMap create(byte[] imageContent, String name);
+	BattleMap create(byte[] imageContent, String name, UUID owner);
 
 	void deleteById(UUID id);
 

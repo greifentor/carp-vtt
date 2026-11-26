@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import de.ollie.carp.vtt.core.service.model.Coordinates;
-import de.ollie.carp.vtt.core.service.model.CoordinatesImpl;
 import de.ollie.carp.vtt.core.service.model.TokenInfoProvider;
 import de.ollie.carp.vtt.core.service.model.TokenSize;
 import java.math.BigDecimal;
@@ -37,9 +35,6 @@ class TokenInfoMapperTest {
 		@Test
 		void returnsACorrectTokenInfo() {
 			// Prepare
-			Coordinates coordinates = new CoordinatesImpl();
-			coordinates.setFieldX(FIELD_X);
-			coordinates.setFieldY(FIELD_Y);
 			TokenInfoProvider token = mock(TokenInfoProvider.class);
 			when(token.getImage()).thenReturn(IMAGE);
 			when(token.getTokenSize()).thenReturn(TOKEN_SIZE);
@@ -52,7 +47,7 @@ class TokenInfoMapperTest {
 				COUNTER
 			);
 			// Run & Check
-			assertEquals(expected, unitUnderTest.toTokenInfo(token, coordinates, COUNTER));
+			assertEquals(expected, unitUnderTest.toTokenInfo(token, FIELD_X, FIELD_Y, COUNTER));
 		}
 	}
 }

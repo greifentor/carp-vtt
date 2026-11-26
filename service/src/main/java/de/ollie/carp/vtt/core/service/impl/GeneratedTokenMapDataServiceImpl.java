@@ -29,9 +29,10 @@ abstract class GeneratedTokenMapDataServiceImpl implements TokenMapDataService {
 		Token token,
 		int counter,
 		BigDecimal fieldX,
-		BigDecimal fieldY
+		BigDecimal fieldY,
+		boolean selected
 	) {
-		return tokenMapDataPersistencePort.create(battleMapPartyScenario, token, counter, fieldX, fieldY);
+		return tokenMapDataPersistencePort.create(battleMapPartyScenario, token, counter, fieldX, fieldY, selected);
 	}
 
 	@Override

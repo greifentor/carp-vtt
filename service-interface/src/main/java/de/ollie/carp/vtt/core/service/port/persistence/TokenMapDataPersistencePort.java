@@ -23,7 +23,8 @@ public interface TokenMapDataPersistencePort {
 		Token token,
 		int counter,
 		BigDecimal fieldX,
-		BigDecimal fieldY
+		BigDecimal fieldY,
+		boolean selected
 	);
 
 	void deleteById(UUID id);

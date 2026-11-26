@@ -65,8 +65,8 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 	private final transient GraphicsManager graphicsManager;
 	private final transient PartyService partyService;
 	private final transient TokenHitManager tokenHitManager;
-	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenMapDataService tokenMapDataService;
+	private final transient TokenPositionService tokenPositionService;
 	private final transient TokenService tokenService;
 	private final transient TokenPositionWebPort tokenPositionWebPort;
 	private final transient TokenWebPort tokenWebPort;
@@ -205,7 +205,11 @@ public class BattleMapJInternalFrame extends JInternalFrame implements ActionLis
 		);
 		tokenPositionService.updateTokenPosition(event);
 		tokenPositionWebPort.pushTokenPositionUpdate(event);
-		tokenMap.putCoordinates(battleMapPanel.getSelectedToken().getId(), coordinates);
+		tokenMap.putCoordinates(
+			battleMapPanel.getSelectedToken().getId(),
+			coordinates.getFieldX(),
+			coordinates.getFieldY()
+		);
 		battleMapPanel.updateTokens(tokenMap);
 	}
 

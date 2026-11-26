@@ -6,12 +6,12 @@ import de.ollie.carp.vtt.core.service.DndTokenDataService;
 import de.ollie.carp.vtt.core.service.DndTokenMapDataService;
 import de.ollie.carp.vtt.core.service.PartyService;
 import de.ollie.carp.vtt.core.service.ScenarioService;
+import de.ollie.carp.vtt.core.service.TokenMapDataService;
 import de.ollie.carp.vtt.core.service.TokenPositionService;
 import de.ollie.carp.vtt.core.service.TokenService;
 import de.ollie.carp.vtt.core.service.UuidService;
 import de.ollie.carp.vtt.core.service.model.BattleMap;
 import de.ollie.carp.vtt.core.service.model.BattleMapImpl;
-import de.ollie.carp.vtt.core.service.model.event.BattleMapUpdateEvent;
 import de.ollie.carp.vtt.core.service.port.filesystem.BinaryFileAccessPort;
 import de.ollie.carp.vtt.core.service.port.web.BattleMapWebPort;
 import de.ollie.carp.vtt.core.service.port.web.TokenPositionWebPort;
@@ -93,6 +93,9 @@ public class ApplicationFrame
 	private TokenHitManager tokenHitManager;
 
 	@Inject
+	private TokenMapDataService tokenMapDataService;
+
+	@Inject
 	private TokenPositionService tokenPositionService;
 
 	@Inject
@@ -158,7 +161,7 @@ public class ApplicationFrame
 					@Override
 					public void updated(BattleMap battleMapToSave) {
 						battleMapToSave = battleMapService.updateBattleMap(battleMapToSave);
-						battleMapWebPort.pushBattleMapUpdate(new BattleMapUpdateEvent(uuidService.create(), battleMapToSave));
+						battleMapWebPort.pushBattleMap(battleMapToSave);
 					}
 				}
 			)
@@ -189,6 +192,7 @@ public class ApplicationFrame
 						graphicsManager,
 						partyService,
 						tokenHitManager,
+						tokenMapDataService,
 						tokenPositionService,
 						tokenService,
 						tokenPositionWebPort,
@@ -220,8 +224,9 @@ public class ApplicationFrame
 			// .setVisible(true);
 			// }
 		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_BATTLE_MAPS) {
-			battleMapWebPort.synchronizeBattleMaps((synced, total) ->
-				System.out.println("Battle Map Synced " + synced + " of " + total)
+			battleMapWebPort.synchronizeBattleMaps(
+				(synced, total) -> System.out.println("Battle Map Synced " + synced + " of " + total),
+				battleMapService.listBattleMaps()
 			);
 		} else if (selectedMenuItem == MenuItemIdentifier.SYNC_TOKENS) {
 			tokenWebPort.synchronizeTokens(
